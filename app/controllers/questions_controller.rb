@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
       redirect_to @question
     else
       render :new
-    end        
+    end
   end
 
   private
