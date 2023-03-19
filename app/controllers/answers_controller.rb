@@ -1,4 +1,3 @@
-require 'byebug'
 class AnswersController < ApplicationController
   def create
     find_question
