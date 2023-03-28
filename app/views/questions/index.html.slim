@@ -1,0 +1,9 @@
+p= link_to 'Ask question', new_question_path 
+table
+  thead
+    tr
+      th ID
+      th Title 
+      th Body
+  tbody 
+    = render @questions 
