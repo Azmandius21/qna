@@ -6,7 +6,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       let(:answer_attributes) { attributes_for(:answer) }
-      
+
       it 'save a new answer ' do
         expect do
           post :create, params: { question_id: question, answer: answer_attributes }
