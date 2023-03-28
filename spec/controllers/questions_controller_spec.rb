@@ -1,23 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  describe 'GET #index' do
-    let(:questions){ create_list(:question, 3)}
+  let(:questions) { create_list(:question, 3) }
+  let(:user) { create(:user) }
 
-    before { get :index}
-    
+  describe 'GET #index' do
+    before { get :index }
+
     it 'populate an array of questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
   end
 
+  describe 'GET #new' do
+    before { login(user) }
+    before { get :new }
+
+    it 'render template new' do
+      expect(response).to render_template :new
+    end
+  end
+
   describe 'POST #create' do
+    before { login(user) }
+
     context 'with valid attributes' do
-      let(:question){ attributes_for(:question)}
+      let(:question) { attributes_for(:question) }
 
       it 'saves a new questions' do
-        expect do 
-          post :create, params: { question: question } 
+        expect do
+          post :create, params: { question: question }
         end.to change(Question, :count).by(1)
       end
 
@@ -28,7 +40,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with not valid attributes' do
-      let(:question){ attributes_for(:question, :invalid)}
+      let(:question) { attributes_for(:question, :invalid) }
       it 'does not save a new questions' do
         expect do
           post :create, params: { question: question }
