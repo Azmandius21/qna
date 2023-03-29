@@ -9,10 +9,8 @@ feature 'User can create an answer on the question', "
   given(:user){ create(:user)}
   given(:question){ create(:question)}
 
-  background do
-    sign_in(user)
-    visit question_path(question)
-  end
+  background { visit question_path(question) }
+  
 
   scenario 'create an answer with valid data' do
     fill_in 'Body', with: 'My answer text text text'

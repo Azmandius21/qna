@@ -3,3 +3,7 @@ h1 = @question.title
 p = @question.body
 
 =render 'answers/form'
+
+ul 
+  - @answers.each do |answer|
+    li = answer.body 

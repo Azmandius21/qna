@@ -20,6 +20,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answers = Answer.all
   end
 
   private
