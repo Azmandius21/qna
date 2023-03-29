@@ -13,9 +13,9 @@ RSpec.describe AnswersController, type: :controller do
         end.to change(Answer, :count).by(1)
       end
 
-      it 'redirect to  show  a new answer' do
+      it 'redirect to  show  a question' do
         post :create, params: { question_id: question, answer: answer_attributes }
-        expect(response).to redirect_to assigns(:answer)
+        expect(response).to redirect_to assigns(:question)
       end
     end
 
@@ -28,9 +28,9 @@ RSpec.describe AnswersController, type: :controller do
         end.to_not change(Answer, :count)
       end
 
-      it 'render template new' do
+      it 'redirect to  show  a question' do
         post :create, params: { question_id: question, answer: answer_attributes }
-        expect(response).to render_template :new
+        expect(response).to redirect_to assigns(:question)
       end
     end
   end
