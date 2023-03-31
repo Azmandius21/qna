@@ -53,4 +53,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    let(:question) { attributes_for(:question) }
+  end
 end
