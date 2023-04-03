@@ -1,20 +1,25 @@
 require 'rails_helper'
+require 'byebug'
 
 RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     let(:question) { create(:question) }
+    let(:author) { create(:user) }
+
+    before{ login(author) }
 
     context 'with valid attributes' do
-      let(:answer_attributes) { attributes_for(:answer) }
+      let(:answer) { attributes_for(:answer, question_id: question.id, author_id: author.id) }
 
       it 'save a new answer ' do
         expect do
-          post :create, params: { question_id: question, answer: answer_attributes }
+          byebug
+          post :create, params: { answer: answer }
         end.to change(Answer, :count).by(1)
       end
 
       it 'redirect to  show  a question' do
-        post :create, params: { question_id: question, answer: answer_attributes }
+        post :create, params: { answer: answer }
         expect(response).to redirect_to assigns(:question)
       end
     end

@@ -25,7 +25,8 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
 
     context 'with valid attributes' do
-      let(:question) { attributes_for(:question) }
+      let(:question) { attributes_for(:question, author_id:user.id) }
+      
 
       it 'saves a new questions' do
         expect do
