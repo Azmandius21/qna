@@ -1,9 +1,11 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
+  
   def create
     find_question
 
-    @answer = @question.answers.new(answer_params, author.id)
+    @answer = @question.answers.new(answer_params)
+    @answer.update(author_id: author.id)
 
     if @answer.save
       redirect_to @question, notice: 'Your answer created successfully.'
@@ -15,7 +17,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id)
+    params.require(:answer).permit(:body, :question_id, :author_id)
   end
 
   def find_question
