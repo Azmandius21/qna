@@ -9,20 +9,35 @@ feature 'User can create an answer on the question', "
   given(:user){ create(:user)}
   given(:question){ create(:question)}
 
-  background { visit question_path(question) }
+  describe 'Authenticated user try' do
+    background { sign_in(user) }
+
+    background { visit question_path(question) }
+
+    scenario 'create an answer with valid data' do
+      fill_in 'Body', with: 'My answer text text text'
+      click_on 'Give answer'
+      
+      expect(page).to have_content 'Your answer created successfully.'
+    end
   
-
-  scenario 'create an answer with valid data' do
-    fill_in 'Body', with: 'My answer text text text'
-    click_on 'Give answer'
-    
-    expect(page).to have_content 'Your answer created successfully.'
+    scenario 'create an answer with invalid data' do
+      fill_in 'Body', with: ''
+      click_on 'Give answer'
+      
+      expect(page).to have_content 'The answer body can\'t be blank.'
+    end
   end
 
-  scenario 'create an answer with invalid data' do
-    fill_in 'Body', with: ''
-    click_on 'Give answer'
-    
-    expect(page).to have_content 'The answer body can\'t be blank.'
+  describe 'Unauthenticated user try' do
+    background { visit question_path(question) }
+
+    scenario 'create an answer with valid data' do
+      fill_in 'Body', with: 'My answer text text text'
+      click_on 'Give answer'
+      
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    end
   end
+  
 end
