@@ -29,11 +29,10 @@ feature 'User can create a question', "
       click_on 'Ask'
 
       expect(page).to have_content "Title can't be blank"
-      
     end
   end
 
-  scenario 'Anauthenticated User ask a question' do
+  scenario 'Unauthenticated User ask a question' do
     visit questions_path
     click_on 'Ask question'
 
