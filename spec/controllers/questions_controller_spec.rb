@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'byebug'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:questions) { create_list(:question, 3) }
@@ -25,8 +26,7 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
 
     context 'with valid attributes' do
-      let(:question) { attributes_for(:question, author_id:user.id) }
-      
+      let(:question) { attributes_for(:question, author_id: user) }
 
       it 'saves a new questions' do
         expect do
@@ -42,6 +42,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with not valid attributes' do
       let(:question) { attributes_for(:question, :invalid) }
+
       it 'does not save a new questions' do
         expect do
           post :create, params: { question: question }
@@ -56,6 +57,19 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let(:question) { attributes_for(:question) }
+    before { login(user)}
+
+    let!(:question) { create(:question, author_id: user.id) }
+
+    it 'delete the question' do
+      expect do 
+        delete :destroy, params: { id: question }
+      end.to change(Question, :count).by(-1)
+    end
+    
+    it 'redirect to questions#index' do
+      delete :destroy, params: { id: question }
+      expect(response).to redirect_to questions_path
+    end
   end
 end
