@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :answer do
-    body { "#{['MyText1', 'MyText2', 'MyText3'].sample}" }
+    body { "#{['My answer1', 'My answer2', 'My answer3'].sample}" }
     association :question, factory: :question
     association :author, factory: :user
 
