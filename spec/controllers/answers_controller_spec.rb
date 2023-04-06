@@ -27,14 +27,30 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not save a new answer ' do
         expect do
-          post :create, params: { question_id: question, answer: answer_attributes }
+          post :create, params: { question_id: question, author_id: user,answer: answer_attributes }
         end.to_not change(Answer, :count)
       end
 
       it 'redirect to  show  a question' do
-        post :create, params: { question_id: question, answer: answer_attributes }
+        post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
         expect(response).to redirect_to assigns(:question)
       end
+    end
+  end
+
+  describe 'GET #show' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, author_id: user.id) }
+    let(:answer) { create(:answer, question_id: question.id,  author_id: user.id) }
+
+    before { get :show, params: { id: answer } }
+    
+    it 'assign the requested answer to @answer' do
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'render show answer template' do
+      expect(response).to render_template :show
     end
   end
 end

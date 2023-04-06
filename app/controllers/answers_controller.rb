@@ -1,9 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  
-  def create
-    find_question
+  before_action :find_answer, only: :show
+  before_action :find_question, only: :create
 
+  def create
     @answer = @question.answers.new(answer_params)
     @answer.update(author_id: author.id)
 
@@ -14,6 +14,10 @@ class AnswersController < ApplicationController
     end
   end
 
+  def show
+    @question = @answer.question   
+  end
+
   private
 
   def answer_params
@@ -22,6 +26,10 @@ class AnswersController < ApplicationController
 
   def find_question
     @question = Question.find(params[:question_id])
+  end
+
+  def find_answer
+    @answer = Answer.find(params[:id])    
   end
 
   def author
