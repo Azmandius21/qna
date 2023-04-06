@@ -4,6 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :questions, class_name:'Question', dependent: :destroy, foreign_key: 'author_id'
-  has_many :answers, class_name:'Answer', dependent: :destroy, foreign_key: 'author_id'
+  has_many :questions, class_name: 'Question', dependent: :destroy, foreign_key: 'author_id'
+  has_many :answers, class_name: 'Answer', dependent: :destroy, foreign_key: 'author_id'
 end

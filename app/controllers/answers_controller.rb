@@ -1,8 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :find_answer, only: %i[ show destroy]
+  before_action :find_answer, only: %i[show destroy]
   before_action :find_question_by_id, only: :create
-  before_action :find_question, only: %i[ destroy show]
+  before_action :find_question, only: %i[destroy show]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -15,12 +15,11 @@ class AnswersController < ApplicationController
     end
   end
 
-  def show    
-  end
+  def show; end
 
   def destroy
     if current_user.id.eql?(@answer.author_id)
-      @answer.destroy    
+      @answer.destroy
       redirect_to question_path(@question), notice: 'The answer deleted successfully.'
     else
       redirect_to @question, alert: 'Only author of the answer can remove it.'
@@ -42,7 +41,7 @@ class AnswersController < ApplicationController
   end
 
   def find_answer
-    @answer = Answer.find(params[:id])    
+    @answer = Answer.find(params[:id])
   end
 
   def author

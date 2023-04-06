@@ -6,8 +6,8 @@ feature 'User can create an answer on the question', "
   As user
   I'd like be able to create an answer
 " do
-  given(:user){ create(:user)}
-  given(:question){ create(:question)}
+  given(:user) { create(:user) }
+  given(:question) { create(:question) }
 
   describe 'Authenticated user try' do
     background { sign_in(user) }
@@ -17,14 +17,14 @@ feature 'User can create an answer on the question', "
     scenario 'create an answer with valid data' do
       fill_in 'Body', with: 'My answer text text text'
       click_on 'Give answer'
-      
+
       expect(page).to have_content 'Your answer created successfully.'
     end
-  
+
     scenario 'create an answer with invalid data' do
       fill_in 'Body', with: ''
       click_on 'Give answer'
-      
+
       expect(page).to have_content 'The answer body can\'t be blank.'
     end
   end
@@ -35,9 +35,8 @@ feature 'User can create an answer on the question', "
     scenario 'create an answer with valid data' do
       fill_in 'Body', with: 'My answer text text text'
       click_on 'Give answer'
-      
+
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end
-  
 end

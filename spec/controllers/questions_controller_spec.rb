@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'byebug'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:questions) { create_list(:question, 3) }
@@ -57,16 +56,16 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { login(user)}
+    before { login(user) }
 
     let!(:question) { create(:question, author_id: user.id) }
 
     it 'delete the question' do
-      expect do 
+      expect do
         delete :destroy, params: { id: question }
       end.to change(Question, :count).by(-1)
     end
-    
+
     it 'redirect to questions#index' do
       delete :destroy, params: { id: question }
       expect(response).to redirect_to questions_path

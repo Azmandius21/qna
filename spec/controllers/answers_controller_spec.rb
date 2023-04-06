@@ -1,12 +1,11 @@
 require 'rails_helper'
-require 'byebug'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, author_id: user.id) }
 
   describe 'POST #create' do
-    before{ login(user) }
+    before { login(user) }
 
     context 'with valid attributes' do
       let(:answer_attributes) { attributes_for(:answer) }
@@ -28,7 +27,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not save a new answer ' do
         expect do
-          post :create, params: { question_id: question, author_id: user,answer: answer_attributes }
+          post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
         end.to_not change(Answer, :count)
       end
 
@@ -40,7 +39,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:answer) { create(:answer, question_id: question.id,  author_id: user.id) }
+    let(:answer) { create(:answer, question_id: question.id, author_id: user.id) }
 
     before { get :show, params: { id: answer } }
 
@@ -54,18 +53,18 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:answer) { create(:answer, question_id: question.id,  author_id: user.id) }
-  
-    before{ login(user) }
+    let!(:answer) { create(:answer, question_id: question.id, author_id: user.id) }
+
+    before { login(user) }
 
     it 'delete the answer' do
       expect do
-        delete :destroy, params: { id: answer}
+        delete :destroy, params: { id: answer }
       end.to change(Answer, :count).by(-1)
     end
 
     it 'redirect to questions#index' do
-      delete :destroy, params: { id: answer}
+      delete :destroy, params: { id: answer }
       expect(response).to redirect_to question_path(question)
     end
   end
