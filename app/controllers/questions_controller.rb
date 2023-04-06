@@ -23,7 +23,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
-    @answers = Answer.all
+    @answers = Answer.where(question_id: @question.id)
   end
 
   def destroy

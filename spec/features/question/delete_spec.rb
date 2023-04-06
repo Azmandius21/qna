@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'byebug'
 
 feature 'User can delete a question', %q{
   In order to delete my question
