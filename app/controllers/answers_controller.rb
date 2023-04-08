@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
-    @answer.update(author_id: author.id)
+    @answer.update(author_id: current_user.id)
 
     if @answer.save
       redirect_to @question, notice: 'Your answer created successfully.'
@@ -42,9 +42,5 @@ class AnswersController < ApplicationController
 
   def find_answer
     @answer = Answer.find(params[:id])
-  end
-
-  def author
-    current_user
   end
 end
