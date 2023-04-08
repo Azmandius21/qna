@@ -2,7 +2,8 @@ h1 = @question.title
 h2 Question:
 p = @question.body
 
-= link_to  "Delete", question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }
+- if current_user && current_user.id == @question.author_id
+  = link_to  "Delete", question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }
 
 =render 'answers/form'
 
