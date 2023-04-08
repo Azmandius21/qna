@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :answer do
-    body { 'MyText' }
-    question_id { nil }
+    body { "#{['My answer1', 'My answer2', 'My answer3'].sample}" }
+    association :question, factory: :question
+    association :author, factory: :user
 
     trait :invalid do
       body { nil }
