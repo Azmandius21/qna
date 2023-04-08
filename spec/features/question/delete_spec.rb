@@ -20,7 +20,7 @@ feature 'User can delete a question', "
   scenario 'User tries delete question from another author' do
     sign_in(user)
     visit question_path(question)
-    click_on 'Delete'
-    expect(page).to have_content 'Only author of the question can remove it.'
+    
+    expect(page).not_to have_button 'Delete' 
   end
 end
