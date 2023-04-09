@@ -71,4 +71,22 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
+
+  describe 'GET #show' do
+    let!(:question) { create(:question, author: user) }
+
+    before { get :show, params: { id: question } }
+
+    it 'assigns the requested question as @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'assigns  new answer for question' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it 'render show view' do
+      expect(response).to render_template :show
+    end
+  end
 end
