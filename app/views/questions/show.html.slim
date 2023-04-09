@@ -1,12 +1,12 @@
 h1 = @question.title
-h2 Question:
-p = @question.body
+p Question: #{@question.body}
 
 - if current_user && current_user.id == @question.author_id
-  = link_to  "Delete", question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }
+  = link_to  "Delete", question_path(@question), method: :delete
 
+.answers 
+  -@question.answers.each do |answer|
+    p= answer.body
+
+=render 'shared/errors', resource: @answer
 =render 'answers/form'
-
-ul 
-  - @answers.each do |answer|
-    li = answer.body 
