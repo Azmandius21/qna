@@ -7,12 +7,6 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.update(author_id: current_user.id)
-
-    if @answer.save
-      redirect_to @question, notice: 'Your answer created successfully.'
-    else
-      redirect_to @question, alert: 'The answer body can\'t be blank.'
-    end
   end
 
   def show; end

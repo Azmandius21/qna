@@ -8,5 +8,6 @@ p Question: #{@question.body}
   -@question.answers.each do |answer|
     p= answer.body
 
-=render 'shared/errors', resource: @answer
+.answer-errors
+  =render 'shared/errors', resource: @answer
 =render 'answers/form'
