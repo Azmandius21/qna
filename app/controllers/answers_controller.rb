@@ -1,11 +1,11 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :find_answer, only: %i[show destroy]
+  before_action :find_answer, only: %i[show destroy update]
   before_action :find_question_by_id, only: :create
-  before_action :find_question, only: %i[destroy show]
+  before_action :find_question, only: %i[destroy show update]
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.update(author_id: current_user.id)
   end
 
@@ -17,6 +17,12 @@ class AnswersController < ApplicationController
       redirect_to question_path(@question), notice: 'The answer deleted successfully.'
     else
       redirect_to @question, alert: 'Only author of the answer can remove it.'
+    end
+  end
+
+  def update
+    if current_user == @answer.author
+      @answer.update(answer_params)
     end
   end
 

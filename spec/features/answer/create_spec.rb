@@ -32,14 +32,13 @@ feature 'User can create an answer on the question', "
     end
   end
 
-  describe 'Unauthenticated user try', js: true do
+  describe 'Unauthenticated user try' do
     background { visit question_path(question) }
 
-    scenario 'create an answer with valid data' do
-      save_and_open_page
+    scenario 'create an answer with valid data', js: true do
       fill_in 'Body', with: 'My answer text text text'
       click_on 'Give answer'
-
+      
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end
