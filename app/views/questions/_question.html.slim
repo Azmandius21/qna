@@ -3,3 +3,5 @@ tr
   td = question.title
   td = question.body 
   td = link_to 'Show', question_path(question)
+  td = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+  td = render 'edit_form', question: question 
