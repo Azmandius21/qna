@@ -54,7 +54,6 @@ given!(:question){ create(:question, author: author)}
      
       sign_in(user)
       visit question_path(question)
-      save_and_open_page
       expect(page).to_not have_link 'Edit answer'
     end
   end
