@@ -6,19 +6,35 @@ feature 'User can edit question ', "
   From page current question
   I'd like to be able to edit an question
 " do
-  given(:author){ create(:user) }
-  given(:question){ create(:question, author_id: author.id) }
-  describe 'Authenticated user try edit his question ', js: true do
-    scenario 'with valid data' do
-      visit question_path(question)
-      click_on 'Edit question'
-      fill_in 'Body', with: 'New question body'
-      fill_in 'Title', with: 'New question title'
-      click_on 'Edit'
+  given!(:author) { create(:user) }
+  given!(:question) { create(:question, author: author) }
 
-      within '.question' do
+  describe 'Authenticated user try edit his question ', js: true do
+    background { sign_in(author)}
+
+    scenario 'with valid data' do
+      visit questions_path
+      click_on 'Edit'
+      fill_in 'question_body', with: 'New question body'
+      fill_in 'question_title', with: 'New question title'
+      click_on 'Save'
+
+      within '.questions' do
         expect(page).to have_content 'New question body'
         expect(page).to have_content 'New question title'
+      end
+    end
+
+    scenario 'with invalid data' do
+      visit questions_path
+      click_on 'Edit'
+      fill_in 'question_body', with: ''
+      fill_in 'question_title', with: ''
+      click_on 'Save'
+
+      within '.questions' do
+        expect(page).to have_content "Title can't be blank"
+        expect(page).to have_content "Body can't be blank"
       end
     end
   end

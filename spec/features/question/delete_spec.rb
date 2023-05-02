@@ -6,13 +6,14 @@ feature 'User can delete a question', "
   I'd like ba able to delete only my questions
 " do
   given!(:author) { create(:user) }
-  given(:question) { create(:question, author_id: author.id) }
+  given!(:question) { create(:question, author_id: author.id) }
 
-  scenario 'Author delete only his question' do
+  scenario 'Author delete only his question', js: true do
     sign_in(author)
-    visit question_path(question)
+    visit questions_path
     click_on 'Delete'
-    expect(page).to have_content 'The question successfully deleted.'
+    expect(page).to_not have_content question.title
+    expect(page).to_not have_content question.body
   end
 
   given(:user) { create(:user) }
@@ -20,7 +21,7 @@ feature 'User can delete a question', "
   scenario 'User tries delete question from another author' do
     sign_in(user)
     visit question_path(question)
-    
-    expect(page).not_to have_button 'Delete' 
+
+    expect(page).to_not have_button 'Delete'
   end
 end

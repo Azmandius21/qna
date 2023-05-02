@@ -1,10 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show destroy update]
-
-  def index
-    @questions = Question.all
-  end
+  before_action :find_questions, only: %i[index update]
+  def index; end
 
   def new
     @question = Question.new
@@ -26,7 +24,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if author?
+    if current_user.author?(@question)
       @question.destroy
       redirect_to questions_path, notice: 'The question successfully deleted.'
     else
@@ -35,8 +33,10 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if author?
+    if current_user.author?(@question)
       @question.update(question_params)
+    else
+      redirect_to questions_path, alert: 'Only author of the question can edit it.'
     end
   end
 
@@ -50,7 +50,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  def author?
-    current_user.id.eql?(@question.author_id)
+  def find_questions
+    @questions = Question.all
   end
 end
