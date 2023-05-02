@@ -4,5 +4,10 @@ $(document).on('turbolinks:load', function(){
    $(this).hide();
    const answerId= $(this).data('answerId');
    $('form#edit-answer-'+ answerId).removeClass('hidden');
+  });
+
+  $('.answers').on('click', '.delete-answer-link', function(e){
+    const answerId = $(this).data('answerId');
+    $('.answer-'+ answerId).remove();
   })
 })

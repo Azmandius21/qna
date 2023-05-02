@@ -1,9 +1,11 @@
-p= answer.body
+div class="answer-#{answer.id}"
+  p= answer.body
 
--if current_user == answer.author 
-  p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+  -if current_user.author?(answer) 
+    p= link_to 'Edit answer', answer, class: 'edit-answer-link', data: { answer_id: answer.id }
+    p= link_to 'Delete answer', answer, class: 'delete-answer-link', data: { answer_id: answer.id }, method: 'delete'
 
-=form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |form|
-  = form.label :body
-  = form.text_area :body
-  = form.submit 'Save'
+  =form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |form|
+    = form.label :body
+    = form.text_area :body
+    = form.submit 'Save'

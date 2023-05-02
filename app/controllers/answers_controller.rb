@@ -12,18 +12,14 @@ class AnswersController < ApplicationController
   def show; end
 
   def destroy
-    if current_user.id.eql?(@answer.author_id)
+    if current_user.author?(@answer)
       @answer.destroy
       redirect_to question_path(@question), notice: 'The answer deleted successfully.'
-    else
-      redirect_to @question, alert: 'Only author of the answer can remove it.'
     end
   end
 
   def update
-    if current_user == @answer.author
-      @answer.update(answer_params)
-    end
+    @answer.update(answer_params) if current_user.author?(@answer) 
   end
 
   private

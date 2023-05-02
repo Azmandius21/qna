@@ -19,7 +19,7 @@ feature 'User can create an answer on the question', "
       click_on 'Give answer'
 
       expect(current_path).to eq question_path(question)
-      within '.answers'do
+      within '.answers' do
         expect(page).to have_content 'My answer text text text'
       end
     end
@@ -38,7 +38,7 @@ feature 'User can create an answer on the question', "
     scenario 'create an answer with valid data', js: true do
       fill_in 'Body', with: 'My answer text text text'
       click_on 'Give answer'
-      
+
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end
