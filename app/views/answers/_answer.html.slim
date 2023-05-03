@@ -1,7 +1,7 @@
 div class="answer-#{answer.id}"
   p= answer.body
 
-  -if current_user.author?(answer) 
+  -if user_signed_in? && current_user.author?(answer) 
     p= link_to 'Edit answer', answer, class: 'edit-answer-link', data: { answer_id: answer.id }
     p= link_to 'Delete answer', answer, class: 'delete-answer-link', data: { answer_id: answer.id }, method: 'delete'
 
