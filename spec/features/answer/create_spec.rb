@@ -8,7 +8,7 @@ feature 'User can create an answer on the question', "
 " do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
-
+  
   describe 'Authenticated user try' do
     background { sign_in(user) }
 
@@ -36,10 +36,7 @@ feature 'User can create an answer on the question', "
     background { visit question_path(question) }
 
     scenario 'create an answer with valid data', js: true do
-      fill_in 'Body', with: 'My answer text text text'
-      click_on 'Give answer'
-
-      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      expect(page).to_not have_css('form')
     end
   end
 end

@@ -14,7 +14,6 @@ feature 'User can delete an answer', "
     sign_in(author)
     visit question_path(question)
     click_on 'Delete'
-save_and_open_page
     expect(page).to have_content 'The answer deleted successfully.'
     expect(page).to_not have_content answer.body
   end
