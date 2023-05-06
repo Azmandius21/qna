@@ -22,6 +22,8 @@ I'd like be able to choose one best answer
       click_on 'Best answer'
     end
 
-    expect(page).to have
+    within ".answers" do 
+      expect(page).to have_css '.best-answer'
+    end
   end
 end

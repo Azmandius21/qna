@@ -21,6 +21,12 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    if @question.best_answer_id
+      @best_answer = @question.best_answer
+      @answers = @question.answers.where.not(id: @question.best_answer_id)
+    else
+      @answers = @question.answers
+    end
   end
 
   def destroy

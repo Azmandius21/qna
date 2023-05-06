@@ -2,9 +2,12 @@
   h1 = @question.title
   p Question: #{@question.body}
 
-.answers 
-  = render @question.answers
-
+.answers
+  - if @question.best_answer_id
+    .best-answer
+      = render 'answers/best_answer', resource: @best_answer 
+  .other-answers 
+    =render partial:'answers/answer', collection: @answers
 .answer-errors
   =render 'shared/errors', resource: @answer
 
