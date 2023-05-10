@@ -1,8 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :find_answer, only: %i[show destroy update]
+  before_action :find_answer, only: %i[show destroy update select]
   before_action :find_question_by_id, only: :create
-  before_action :find_question, only: %i[destroy show update]
+  before_action :find_question, only: %i[destroy show update select]
 
   def create
     @answer = @question.answers.create(answer_params)
@@ -20,6 +20,15 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params) if current_user.author?(@answer) 
+  end
+
+  def select
+    if current_user.author?(@question)
+      @answer.mark_as_best
+      flash[:notice] = 'Best answer selected'
+    else
+      flash[:alert] = 'Select best answer can only question author'
+    end
   end
 
   private

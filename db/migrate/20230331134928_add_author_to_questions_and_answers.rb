@@ -1,4 +1,4 @@
-class AddColumnToQuestionsAndAnswers < ActiveRecord::Migration[6.1]
+class AddAuthorToQuestionsAndAnswers < ActiveRecord::Migration[6.1]
   def change
     change_table :questions do |t|
       t.belongs_to :author, null: false, foreign_key: { to_table: :users }
