@@ -10,12 +10,4 @@ $(document).on('turbolinks:load', function(){
     const answerId = $(this).data('answerId');
     $('.answer-'+ answerId).remove();
   });
-
-  $('.other-answers').on('click', '.best-answer-link', function(e){
-    const answerId = $(this).data('answerId');
-    const lastBestAnswer = $(this)
-  
-    $('.answer'+ answerId).remove();
-    $('.best-answer').html('.answer' + answerId);
-  })
 })
