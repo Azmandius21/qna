@@ -5,4 +5,14 @@ module FeatureHelpers
     fill_in 'Password', with: user.password
     click_on 'Log in'
   end
+
+  def wait_for_ajax
+    Timeout.timeout(Capybara.default_max_wait_time) do
+      loop until finish_all_ajax_request?
+    end
+  end
+
+  def finish_all_ajax_request?
+    page.evaluate_script('jQuery.active').zero?
+  end
 end

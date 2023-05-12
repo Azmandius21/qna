@@ -112,7 +112,8 @@ RSpec.describe AnswersController, type: :controller do
 
     it 'select answer like best for current question' do
       patch :select, params: { id: answer}, format: :js
-      expect(question.best_answer.question).to eq answer.question
+      question.reload
+      expect(question.best_answer.id).to eq answer.id
     end
   end
 end
