@@ -106,12 +106,12 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #select' do
-    let!(:answer) { create(:answer, question: question, author: user)}
+    let!(:answer) { create(:answer, question: question, author: user) }
 
     before { login(user) }
 
     it 'select answer like best for current question' do
-      patch :select, params: { id: answer}, format: :js
+      patch :select, params: { id: answer }, format: :js
       question.reload
       expect(question.best_answer.id).to eq answer.id
     end

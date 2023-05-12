@@ -10,7 +10,7 @@ feature 'User can edit question ', "
   given!(:question) { create(:question, author: author) }
 
   describe 'Authenticated user try edit his question ', js: true do
-    background { sign_in(author)}
+    background { sign_in(author) }
 
     scenario 'with valid data' do
       visit questions_path

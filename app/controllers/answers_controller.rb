@@ -19,14 +19,14 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params) if current_user.author?(@answer) 
+    @answer.update(answer_params) if current_user.author?(@answer)
   end
 
   def select
     if current_user.author?(@question)
       @answer.mark_as_best
       @best_answer = @answer
-      @other_answers = Answer.where.not(id: @answer.id )
+      @other_answers = Answer.where.not(id: @answer.id)
       flash[:notice] = 'Best answer selected'
     else
       flash[:alert] = 'Select best answer can only question author'

@@ -10,7 +10,7 @@ feature 'User can delete an answer', "
   given!(:answer) { create(:answer, question: question, author: author) }
   given(:user) { create(:user) }
 
-  scenario 'Author delete only his answer' , js: true do
+  scenario 'Author delete only his answer', js: true do
     sign_in(author)
     visit question_path(question)
     click_on 'Delete'

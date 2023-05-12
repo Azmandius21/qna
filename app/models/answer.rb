@@ -5,6 +5,6 @@ class Answer < ApplicationRecord
   validates :body, :question_id, :author_id, presence: true
 
   def mark_as_best
-    question.update(best_answer_id: self.id)
+    question.update(best_answer_id: id)
   end
 end
