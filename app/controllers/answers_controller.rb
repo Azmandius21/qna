@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
   def update
     @answer.update(answer_params) if current_user.author?(@answer)
     @best_answer = @question.best_answer
-    @other_answers = @question.answers.where.not(id: @best_answer.id)
+    @best_answer? @other_answers = @question.answers.where.not(id: @best_answer.id) : @other_answers = @question.answers
   end
 
   def select
