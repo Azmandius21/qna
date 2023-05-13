@@ -1,10 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show destroy]
-
-  def index
-    @questions = Question.all
-  end
+  before_action :find_question, only: %i[show destroy update]
+  before_action :find_questions, only: %i[index update]
+  def index; end
 
   def new
     @question = Question.new
@@ -12,7 +10,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    @question.update(author_id: author.id)
+    @question.update(author_id: current_user.id)
 
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
@@ -23,15 +21,28 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
-    @answers = Answer.where(question_id: @question.id)
+    if @question.best_answer_id
+      @best_answer = @question.best_answer
+      @answers = @question.answers.where.not(id: @question.best_answer_id)
+    else
+      @answers = @question.answers
+    end
   end
 
   def destroy
-    if current_user.id.eql?(@question.author_id)
+    if current_user.author?(@question)
       @question.destroy
       redirect_to questions_path, notice: 'The question successfully deleted.'
     else
       redirect_to questions_path, alert: 'Only author of the question can remove it.'
+    end
+  end
+
+  def update
+    if current_user.author?(@question)
+      @question.update(question_params)
+    else
+      redirect_to questions_path, alert: 'Only author of the question can edit it.'
     end
   end
 
@@ -45,7 +56,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  def author
-    current_user
+  def find_questions
+    @questions = Question.all
   end
 end

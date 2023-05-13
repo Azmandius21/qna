@@ -1,28 +1,35 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :find_answer, only: %i[show destroy]
+  before_action :find_answer, only: %i[show destroy update select]
   before_action :find_question_by_id, only: :create
-  before_action :find_question, only: %i[destroy show]
+  before_action :find_question, only: %i[destroy show update select]
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.update(author_id: current_user.id)
-
-    if @answer.save
-      redirect_to @question, notice: 'Your answer created successfully.'
-    else
-      redirect_to @question, alert: 'The answer body can\'t be blank.'
-    end
   end
 
   def show; end
 
   def destroy
-    if current_user.id.eql?(@answer.author_id)
+    if current_user.author?(@answer)
       @answer.destroy
       redirect_to question_path(@question), notice: 'The answer deleted successfully.'
+    end
+  end
+
+  def update
+    @answer.update(answer_params) if current_user.author?(@answer)
+  end
+
+  def select
+    if current_user.author?(@question)
+      @answer.mark_as_best
+      @best_answer = @answer
+      @other_answers = Answer.where.not(id: @answer.id)
+      flash[:notice] = 'Best answer selected'
     else
-      redirect_to @question, alert: 'Only author of the answer can remove it.'
+      flash[:alert] = 'Select best answer can only question author'
     end
   end
 

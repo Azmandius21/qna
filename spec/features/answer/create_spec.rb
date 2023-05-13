@@ -14,29 +14,29 @@ feature 'User can create an answer on the question', "
 
     background { visit question_path(question) }
 
-    scenario 'create an answer with valid data' do
+    scenario 'create an answer with valid data', js: true do
       fill_in 'Body', with: 'My answer text text text'
       click_on 'Give answer'
 
-      expect(page).to have_content 'Your answer created successfully.'
+      expect(current_path).to eq question_path(question)
+      within '.answers' do
+        expect(page).to have_content 'My answer text text text'
+      end
     end
 
-    scenario 'create an answer with invalid data' do
+    scenario 'create an answer with invalid data', js: true do
       fill_in 'Body', with: ''
       click_on 'Give answer'
 
-      expect(page).to have_content 'The answer body can\'t be blank.'
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
   describe 'Unauthenticated user try' do
     background { visit question_path(question) }
 
-    scenario 'create an answer with valid data' do
-      fill_in 'Body', with: 'My answer text text text'
-      click_on 'Give answer'
-
-      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    scenario 'create an answer with valid data', js: true do
+      expect(page).to_not have_css('form')
     end
   end
 end
