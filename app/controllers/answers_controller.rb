@@ -20,6 +20,8 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params) if current_user.author?(@answer)
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @best_answer.id)
   end
 
   def select
@@ -36,7 +38,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id, :author_id)
+    params.require(:answer).permit(:body, :question_id, :author_id, files: [])
   end
 
   def find_question_by_id

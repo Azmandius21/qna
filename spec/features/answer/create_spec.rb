@@ -24,6 +24,17 @@ feature 'User can create an answer on the question', "
       end
     end
 
+    scenario 'create an answer with attached files', js: true do
+      fill_in 'Body', with: 'My answer text text text'
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Give answer'
+
+      within '.answers' do
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
     scenario 'create an answer with invalid data', js: true do
       fill_in 'Body', with: ''
       click_on 'Give answer'
