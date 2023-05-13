@@ -2,10 +2,7 @@ div class="answer-#{answer.id}"
   p = answer.body
 
   = render 'shared/attachment', resource: answer
-  / -if answer.files.attached?
-  /   - answer.files.each do |file|
-  /     p = link_to file.filename.to_s, url_for(file)
-
+  
   - if user_signed_in? && current_user.author?(answer.question)
     p = link_to 'Best answer', select_answer_path(answer), \
       class: 'best-answer-link', \
