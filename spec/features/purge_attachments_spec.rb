@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'byebug'
 
 feature 'purge attachment', "
   In order to prune attacments in resource 
@@ -14,17 +13,20 @@ feature 'purge attachment', "
       sign_in(author)
       visit questions_path
 
-      byebug
       click_on 'Remove file'
       expect(page).to_not have_link 'test-image.png'
     end
+
     scenario 'authenticated not author try'
+
     scenario 'unauthenticated user try'
   end
 
   describe 'purge attached file to answer' do
     scenario 'authenticated author of answer try' 
+
     scenario 'authenticated not author try'
+    
     scenario 'unauthenticated user try'
   end 
 end
