@@ -7,5 +7,15 @@ FactoryBot.define do
     trait :invalid do
       body { nil }
     end
+
+    trait :with_attached_files do
+      after(:build) do |answer|
+        answer.files.attach(
+          io: File.open(Rails.root.join('spec','support','assets','test-image.png')),
+          filename: 'test-image.png',
+          content_type: 'image/png'
+        )
+      end
+    end
   end
 end
