@@ -9,9 +9,9 @@ RSpec.describe AttachmentsController, type: :controller do
 
     it 'purge one files in questions.files' do
       attachment_id = question.files.first.id
-      
+
       expect do
-         delete :purge, params: { id: attachment_id} 
+        delete :purge, params: { id: attachment_id }
       end.to change(ActiveStorage::Attachment, :count).by(-1)
     end
   end

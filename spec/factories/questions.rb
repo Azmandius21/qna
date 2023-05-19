@@ -4,7 +4,7 @@ FactoryBot.define do
     body { 'MyText' }
     association :author, factory: :user
     best_answer_id { nil }
-    
+
     trait :invalid do
       title { nil }
     end
@@ -15,7 +15,7 @@ FactoryBot.define do
           io: File.open("#{Rails.root}/spec/support/assets/test-image.png"),
           filename: 'test-image.png',
           content_type: 'image/png'
-         )
+        )
       end
     end
   end
