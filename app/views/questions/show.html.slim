@@ -2,15 +2,18 @@
   h1 = @question.title
   p Question: #{@question.body}
 
+= render 'shared/attachment', resource: @question
+    
+
 .answers
   - if @question.best_answer_id
     .best-answer
       = render 'answers/best_answer', resource: @best_answer 
   .other-answers 
-    =render partial:'answers/answer', collection: @answers
+    = render partial:'answers/answer', collection: @answers
 .answer-errors
-  =render 'shared/errors', resource: @answer
+  = render 'shared/errors', resource: @answer
 
 - if user_signed_in?  
-  =render 'answers/form'
+  = render 'answers/form'
  

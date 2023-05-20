@@ -25,6 +25,35 @@ feature 'User can edit question ', "
       end
     end
 
+    scenario 'with attach many files' do
+      visit questions_path
+      click_on 'Edit'
+      fill_in 'question_body', with: 'New question body'
+      fill_in 'question_title', with: 'New question title'
+
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Save'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'with detach file' do
+      visit questions_path
+      click_on 'Edit'
+      fill_in 'question_body', with: 'New question body'
+      fill_in 'question_title', with: 'New question title'
+
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Save'
+
+      click_on 'Detach'
+      click_on 'Detach'
+
+      expect(page).to_not have_link 'rails_helper.rb'
+      expect(page).to_not have_link 'spec_helper.rb'
+    end
+
     scenario 'with invalid data' do
       visit questions_path
       click_on 'Edit'

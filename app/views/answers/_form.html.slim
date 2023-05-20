@@ -1,4 +1,8 @@
-= form_with model:[@question, @answer], local: false, class: 'new-answer'  do |form|
-  = form.label :body
-  = form.text_area :body
-  = form.submit 'Give answer'
+= form_with model:[@question, @answer], local: false, class: 'new-answer'  do |f|
+  p 
+    = f.label :body
+    = f.text_area :body
+  p 
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
+  p = f.submit 'Give answer'
