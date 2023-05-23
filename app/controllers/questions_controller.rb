@@ -7,6 +7,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    @question.links.build
   end
 
   def create
@@ -22,6 +23,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.build
     if @question.best_answer_id
       @best_answer = @question.best_answer
       @answers = @question.answers.where.not(id: @question.best_answer_id)
@@ -50,7 +52,8 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, :author_id, files: [])
+    params.require(:question).permit(:title, :body, :author_id, files: [],
+                                           links_attributes:[:name, :url])
   end
 
   def find_question

@@ -3,8 +3,10 @@
   p Question: #{@question.body}
 
 = render 'shared/attachment', resource: @question
-    
 
+.questions-links 
+  = render 'shared/show_links', resource: @question
+  
 .answers
   - if @question.best_answer_id
     .best-answer

@@ -3,6 +3,8 @@ div class="best_answer-#{@best_answer.id}"
 
   = render 'shared/attachment', resource: @best_answer
 
+  = render 'shared/show_links', resource: @best_answer
+
   -if user_signed_in? && current_user.author?(@best_answer) 
     p= link_to 'Edit answer', @best_answer, class: 'edit-answer-link', data: { answer_id: @best_answer.id }
     p= link_to 'Delete answer', @best_answer, class: 'delete-answer-link', data: { answer_id: @best_answer.id }, method: 'delete'

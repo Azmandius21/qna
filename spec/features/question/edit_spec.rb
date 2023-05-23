@@ -47,9 +47,6 @@ feature 'User can edit question ', "
       attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Save'
 
-      click_on 'Detach'
-      click_on 'Detach'
-
       expect(page).to_not have_link 'rails_helper.rb'
       expect(page).to_not have_link 'spec_helper.rb'
     end
