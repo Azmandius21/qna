@@ -1,9 +1,11 @@
 div class="best_answer-#{@best_answer.id}"
   p= "Best answer: #{@best_answer.body}"
 
-  = render 'shared/attachment', resource: @best_answer
+  .best-answer-attachments 
+    = render 'shared/attachment', resource: @best_answer
 
-  = render 'shared/show_links', resource: @best_answer
+  .best-answer-links 
+    = render 'shared/show_links', resource: @best_answer
 
   -if user_signed_in? && current_user.author?(@best_answer) 
     p= link_to 'Edit answer', @best_answer, class: 'edit-answer-link', data: { answer_id: @best_answer.id }

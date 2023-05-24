@@ -8,6 +8,9 @@
 
   = render 'shared/attachment', resource: question
 
+  .questions-links 
+  = render 'shared/show_links', resource: question
+
   p = link_to 'Show', question_path(question)
   
   -if current_user && current_user.author?(question)
@@ -25,3 +28,5 @@
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
     p = f.submit 'Save'
+
+    = render 'shared/links_form', f: f

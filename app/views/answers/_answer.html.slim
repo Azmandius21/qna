@@ -1,9 +1,11 @@
 div class="answer-#{answer.id}"
   p = answer.body
 
-  = render 'shared/attachment', resource: answer
+  .other-answer-attachments 
+    = render 'shared/attachment', resource: answer
 
-  = render 'shared/show_links', resource: answer
+  .other-answer-links 
+    = render 'shared/show_links', resource: answer
   
   - if user_signed_in? && current_user.author?(answer.question)
     p = link_to 'Best answer', select_answer_path(answer), \
