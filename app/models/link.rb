@@ -3,5 +3,5 @@ class Link < ApplicationRecord
   
   validates :name, :url, presence: true
 
-  validates_format_of :url, with: URI.regexp, message: 'Invalid format links url'
+  validates_format_of :url, with: URI.regexp, message: 'Invalid format links'
 end
