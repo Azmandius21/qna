@@ -2,4 +2,4 @@
   p Links: 
   ul 
     - resource.links.each do |link|
-      li= link_to link.name, link.url
+      li= link_to link.name, link.url, class: 'links', id: link.id

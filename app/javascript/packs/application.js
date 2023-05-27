@@ -13,6 +13,7 @@ require("@nathanvda/cocoon")
 
 require('./answers')
 require('./questions')
+require('./gist')
 
 Rails.start()
 Turbolinks.start()
