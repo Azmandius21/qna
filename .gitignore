@@ -37,3 +37,7 @@ yarn-debug.log*
 
 # Ignore database local setting
 /config/database.yml
+
+# Ignore .env with classick token
+.env
+
