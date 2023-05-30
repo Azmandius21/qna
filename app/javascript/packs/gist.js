@@ -1,18 +1,18 @@
-$(document).on('turbolinks:load', function(){
-  $('ul li a').on('click', function(e){
-   e.preventDefault();
-   // gist-client entity
-   const GistClient = require("gist-client")
-   const gistClient = new GistClient()
-   // parsing url
-   const url = new URL(this.href)
-   const urlPattern = url.username + url.hostname 
-   if (urlPattern == 'gist.github.com') {
-    $(this).toggle();   
-    gistClient.getOneById('GIST_ID') 
-   }
+// $(document).on('turbolinks:load', function(){
+//   $('ul li a').on('click', function(e){
+//    e.preventDefault();
    
-   console.log(url.search)
-   console.log(gistClient)
-  });
-})
+//    // parsing url
+//    const url = new URL(this.href)
+//    const urlPattern = url.username + url.hostname 
+//    const gistId = url.hash
+//    const arr = url.pathname.split('/')
+//    if (urlPattern == 'gist.github.com') {
+//     //$(this).toggle();
+//     console.log('begin')
+//     console.log(arr[2])
+//     console.log('end')
+//    }
+//    //console.log(gistClient)
+//   });
+// })

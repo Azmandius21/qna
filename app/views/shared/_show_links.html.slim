@@ -2,4 +2,7 @@
   p Links: 
   ul 
     - resource.links.each do |link|
-      li= link_to link.name, link.url, class: 'links', id: link.id
+      - if link.gist?  
+        li = javascript_include_tag link.url+".js" 
+      - else 
+        li = link_to link.name, link.url, class: 'links', id: link.id
