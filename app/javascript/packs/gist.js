@@ -1,21 +1,16 @@
 $(document).on('turbolinks:load', function(){
   let gistLinks = $('.gist-link')
-  
+  const token = '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'
   console.log(gistLinks) 
 
+  const GistClient = require("gist-client")
+  const gistClient = new GistClient()
+  gistClient.setToken(token)
   jQuery.each(gistLinks, function(){
+    const gistId = $(this).data('gist-id');
+    gistClient.getOneById(gistId)
     //alert($(this).data('url'));
-    const url = $(this).data('url');
-    $('p',{
-      src: "${url}"
-    }).appendTo(this)
-    $(this).innerHTML('<script src="https://gist.github.com/Azmandius21/eff05f500691a63d7dd0cdec1ab895ca.js"></script>')
   })
-  // // for use Gist-Client
-  // const GistClient = require("gist-client")
-  // const gistClient = new GistClient()
-  // //
-
 })
 
 

@@ -3,6 +3,6 @@
   ul 
     - resource.links.each do |link|
       - if link.gist?  
-        = content_tag :li, "Hi! I am gist link", class: 'gist-link links', id: link.id, data:{ url: link.url}
+        = content_tag :li, "Hi! I am gist link", class: 'gist-link links', id: link.id, data:{ gist_id: link.give_gist_id}
       - else 
         li = link_to link.name, link.url, class: 'links', id: link.id
