@@ -1,27 +1,37 @@
 $(document).on('turbolinks:load', function(){
-  
-  let gistLinks = $('.gist-link')
-  const token = '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'
+  const gistShowLinks = $('.show-gist-trigger');
+  console.log(gistShowLinks);
+  jQuery.each(gistShowLinks, function(){
+    $(this).on('custom', function(event){
+      event.preventDefault();
+      getGist($(this));
+    });
+    $(this).trigger('custom');
+    $(this).hide();
+    $(this).off();
+  })  
+});
 
-  const GistClient = require("gist-client")
-  const gistClient = new GistClient()
-  gistClient.setToken(token)
-  jQuery.each(gistLinks, function(){
-    const gistId = $(this).data('gist-id');
-    gistClient.getOneById(gistId).then(
-     Gist => {
-      const gist = Gist
-      const gistFile = gist['files']['gistfile1.txt']
-      const gistFileName = gist['files']['gistfile1.txt']['filename']
-      const content = gistFile['content']
-      const owner = gist['owner']['login']
-     
-      $(this).append("<div class='gist'>\
-                        <div class='title'>Title:"+ Gist.description +"</div>\
-                        <div class='file-name'>File name:"+ gistFileName +"</div>\
-                        <div class='context'>Content:"+ content +"</div>\
-                        <div class='owner'>Owner:"+ owner +"</div>\
-                     </div>")     
-    })
-  })
-})
+function getGist(obj){  
+  const  gistId = obj.data('gistId')
+  const elementId = obj.data('linkId')
+  const element = $('#link-'+ elementId +'-gist-content')
+
+  const { Octokit } = require("@octokit/core")
+  const octokit = new Octokit();
+
+  octokit.request("GET /gists/"+ gistId).then(Gist =>{
+    addGistContentToPage(Gist, element)
+  });
+};
+
+function addGistContentToPage(gist,element){
+  for (file in gist.data.files){
+    let gistContent = "<h3>"+ file +"</h3>"
+    gistContent = gistContent + "<div>" + gist.data.files[file].content + "</div>"
+    gistContent = "<div class='gist-file'>" + gistContent + "</div>"
+    if (gistContent) {
+      element.append(gistContent)
+    }
+  }
+}
