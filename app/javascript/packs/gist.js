@@ -2,17 +2,15 @@ $(document).on('turbolinks:load', function(){
   const gistShowLinks = $('.show-gist-trigger');
   console.log(gistShowLinks);
   jQuery.each(gistShowLinks, function(){
-    $(this).on('custom', function(event){
+    $(this).on('click', function(event){
       event.preventDefault();
       getGist($(this));
     });
-    $(this).trigger('custom');
-    $(this).hide();
-    $(this).off();
   })  
 });
 
 function getGist(obj){  
+  $(obj).hide();
   const  gistId = obj.data('gistId')
   const elementId = obj.data('linkId')
   const element = $('#link-'+ elementId +'-gist-content')
