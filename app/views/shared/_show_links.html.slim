@@ -4,7 +4,7 @@
     - resource.links.each do |link|
       - if link.gist?  
         p = link_to 'Show gist content', '#', class: "show-gist-trigger links", data: {gist_id: link.give_gist_id, link_id: link.id } 
-        div[id="link-#{link.id}-gist-content"]
+        div[id="link-#{link.id}-gist-content", class="gist-link"]
         //= content_tag :li, "Hi! I am gist link", class: 'gist-link links', id: link.id, data:{ gist_id: link.give_gist_id}
       - else 
         li = link_to link.name, link.url, class: 'links', id:link.id

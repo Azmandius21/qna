@@ -1,6 +1,5 @@
 $(document).on('turbolinks:load', function(){
   const gistShowLinks = $('.show-gist-trigger');
-  console.log(gistShowLinks);
   jQuery.each(gistShowLinks, function(){
     $(this).on('click', function(event){
       event.preventDefault();
