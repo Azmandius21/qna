@@ -1,7 +1,8 @@
 class Reward < ApplicationRecord
+  belongs_to :rewardable, polymorphic: true
   has_one :giving_reward
 
   has_one_attached :image
 
-  validates :name, presence: true
+  validates :name, :image, presence: true
 end

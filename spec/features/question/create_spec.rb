@@ -28,8 +28,8 @@ feature 'User can create a question', "
     scenario 'ask a question with reward' do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
-      fill_in 'Reward', with: 'Reward name'
-      attach_file 'Reward', "#{Rails.root}/spec/support/assets/reward.png"
+      fill_in 'Reward name', with: 'Reward name'
+      attach_file 'Image', "#{Rails.root}/spec/support/assets/reward.png"
       click_on 'Ask'
 
       expect(page).to have_content 'Your question successfully created.'
