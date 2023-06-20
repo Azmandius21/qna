@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show destroy update]
+  before_action :find_question, only: %i[show destroy update giving_reward]
   before_action :find_questions, only: %i[index update]
 
   def index; end
@@ -8,8 +8,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.links.build
-    @question.reward = Reward.new
-    @reward = @question.reward
+    @question.build_reward 
   end
 
   def create
@@ -50,6 +49,10 @@ class QuestionsController < ApplicationController
     else
       redirect_to questions_path, alert: 'Only author of the question can edit it.'
     end
+  end
+
+  def giving_reward(answer)
+    
   end
 
   private

@@ -1,15 +1,16 @@
 .question-index
   .question-errors 
     = render 'shared/errors', resource: question
-
   p = question.title 
-
   p = question.body
-
+  
   = render 'shared/attachment', resource: question
 
   .questions-links 
-  = render 'shared/show_links', resource: question
+    = render 'shared/show_links', resource: question
+
+  .question-reward 
+    = render 'shared/reward_link', resource: question
 
   p = link_to 'Show', question_path(question)
   

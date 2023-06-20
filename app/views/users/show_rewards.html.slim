@@ -1,0 +1,6 @@
+t1 " #{@user.email} rewards:"
+
+-if @rewards
+  ol 
+    -@rewards.each do |reward|
+      li = link_to reward.name, url_for(reward.image)

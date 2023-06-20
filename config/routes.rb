@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards' 
+  
   resources :questions do
     resources :answers, shallow: true do
       patch 'select', on: :member

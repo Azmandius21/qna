@@ -11,5 +11,9 @@ class Answer < ApplicationRecord
 
   def mark_as_best
     question.update(best_answer_id: id)
+    if question.reward.present?
+
+      GivingReward.create(reward_id: question.reward.id, user_id: self.author.id)
+    end
   end
 end
