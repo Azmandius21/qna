@@ -19,7 +19,7 @@ feature 'User can give reward', "
 
     sign_in(answer_author)
     visit user_show_rewards_path(answer_author)
-    save_and_open_page
+    
     expect(page).to have_content 'MyReward'
   end
 end
