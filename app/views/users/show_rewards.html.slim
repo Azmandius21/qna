@@ -1,6 +1,10 @@
-t1 " #{@user.email} rewards:"
+h1 " #{@user.email} rewards:"
 
 -if @rewards
   ol 
     -@rewards.each do |reward|
-      li = link_to reward.name, url_for(reward.image)
+      li 
+        h4 "Question title: #{reward.rewardable.title}"
+        h3 "Reward name: #{reward.name}"
+        = image_tag reward.image.variant(resize_to_limit: [100, 100])
+       
