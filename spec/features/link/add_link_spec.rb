@@ -5,14 +5,14 @@ feature 'add links to objects', "
   As author of object
   I'd like be able to add links during creating object
 " do
-  given!(:author){ create(:user) }
-  given(:question){ create(:question) }
-  given(:link_url){ "https://Azmandius21/0d80fb9f91558acda58d627f3493e38d"}
-  given(:gist_url){ "https://gist.github.com/Azmandius21/db01c544addfb9d6d9358077b7402718"}
+  given!(:author) { create(:user) }
+  given(:question) { create(:question) }
+  given(:link_url) { 'https://Azmandius21/0d80fb9f91558acda58d627f3493e38d' }
+  given(:gist_url) { 'https://gist.github.com/Azmandius21/db01c544addfb9d6d9358077b7402718' }
 
   background { sign_in(author) }
 
-  scenario'add link to question', js: true do
+  scenario 'add link to question', js: true do
     visit questions_path
     click_on 'Ask question'
 
@@ -25,7 +25,7 @@ feature 'add links to objects', "
     expect(page).to have_link 'My link', href: link_url
   end
 
-  scenario'add link to answer', js: true do 
+  scenario 'add link to answer', js: true do
     visit question_path(question)
     fill_in 'Body', with: 'My answer body'
 
@@ -52,7 +52,7 @@ feature 'add links to objects', "
     expect(page).to have_css '.gist-link'
   end
 
-  scenario 'add gist link to answer' , js: true do
+  scenario 'add gist link to answer', js: true do
     visit question_path(question)
     fill_in 'Body', with: 'My answer body'
 

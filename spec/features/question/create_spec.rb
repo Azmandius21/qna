@@ -35,7 +35,7 @@ feature 'User can create a question', "
       expect(page).to have_content 'Your question successfully created.'
       expect(page).to have_content 'Test question'
       expect(page).to have_content 'text text text'
-      expect(page).to have_link 'MyReward' 
+      expect(page).to have_link 'MyReward'
     end
 
     scenario 'ask a question with attached fille' do
