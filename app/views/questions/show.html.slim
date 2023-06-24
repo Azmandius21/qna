@@ -1,19 +1,26 @@
-.question 
-  h1 = @question.title
-  p Question: #{@question.body}
+.question-content
+  .question 
+    h1 = @question.title
+    p Question: #{@question.body}
 
-= render 'shared/attachment', resource: @question
-    
+  = render 'shared/attachment', resource: @question
 
-.answers
-  - if @question.best_answer_id
-    .best-answer
-      = render 'answers/best_answer', resource: @best_answer 
-  .other-answers 
-    = render partial:'answers/answer', collection: @answers
-.answer-errors
-  = render 'shared/errors', resource: @answer
+  .questions-links 
+    = render 'shared/show_links', resource: @question
+  .question-reward
+    = render 'shared/reward_link', resource: @question
+      
+  .answers
+    h2 Answers:
+    ol 
+      - if @question.best_answer_id
+        .best-answer
+          = render 'answers/best_answer', resource: @best_answer 
+      .other-answers 
+        = render partial:'answers/answer', collection: @answers
+  .answer-errors
+    = render 'shared/errors', resource: @answer
 
-- if user_signed_in?  
-  = render 'answers/form'
- 
+  - if user_signed_in?  
+    = render 'answers/form'
+  

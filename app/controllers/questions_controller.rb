@@ -1,12 +1,14 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show destroy update]
+  before_action :find_question, only: %i[show destroy update giving_reward]
   before_action :find_questions, only: %i[index update]
 
   def index; end
 
   def new
     @question = Question.new
+    @question.links.build
+    @question.build_reward
   end
 
   def create
@@ -22,6 +24,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.build
     if @question.best_answer_id
       @best_answer = @question.best_answer
       @answers = @question.answers.where.not(id: @question.best_answer_id)
@@ -47,10 +50,14 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def giving_reward(answer); end
+
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, :author_id, files: [])
+    params.require(:question).permit(:title, :body, :author_id, files: [],
+                                                                links_attributes: %i[id name url _destroy],
+                                                                reward_attributes: %i[name image])
   end
 
   def find_question

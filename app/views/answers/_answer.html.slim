@@ -1,17 +1,22 @@
-div class="answer-#{answer.id}"
-  p = answer.body
+li 
+  div class="answer-#{answer.id}"
+    p = answer.body
 
-  = render 'shared/attachment', resource: answer
-  
-  - if user_signed_in? && current_user.author?(answer.question)
-    p = link_to 'Best answer', select_answer_path(answer), \
-      class: 'best-answer-link', \
-      data: { answer_id: answer.id },\
-      method: :patch,\
-      remote: true 
+    .other-answer-attachments 
+      = render 'shared/attachment', resource: answer
 
-  - if user_signed_in? && current_user.author?(answer) 
-    p = link_to 'Edit answer', answer, class: 'edit-answer-link', data: { answer_id: answer.id }
-    p = link_to 'Delete answer', answer, class: 'delete-answer-link', data: { answer_id: answer.id }, method: 'delete'
+    .other-answer-links 
+      = render 'shared/show_links', resource: answer
     
-  = render 'answers/form_edit', resource: answer
+    - if user_signed_in? && current_user.author?(answer.question)
+      p = link_to 'Best answer', select_answer_path(answer), \
+        class: 'best-answer-link', \
+        data: { answer_id: answer.id },\
+        method: :patch,\
+        remote: true 
+
+    - if user_signed_in? && current_user.author?(answer) 
+      p = link_to 'Edit answer', answer, class: 'edit-answer-link', data: { answer_id: answer.id }
+      p = link_to 'Delete answer', answer, class: 'delete-answer-link', data: { answer_id: answer.id }, method: 'delete'
+      
+    = render 'answers/form_edit', resource: answer

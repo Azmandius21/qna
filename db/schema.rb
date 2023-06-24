@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_513_063_913) do
+ActiveRecord::Schema.define(version: 20_230_613_060_957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -53,6 +53,25 @@ ActiveRecord::Schema.define(version: 20_230_513_063_913) do
     t.index ['question_id'], name: 'index_answers_on_question_id'
   end
 
+  create_table 'giving_rewards', force: :cascade do |t|
+    t.bigint 'user_id', null: false
+    t.bigint 'reward_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['reward_id'], name: 'index_giving_rewards_on_reward_id'
+    t.index ['user_id'], name: 'index_giving_rewards_on_user_id'
+  end
+
+  create_table 'links', force: :cascade do |t|
+    t.string 'name'
+    t.string 'url'
+    t.string 'linkable_type'
+    t.bigint 'linkable_id'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[linkable_type linkable_id], name: 'index_links_on_linkable'
+  end
+
   create_table 'questions', force: :cascade do |t|
     t.string 'title'
     t.text 'body'
@@ -62,6 +81,15 @@ ActiveRecord::Schema.define(version: 20_230_513_063_913) do
     t.bigint 'best_answer_id'
     t.index ['author_id'], name: 'index_questions_on_author_id'
     t.index ['best_answer_id'], name: 'index_questions_on_best_answer_id'
+  end
+
+  create_table 'rewards', force: :cascade do |t|
+    t.string 'name', null: false
+    t.string 'rewardable_type'
+    t.bigint 'rewardable_id'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[rewardable_type rewardable_id], name: 'index_rewards_on_rewardable'
   end
 
   create_table 'users', force: :cascade do |t|

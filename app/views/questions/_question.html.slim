@@ -1,14 +1,19 @@
 .question-index
   .question-errors 
     = render 'shared/errors', resource: question
-
   p = question.title 
-
   p = question.body
-
+  
   = render 'shared/attachment', resource: question
 
+  .questions-links 
+    = render 'shared/show_links', resource: question
+
+  .question-reward 
+    = render 'shared/reward_link', resource: question
+
   p = link_to 'Show', question_path(question)
+  
   -if current_user && current_user.author?(question)
     p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     p = link_to  "Delete", question_path(question), method: :delete
@@ -24,3 +29,5 @@
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
     p = f.submit 'Save'
+
+    = render 'shared/links_form', f: f

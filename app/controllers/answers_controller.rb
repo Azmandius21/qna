@@ -38,7 +38,8 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id, :author_id, files: [])
+    params.require(:answer).permit(:body, :question_id, :author_id, files: [],
+                                                                    links_attributes: %i[id name url _destroy])
   end
 
   def find_question_by_id

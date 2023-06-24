@@ -6,6 +6,10 @@ module FeatureHelpers
     click_on 'Log in'
   end
 
+  def log_out
+    click_on 'Log out'
+  end
+
   def wait_for_ajax
     Timeout.timeout(Capybara.default_max_wait_time) do
       loop until finish_all_ajax_request?
