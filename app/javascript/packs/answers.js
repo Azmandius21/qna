@@ -10,4 +10,13 @@ $(document).on('turbolinks:load', function(){
     const answerId = $(this).data('answerId');
     $('.answer-'+ answerId).remove();
   });
+
+  $('form.new-answer').on('ajax:success', function(e){
+    const xhr = e.detail[2];
+    $('.other-answers').append(xhr.responseText);  
+  })
+    .on('ajax:error', function(e){
+      const xhrEr = e.detail[2];
+      $('.answer-errors').html(xhrEr.responseText);
+    })
 })

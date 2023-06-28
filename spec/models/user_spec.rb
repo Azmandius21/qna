@@ -7,4 +7,5 @@ RSpec.describe User, type: :model do
   it { should have_many :answers }
   it { should have_many :giving_rewards }
   it { should have_many :rewards }
+  it { should have_many(:votes).dependent(:destroy) }
 end
