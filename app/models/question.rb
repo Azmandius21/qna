@@ -1,7 +1,7 @@
 class Question < ApplicationRecord
   has_many :answers, dependent: :destroy, inverse_of: :question
   has_many :links, dependent: :destroy, as: :linkable
-  has_many :votes, as: :linkable
+  has_many :votes, as: :votable
   has_one :reward, dependent: :destroy, as: :rewardable
 
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true

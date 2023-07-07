@@ -1,7 +1,14 @@
 .question-vote 
-  = link_to 'Like', create_vote_path, data: { type: :json, vote: true }, class: 'vote-link' 
-  = link_to 'Dislike', create_vote_path, data: { type: :json, vote: false }, class: 'vote-link'
-  = link_to 'Cancel vote', destroy_vote_path, data: { type: :json }, method: :delete,  class: 'cancel-vote-link'
+  p 
+    / = link_to 'Like', create_vote_path(@question), data: { type: :json, liked: true, question_id: @question.id }, method: :post, class: 'vote-link', remote: true
+    = link_to 'Like', create_vote_path(@question, @vote, vote: {user_id: current_user.id, liked: true }, format: :json ),
+      method: :post, class: 'vote-link', remote: true
+  p 
+    = link_to 'Dislike', create_vote_path(@question, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
+      method: :post, class: 'vote-link', remote: true
+  p   
+    / = link_to 'Cancel vote', destroy_vote_path(@vote, format: :json), method: :delete,  class: 'cancel-vote-link', remote: true
+
 .question-content
   .question 
     h1 = @question.title

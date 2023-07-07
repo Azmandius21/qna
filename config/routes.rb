@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
 
-  post   'votes/', to: 'votes#create', as: 'create_vote'
+  post   'questions/:question_id/votes/', to: 'votes#create', as: 'create_vote'
   delete 'votes/:id/destroy', to: 'votes#destroy', as: 'destroy_vote'
 
   root to: 'questions#index'
