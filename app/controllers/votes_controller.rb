@@ -7,7 +7,7 @@ class VotesController < ApplicationController
     @vote.update(user_id: current_user.id) unless current_user.author?(@question) 
     respond_to do |format|
       if @vote.save
-        format.json { render json: [@vote] }
+        format.json { render json: Vote.rank_of_votable(@question) }
       else 
         format.json { render json: [@vote.errors.full_messages, status: :unprocessable_entity] }
       end
@@ -16,7 +16,14 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])   
-    @vote.destroy 
+    @question = @vote.votable
+    respond_to do |format|
+      if @vote.destroy
+        format.json { render json: Vote.rank_of_votable(@question) }     
+      else
+        format.json { render json: [@vote.errors.full_messages, status: :unprocessable_entity] }
+      end
+    end
   end
 
   private
