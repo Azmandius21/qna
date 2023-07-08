@@ -1,0 +1,24 @@
+.votable-vote
+  - if current_user.can_vote_for?(votable)
+    div class = 'like'
+      p = link_to 'Like', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: true }, format: :json ),
+          method: :post, class: 'vote-link', remote: true, data: { type: :json }
+    div class = 'like hidden'
+      p = link_to 'Like', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: true }, format: :json ),
+          method: :post, class: 'vote-link', remote: true, data: { type: :json }
+    div class = 'dislike'
+      p = link_to 'Dislike', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
+          method: :post, class: 'vote-link', remote: true
+    div class = 'dislike hidden'
+      p = link_to 'Dislike', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
+          method: :post, class: 'vote-link', remote: true
+
+  - unless current_user.can_vote_for?(votable)
+    div class = 'reset-vote '
+      p = link_to 'Reset vote', destroy_vote_path(current_user.vote_for(votable), format: :json),
+          method: :delete,  class: 'cancel-vote-link', remote: true
+    div class = 'reset-vote hidden'
+      p = link_to 'Reset vote', destroy_vote_path(current_user.vote_for(votable), format: :json),
+          method: :delete,  class: 'cancel-vote-link', remote: true
+
+.votable-rank 

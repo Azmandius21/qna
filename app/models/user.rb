@@ -14,9 +14,15 @@ class User < ApplicationRecord
     id.eql?(subject.author_id)
   end
 
-  def vote_for(question)
+  def find_vote_for(question)
     Vote.find_by(user_id: self.id, 
                  votable_type: 'Question',
                  votable_id: question.id)
   end
+
+  def can_vote_for?(question)
+    question.votes.where(user_id: self.id).empty?
+  end
+
+
 end

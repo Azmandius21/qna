@@ -1,4 +1,5 @@
 $(document).on('turbolinks:load', function(){
+  $('.cancel-vote-link').addClass('hidden')
   $('.questions').on('click','.edit-question-link', function(e){
    e.preventDefault();
    $(this).hide();
@@ -8,8 +9,8 @@ $(document).on('turbolinks:load', function(){
 
   $('.vote-link').on('ajax:success', function(e){
     const answer = e.detail[0];
-    $('.vote-link').addClass('hidden');
-    $('.cancel-vote-link').removeClass('hidden')
+    $('.vote-link').toggleClass('hidden');
+    $('.cancel-vote-link').toggleClass('hidden')
     $('.question-rank').append('<h2>' + answer + '</h2>')
   })
 

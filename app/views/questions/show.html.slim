@@ -1,15 +1,6 @@
 .question-vote 
-  p = link_to 'Like', create_vote_path(@question, @vote, vote: {user_id: current_user.id, liked: true }, format: :json ),
-      method: :post, class: 'vote-link', remote: true, data: { type: :json }
-  p = link_to 'Dislike', create_vote_path(@question, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
-      method: :post, class: 'vote-link', remote: true
-  - if current_user.vote_for(@question)
-    p = link_to 'Reset vote', destroy_vote_path(current_user.vote_for(@question), format: :json),
-      method: :delete,  class: 'cancel-vote-link', remote: true
-
-.question-rank 
-   
-
+  = render 'shared/vote', votable: @question
+  
 .question-content
   .question 
     h1 = @question.title
