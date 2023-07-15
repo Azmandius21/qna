@@ -19,7 +19,7 @@ class User < ApplicationRecord
                      votable_id: votable.id)&.sample
   end
 
-  def can_vote_for?(question)
-    question.votes.where(user_id: self.id).empty?
+  def can_vote_for?(votable)
+    votable.votes.where(user_id: self.id).empty?
   end
 end

@@ -1,20 +1,20 @@
 - unless current_user.author?(votable)
 	.votable-vote
 	- if current_user.can_vote_for?(votable)
-			p = link_to 'Like', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: true }, format: :json ),
-					method: :post, class: 'vote-link', remote: true, data: { type: :json }
-			p = link_to 'Dislike', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
-					method: :post, class: 'vote-link', remote: true
+			p = link_to 'Like', "/questions/:question_id/votes.json",
+					method: :post, class: 'vote-link', remote: true, data: { id: votable.id, type: :json }
+			p = link_to 'Dislike', create_vote_to_question_path(votable, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
+					method: :post, class: 'vote-link', remote: true, data: { id: votable.id, type: :json }
 			p = link_to 'Reset vote', current_user.find_vote_for(votable) , format: :json,
-					method: :delete,  class: 'reset vote-link hidden', remote: true
+					method: :delete,  class: 'reset vote-link hidden', remote: true, data: { id: votable.id, type: :json }
 
 	- else         
-			p = link_to 'Like', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: true }, format: :json ),
-					method: :post, class: 'vote-link hidden', remote: true, data: { type: :json }
-			p = link_to 'Dislike', create_vote_path(votable, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
-					method: :post, class: 'vote-link hidden', remote: true    
+			p = link_to 'Like', create_vote_to_question_path(votable, @vote, vote: {user_id: current_user.id, liked: true }, format: :json ),
+					method: :post, class: 'vote-link hidden', remote: true, data: { id: votable.id, type: :json }
+			p = link_to 'Dislike', create_vote_to_question_path(votable, @vote, vote: {user_id: current_user.id, liked: false }, format: :json ),
+					method: :post, class: 'vote-link hidden', remote: true, data: { id: votable.id, type: :json }
 			p = link_to 'Reset vote', destroy_vote_path(current_user.find_vote_for(votable), format: :json),
-					method: :delete,  class: 'reset vote-link', remote: true    
+					method: :delete,  class: 'reset vote-link', remote: true, data: { id: votable.id, type: :json }
 
 .votable-rank 
   h2 = Vote.rank_of_votable(votable)
