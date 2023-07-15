@@ -2,12 +2,11 @@ $(document).on('turbolinks:load', function(){
   $('.vote-link').on('ajax:success', function(e){
     const answer = e.detail[0][1]
     const voteId = e.detail[0][0].id
-    const votableId = this.data('id')
+    const votableId = $(this).data('id')
     const newUrl = '/votes/'+ voteId + '/destroy.json'
-    $('.vote-link'+ votableId).toggleClass('hidden');
-    
-    $('.votable-rank').html('<h2>' + answer + '</h2>')
-    $('.reset').attr("href", newUrl)
-    console.log('hi')
+
+    $('#'+votableId+'.vote-link').toggleClass('hidden');
+    $('#'+votableId+'.votable-rank').html('<h2>' + answer + '</h2>')
+    $('#'+votableId+'.reset').attr("href", newUrl)
   })
 })

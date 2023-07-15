@@ -5,9 +5,15 @@ module Votable
     has_many :votes, as: :votable
   end
 
-  def detect_route_path(instance)
-    resource = instance.class.name.downcase
-    resource_id = ":#{resource}_id"
-    return
+  def detect_route_path
+    resource = self.class.name.downcase
+
+    "/#{resource.pluralize}/#{id}/votes.json?"
+  end
+
+  def self.find_votable(params)
+    attr_id = params.keys[3]
+    votable = attr_id.slice(..-4).capitalize.constantize
+    @votable = votable.find(params[attr_id].to_i)
   end
 end

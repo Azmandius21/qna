@@ -16,7 +16,8 @@ class User < ApplicationRecord
 
   def find_vote_for(votable)
     self.votes.where(votable_type: votable.class.name,
-                     votable_id: votable.id)&.sample
+                      votable_id: votable.id)&.sample
+                     
   end
 
   def can_vote_for?(votable)
