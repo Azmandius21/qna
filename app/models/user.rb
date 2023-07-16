@@ -15,12 +15,11 @@ class User < ApplicationRecord
   end
 
   def find_vote_for(votable)
-    self.votes.where(votable_type: votable.class.name,
-                      votable_id: votable.id)&.sample
-                     
+    votes.where(votable_type: votable.class.name,
+                votable_id: votable.id)&.sample
   end
 
   def can_vote_for?(votable)
-    votable.votes.where(user_id: self.id).empty?
+    votable.votes.where(user_id: id).empty?
   end
 end

@@ -1,4 +1,6 @@
 class Answer < ApplicationRecord
+  include Votable
+
   has_many :links, dependent: :destroy, as: :linkable
   belongs_to :question
   belongs_to :author, class_name: 'User'
@@ -7,7 +9,7 @@ class Answer < ApplicationRecord
 
   has_many_attached :files
 
-  include Votable
+  validates :body, :question_id, :author_id, presence: true
   
   def mark_as_best
     question.update(best_answer_id: id)

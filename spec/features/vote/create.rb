@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can create a vote',"
+feature 'User can create a vote', "
   In order to like(or dislike) to votavle
   As an authenticated User
   I'd like to be able to take my vote
 " do
-  
   describe 'Authenticated user try to vote for question' do
     given!(:user) { create(:user) }
     given!(:author) { create(:user) }

@@ -10,9 +10,9 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.save
-        format.html { render @answer}
+        format.html { render @answer }
       else
-        format.html { render partial: 'shared/errors', locals: {resource: @answer}, status: '422' } 
+        format.html { render partial: 'shared/errors', locals: { resource: @answer }, status: '422' }
       end
     end
   end
