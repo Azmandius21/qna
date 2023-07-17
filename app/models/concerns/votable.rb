@@ -12,8 +12,8 @@ module Votable
   end
 
   def self.find_votable(params)
-    attr_id = params.keys[3]
-    votable = attr_id.slice(..-4).capitalize.constantize
+    attr_id = params.keys.select{ |key| key if key =~ /_id$/ }.first
+    votable = attr_id.split('_')[0].capitalize.constantize
     @votable = votable.find(params[attr_id].to_i)
   end
 end
