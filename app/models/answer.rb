@@ -1,4 +1,6 @@
 class Answer < ApplicationRecord
+  include Votable
+
   has_many :links, dependent: :destroy, as: :linkable
   belongs_to :question
   belongs_to :author, class_name: 'User'
@@ -8,7 +10,7 @@ class Answer < ApplicationRecord
   has_many_attached :files
 
   validates :body, :question_id, :author_id, presence: true
-
+  
   def mark_as_best
     question.update(best_answer_id: id)
     GivingReward.create(reward_id: question.reward.id, user_id: author.id) if question.reward.present?

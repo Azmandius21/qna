@@ -5,8 +5,16 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[destroy show update select]
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @answer = @question.answers.new(answer_params)
     @answer.update(author_id: current_user.id)
+
+    respond_to do |format|
+      if @answer.save
+        format.html { render @answer }
+      else
+        format.html { render partial: 'shared/errors', locals: { resource: @answer }, status: '422' }
+      end
+    end
   end
 
   def show; end

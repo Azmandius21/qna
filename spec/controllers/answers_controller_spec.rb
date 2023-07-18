@@ -12,15 +12,13 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'save a new answer ' do
         expect do
-          post :create, params: { question_id: question, author_id: user, answer: answer_attributes },
-                        format: :js
+          post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
         end.to change(Answer, :count).by(1)
       end
 
       it 'render  #create answer' do
-        post :create, params: { question_id: question, author_id: user, answer: answer_attributes },
-                      format: :js
-        expect(response).to render_template :create
+        post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
+        expect(response).to render_template "answers/_answer"
       end
     end
 
@@ -29,15 +27,13 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not save a new answer ' do
         expect do
-          post :create, params: { question_id: question, author_id: user, answer: answer_attributes },
-                        format: :js
+          post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
         end.to_not change(Answer, :count)
       end
 
       it 'render #create answer' do
-        post :create, params: { question_id: question, author_id: user, answer: answer_attributes },
-                      format: :js
-        expect(response).to render_template :create
+        post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
+        expect(response).to render_template "shared/_errors"
       end
     end
   end

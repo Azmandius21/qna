@@ -14,6 +14,7 @@ require("@nathanvda/cocoon")
 require('./answers')
 require('./questions')
 require('./gist')
+require('./vote')
 
 Rails.start()
 Turbolinks.start()

@@ -1,3 +1,6 @@
+.question-vote 
+  = render 'shared/vote', votable: @question
+  
 .question-content
   .question 
     h1 = @question.title
@@ -23,4 +26,4 @@
 
   - if user_signed_in?  
     = render 'answers/form'
-  
+    
