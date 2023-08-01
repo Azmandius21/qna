@@ -15,6 +15,3 @@
 					id: votable.id, method: :post, data: { id: votable.id, type: :json }, remote: true
 			p = link_to 'Reset vote', destroy_vote_path(current_user.find_vote_for(votable)), class: 'vote-link reset',
 					id: votable.id, method: :delete, data: { id: votable.id, type: :json },  remote: true
-
-.votable-rank id="#{votable.id}" 
-  h2 = Vote.rank_of_votable(votable)	

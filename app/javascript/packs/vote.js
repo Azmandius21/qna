@@ -6,7 +6,7 @@ $(document).on('turbolinks:load', function(){
     const newUrl = '/votes/'+ voteId + '/destroy.json'
 
     $('#'+votableId+'.vote-link').toggleClass('hidden');
-    $('#'+votableId+'.votable-rank').html('<h2>' + answer + '</h2>')
+    $('#'+votableId+'.votable-rank').html('<h4>' + answer + '</h4>')
     $('#'+votableId+'.reset').attr("href", newUrl)
   })
 })
