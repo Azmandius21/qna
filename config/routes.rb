@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   delete 'votes/:id/destroy', to: 'votes#destroy', as: 'destroy_vote'
 
   root to: 'questions#index'
+
+  mount ActionCable.server => '/cable'
 end

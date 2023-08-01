@@ -56,6 +56,35 @@ feature 'User can create a question', "
     end
   end
 
+  describe 'Multiply sessions' do
+    given(:guest) { create(:user) }
+
+    scenario 'user has ask a question and all users are able to see this' do
+      Capybara.using_session(user) do
+        sign_in(user)
+        visit questions_path
+      end
+
+      Capybara.using_session(guest) do
+        sign_in(guest)
+        visit questions_path
+      end
+
+      Capybara.using_session(user) do
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+        click_on 'Ask'
+
+        expect(page).to have_content 'Test question'
+        expect(page).to have_content 'text text text'  
+      end
+
+      Capybara.using_session(guest) do
+        expect(page).to have_content 'Test question'
+      end
+    end
+  end
+
   scenario 'Unauthenticated User ask a question' do
     visit questions_path
     click_on 'Ask question'

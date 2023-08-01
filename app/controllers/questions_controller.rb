@@ -1,7 +1,10 @@
+require 'byebug'
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show destroy update giving_reward]
+  before_action :find_question, only: %i[show destroy update giving_reward publish_question]
   before_action :find_questions, only: %i[index update]
+
+  after_action :publish_question, only: %i[ create destroy]
 
   def index; end
 
@@ -66,5 +69,14 @@ class QuestionsController < ApplicationController
 
   def find_questions
     @questions = Question.all
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast "questions_channel", 
+      ApplicationController.render(
+        partial: "questions/question",
+        locals: { question: @question}
+      )
   end
 end
