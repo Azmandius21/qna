@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show destroy update giving_reward publish_question]
   before_action :find_questions, only: %i[index update]
-
+  before_action :gon_user
   after_action :publish_question, only: %i[ create destroy]
 
   def index; end
@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.update(author_id: current_user.id)
-
+    gon.question = @question
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
@@ -28,6 +28,8 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.links.build
+    gon.question = @question
+    gon.answer = @answer
     if @question.best_answer_id
       @best_answer = @question.best_answer
       @answers = @question.answers.where.not(id: @question.best_answer_id)
@@ -78,5 +80,9 @@ class QuestionsController < ApplicationController
         partial: "questions/question",
         locals: { question: @question}
       )
+  end
+
+  def gon_user
+    gon.user_id = current_user.id if current_user
   end
 end
