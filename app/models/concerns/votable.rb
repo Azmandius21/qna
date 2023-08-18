@@ -18,7 +18,7 @@ module Votable
   end
 
   def voted_by?(user)
-    self.votes.where(user_id: user.id) || false
+    self.votes.where(user_id: user.id).any?
   end
 
   def vote_sum
