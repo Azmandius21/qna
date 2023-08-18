@@ -16,8 +16,6 @@ require('./questions')
 require('./gist')
 require('./vote')
 
-require('../templates')
-
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
