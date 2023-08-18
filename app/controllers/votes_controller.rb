@@ -2,6 +2,7 @@ class VotesController < ApplicationController
   before_action :authenticate_user!
 
   def create
+    
     @votable = Votable.find_votable(params)
     @vote = @votable.votes.new(vote_params)
     @vote.update(user_id: current_user.id) unless current_user.author?(@votable)

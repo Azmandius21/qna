@@ -1,5 +1,7 @@
 require 'byebug'
 class QuestionsController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show destroy update giving_reward publish_question]
   before_action :find_questions, only: %i[index update]
