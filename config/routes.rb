@@ -10,10 +10,17 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :commentable do
+    member do
+      patch 'comment'
+      patch 'delete_comment'
+    end
+  end
+
   get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
 
-  resources :questions, concerns: %i[ votable] do
-    resources :answers, shallow: true do
+  resources :questions, concerns: %i[ votable commentable ] do
+    resources :answers, concerns: %i[ votable commentable ], shallow: true do
       patch 'select', on: :member
     end
   end
