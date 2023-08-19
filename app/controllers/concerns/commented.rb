@@ -2,11 +2,11 @@ module Commented
   extend ActiveSupport::Concern
   
   included do
-    before_action :set_commentable, only: %i[ add_comment delete_comment]
+    before_action :set_commentable, only: %i[ add_comment ]
   end
 
   def add_comment
-    @comment = @commenable.comments.new(comment_params.merge(user_id: current_user.id))
+    @comment = @commentable.comments.new(comment_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @comment.save
@@ -18,8 +18,6 @@ module Commented
   end
 
   def delete_comment
-    byebug
-    @comment = @commentable.comments.find_by(params[:id])
     comment_id = @comment.id
     respond_to do |format|
       if @comment.destroy
@@ -41,7 +39,6 @@ module Commented
   end
 
   def set_commentable
-    byebug
     @commentable = model_class.find(params[:id])    
   end
 end
