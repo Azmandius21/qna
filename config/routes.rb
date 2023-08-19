@@ -12,8 +12,8 @@ Rails.application.routes.draw do
 
   concern :commentable do
     member do
-      patch 'comment'
-      patch 'delete_comment'
+      patch 'add_comment'
+      delete 'delete_comment'
     end
   end
 
