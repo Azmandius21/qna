@@ -79,10 +79,13 @@ class QuestionsController < ApplicationController
   def publish_question
     return if @question.errors.any?
     ActionCable.server.broadcast "questions_channel", 
-      ApplicationController.render(
-        partial: "questions/question",
-        locals: { question: @question}
-      )
+      {
+        question_data: {}
+      }
+      # ApplicationController.render(
+      #   partial: "questions/question",
+      #   locals: { question: @question}
+      # )
   end
 
   def gon_user

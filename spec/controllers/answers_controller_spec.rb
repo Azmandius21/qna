@@ -1,6 +1,12 @@
 require 'rails_helper'
+require_relative './concerns/voted_spec'
+require_relative './concerns/commented_spec'
 
 RSpec.describe AnswersController, type: :controller do
+
+  it_behaves_like 'voted'
+  it_behaves_like 'commented'
+
   let(:user) { create(:user) }
   let(:question) { create(:question, author_id: user.id) }
 

@@ -1,4 +1,7 @@
 class AnswersController < ApplicationController
+  include Voted
+  include Commented
+  
   before_action :authenticate_user!, except: :show
   before_action :find_answer, only: %i[show destroy update select]
   before_action :find_question_by_id, only: :create
