@@ -1,17 +1,14 @@
-.question-vote 
-  = render 'shared/vote', votable: @question
   
-.question-content
+.question-content.questions-list
   = render 'questions/question', question: @question
-
+.question-attachment
   = render 'shared/attachment', resource: @question
-
-  .questions-links 
-    = render 'shared/show_links', resource: @question
-  .question-reward
-    = render 'shared/reward_link', resource: @question
+.questions-links 
+  = render 'shared/show_links', resource: @question
+.question-reward
+  = render 'shared/reward_link', resource: @question
   
-  -if current_user && current_user.author?(@question)
+  -if current_user&.author?(@question)
     p = link_to 'Edit', '#', class: 'edit-@question-link', data: { question_id: @question.id }
     p = link_to  "Delete", question_path(@question), method: :delete
 

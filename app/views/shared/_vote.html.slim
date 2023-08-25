@@ -1,17 +1,22 @@
 - if current_user && !current_user.author?(votable)
 	.votable-vote
 	- if current_user.can_vote_for?(votable)
-			p = link_to 'Like', votable.detect_route_path + {vote: { user_id: current_user.id, liked: true }}.to_param, class: 'vote-link',
-					id: votable.id, method: :post, data: { id: votable.id, type: :json }, remote: true
-			p = link_to 'Dislike', votable.detect_route_path + {vote: { user_id: current_user.id, liked: false }}.to_param, class: 'vote-link',
-					id: votable.id, method: :post, data: { id: votable.id, type: :json }, remote: true
-			p = link_to 'Reset vote', current_user.find_vote_for(votable), class: 'vote-link reset hidden',
-					id: votable.id, method: :delete, data: { id: votable.id, type: :json },  remote: true
-
+			= link_to  like_question_path(votable), class: 'like vote-link',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+					 <i class="bi bi-hand-thumbs-up"></i>
+			= link_to  dislike_question_path(votable), class: 'dislike vote-link',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+					 <i class="bi bi-hand-thumbs-down"></i>
+			= link_to reset_question_path(votable), class: 'reset vote-link hidden',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json },  remote: true do 
+					 <i class="bi bi-x-circle"></i>	
 	- else         
-			p = link_to 'Like', votable.detect_route_path + {vote: { user_id: current_user.id, liked: true }}.to_param, class: 'vote-link hidden',
-					id: votable.id, method: :post, data: { id: votable.id, type: :json }, remote: true
-			p = link_to 'Dislike', votable.detect_route_path + {vote: { user_id: current_user.id, liked: false }}.to_param, class: 'vote-link hidden',
-					id: votable.id, method: :post, data: { id: votable.id, type: :json }, remote: true
-			p = link_to 'Reset vote', destroy_vote_path(current_user.find_vote_for(votable)), class: 'vote-link reset',
-					id: votable.id, method: :delete, data: { id: votable.id, type: :json },  remote: true
+			= link_to  like_question_path(votable), class: 'like vote-link hidden',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+					<i class="bi bi-hand-thumbs-up"></i>
+			= link_to  dislike_question_path(votable), class: 'dislike vote-link hidden',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+					<i class="bi bi-hand-thumbs-down"></i>
+			= link_to reset_question_path(votable), class: 'reset vote-link',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json },  remote: true do 
+					<i class="bi bi-x-circle"></i>

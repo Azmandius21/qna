@@ -1,14 +1,21 @@
-.question-errors 
-  = render 'shared/errors', resource: question
-.question  
-  .block 
-    p title: #{question.title} 
-    p body: #{question.body}
-  .block
-    p creator id : #{question.author_id.to_s}
-    p = link_to 'Show', question_path(question)    
-  .block 
-    .votable-rank id="#{question.id}" 
-      h4 = Vote.rank_of_votable(question)	
-  	
-  
+div class="question-errors raw"
+    = render 'shared/errors', resource: question  	
+div class="question card text-center" id="#{question.id}"
+  div class="question-main raw"
+    div class="question-vote col col-md-2"
+      .votable-rank id="#{question.id}" 
+        p = Vote.rank_of_votable(question)	
+      .voting
+        = render 'shared/vote', votable: question
+    div class="question-content col col-md-6"
+      p  #{question.body}
+      h6  #{question.title} 
+
+    div class="question-actions col col-md-2"
+      p = link_to 'Show', question_path(question) 
+      - if current_user&.author?(question)
+        p = link_to  "Delete", question_path(question), method: :delete
+        p = link_to 'Edit', '#', class: 'edit-@question-link', data: { question_id: question.id }
+    
+    .question-author.col.col-md-2 
+      = User.find(question.author_id).email

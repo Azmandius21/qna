@@ -11,7 +11,7 @@ module Voted
     @vote = @votable.votes.new(user: current_user, liked: true)
     respond_to do |format|
       if @vote.save 
-        format.json { render json: [@vote, Vote.rank_of_votable(@votable)] }
+        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable)] }
       else 
         format.json { render json: [@vote.errors.full_messages, { status: :unprocessable_entity }] }
       end
@@ -24,7 +24,7 @@ module Voted
     @vote = @votable.votes.new(user: current_user, liked: false)
     respond_to do |format|
       if @vote.save 
-        format.json { render json: [@vote, Vote.rank_of_votable(@votable)] }
+        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable)] }
       else
         format.json { render json: [@vote.errors.full_messages, { status: :unprocessable_entity }] }
       end
@@ -37,7 +37,7 @@ module Voted
     @vote = @votable.votes.find_by(user: current_user)
     respond_to do |format|
       if @vote.destroy
-        format.json { render json: [{id: @votable.id}, Vote.rank_of_votable(@votable)] }
+        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable)] }
       else
         format.json { render json: [@vote.errors.full_messages, { status: :unprocessable_entity }] }
       end

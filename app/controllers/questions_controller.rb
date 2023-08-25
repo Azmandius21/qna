@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show destroy update giving_reward publish_question]
   before_action :find_questions, only: %i[index update]
-  before_action :gon_user
   after_action :publish_question, only: %i[ create destroy]
 
   def index; end
@@ -78,17 +77,24 @@ class QuestionsController < ApplicationController
 
   def publish_question
     return if @question.errors.any?
+    
+    vote_hash = Hash[ 
+      like_url: like_question_url(@question),
+      dislike_url: dislike_question_url(@question), 
+      reset_url: reset_question_url(@question)
+    ]
+
     ActionCable.server.broadcast "questions_channel", 
       {
-        question_data: {}
+        question: { id: @question.id,
+                    vote_rank: Vote.rank_of_votable(@question) ,
+                    body: @question.body,
+                    title: @question.title,
+                    question_url: question_url(@question),
+                    author_email: @question.author.email,
+                    user_signed_in: "#{ current_user ? true : false }",
+                    vote: vote_hash
+                  }
       }
-      # ApplicationController.render(
-      #   partial: "questions/question",
-      #   locals: { question: @question}
-      # )
-  end
-
-  def gon_user
-    gon.user_id = current_user.id if current_user
   end
 end
