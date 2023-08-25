@@ -1,0 +1,39 @@
+<div class="question card text-center" id="question-{{question.id}}">
+  <div class="question-main raw">
+    
+    <div class="question-vote col col-md-2">
+      <div class="votable-rank" id="{{question.id}}">
+        <p>{{question.vote_rank}}</p>
+      </div>
+      <div class="voting">
+        {{#if question.user_signed_in}}
+          <div>
+            <a class="like vote-link" id="{{question.id}}" data-remote="true" data-id="{{question.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{question.vote.like_url}}">
+              <i class="bi bi-hand-thumbs-up"></i></a>
+            <a class="dislike vote-link" id="{{question.id}}" data-remote="true" data-id="{{question.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{question.vote.dislike_url}}">
+              <i class="bi bi-hand-thumbs-down"></i></a>
+            <a class="reset vote-link hidden" id="{{question.id}}" data-remote="true" data-id="{{question.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{question.vote.reset_url}}">
+              <i class="bi bi-x-circle"></i></a>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="question-content col col-md-6">
+      <p>{{question.body}}</p>
+      <h6>{{question.title}}</h6>
+    </div>
+
+    <div class="question-actions col col-md-2">
+      <a href="{{question_url}}">Show</a>
+    </div>
+
+    <div class="question-author col col-md-2">
+      <p>{{question.author_email}}</p>
+    </div>
+
+  </div>
+</div>
