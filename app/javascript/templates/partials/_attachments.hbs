@@ -1,0 +1,10 @@
+<div class="question-attachments" id="{{question.id}}">
+  <div class="col col-2">
+    <p>Attachments:</p>
+  </div>
+  <div class="col">
+    {{#each question.attachments}}
+      <p><a href="{{this.file_url}}">{{this.file_name}}</a></p>
+    {{/each}}
+  </div>
+</div>

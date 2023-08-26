@@ -1,0 +1,14 @@
+<div class="question-links" id="{{question.id}}">
+  {{#each question.links}}
+    {{#if this.gist_id}}
+      <a href="#" 
+         data-gist-id="{{this.gist_id}}" 
+         data-link-id="{{this.link_id}}"
+         class="show-gist-trigger links">Show gist content
+      </a>
+      <div class="gist-content links" id="{{this.link_id}}"></div>
+    {{else}}
+      <a href="{{this.link_url}}" id="{{this.link_id}}">{{this.link_name}}</a>
+    {{/if}}
+  {{/each}}
+</div>
