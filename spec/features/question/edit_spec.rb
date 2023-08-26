@@ -19,7 +19,7 @@ feature 'User can edit question ', "
       fill_in 'question_title', with: 'New question title'
       click_on 'Save'
 
-      within '.questions' do
+      within '.question-content' do
         expect(page).to have_content 'New question body'
         expect(page).to have_content 'New question title'
       end
@@ -58,7 +58,7 @@ feature 'User can edit question ', "
       fill_in 'question_title', with: ''
       click_on 'Save'
 
-      within '.questions' do
+      within '.questions-list' do
         expect(page).to have_content "Title can't be blank"
         expect(page).to have_content "Body can't be blank"
       end

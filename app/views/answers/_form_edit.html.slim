@@ -1,11 +1,11 @@
-
-= form_with model: resource , local: false, class: 'hidden', html: { id: "edit-answer-#{resource .id}" } do |f|
-    p 
-      = f.label :body
-      = f.text_area :body
-    p   
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-    p = f.submit 'Save'
-    //render fields for links
-    = render 'shared/links_form', f: f
+.edit-answer
+  = form_with model: resource , local: false, class: 'hidden', html: { id: "edit-answer-#{resource .id}" } do |f|
+      p 
+        = f.label :body
+        = f.text_area :body
+      p   
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p = f.submit 'Save'
+      //render fields for links
+      = render 'shared/links_form', f: f

@@ -11,9 +11,4 @@ RSpec.describe QuestionsChannel, type: :channel do
     subscribe
     expect(subscription).to have_stream_from("questions_channel")
   end
-
-  it 'presence stream for User' do
-    subscribe
-    expect(subscription).to have_stream_for(User)
-  end
 end

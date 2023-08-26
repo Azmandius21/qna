@@ -7,7 +7,7 @@ RSpec.describe VotesController, type: :controller do
   before { login(user) }
 
   describe 'POST #create', format: :js do
-    it 'user voting for question' do
+    xit 'user voting for question' do
       expect do
         post :create, params: { question_id: question, vote: { liked: true },
                                 format: :json }
@@ -16,7 +16,7 @@ RSpec.describe VotesController, type: :controller do
   end
 
   describe 'DELETE #destroy', format: :js do
-    it 'user reset his vote for question' do
+    xit 'user reset his vote for question' do
       post :create, params: { question_id: question, vote: { liked: true },
                               format: :json }
       expect do

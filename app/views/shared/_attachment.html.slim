@@ -1,4 +1,7 @@
  -if resource.files.attached?
+  .col.col-2
+    p Attachments:
+  .col
     - resource.files.each do |file|
       p = link_to file.filename.to_s, url_for(file)
       - if current_user && current_user.author?(resource)
