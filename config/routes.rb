@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'questions#index'
+  
   devise_for :users
 
   concern :votable do
@@ -11,13 +13,12 @@ Rails.application.routes.draw do
   end
 
   concern :commentable do
+    resources :comments, only: %i[ destroy ]
     member do
-      patch 'add_comment'
-      delete 'delete_comment'
+      post 'add_comment'
+      # delete 'delete_comment/:comment_id'
     end
   end
-
-  get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
 
   resources :questions, concerns: %i[ votable commentable ] do
     resources :answers, concerns: %i[ votable commentable ], shallow: true do
@@ -25,13 +26,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
+
   delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
-
-  # post   'questions/:question_id/votes/', to: 'votes#create', as: 'create_vote_to_question'
-  # post   'answers/:answer_id/votes/', to: 'votes#create', as: 'create_vote_to_answer'
-  # delete 'votes/:id/destroy', to: 'votes#destroy', as: 'destroy_vote'
-
-  root to: 'questions#index'
 
   mount ActionCable.server => '/cable'
 end

@@ -61,9 +61,10 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, :author_id, files: [],
-                                                                links_attributes: %i[id name url _destroy],
-                                                                reward_attributes: %i[name image])
+    params.require(:question).permit(:title, :body, :author_id,
+     files: [],
+     links_attributes: %i[id name url _destroy],
+     reward_attributes: %i[name image])
   end
 
   def find_question

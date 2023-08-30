@@ -1,0 +1,16 @@
+<div class="container card">
+  {{#each commentable.comments}}
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <th>{{this.author_email}}</th>
+          <th>{{this.body}}</th>
+          <th>{{this.updated_at}}</th>
+          <th class="comment-actions">
+            <a href="{{link_to_remove}}">Remove</a>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  {{/each}}
+</div>

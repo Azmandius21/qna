@@ -41,3 +41,8 @@
     .question-attachments id="#{question.id}"
       = render "shared/attachment", resource: question 
 
+  .question-comments 
+    .comments-list 
+      = render 'comments/list', commentable: question
+    .new-comment
+      = render 'comments/form', commentable: question

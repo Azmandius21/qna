@@ -1,0 +1,11 @@
+.container.card 
+  - commentable.comments.each do |comment|
+    table.table.table-hover
+      tbody
+        tr
+          th  =comment.user.email
+          th  =comment.body 
+          th  =comment.updated_at
+          th = link_to 'remove',
+           "questions/#{commentable.id}/delete_comment/#{comment.id}",
+           method: :delete, remote: true
