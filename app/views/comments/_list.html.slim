@@ -6,6 +6,5 @@
           th  =comment.user.email
           th  =comment.body 
           th  =comment.updated_at
-          th = link_to 'remove',
-           "questions/#{commentable.id}/delete_comment/#{comment.id}",
+          th = link_to 'remove', url_for([:delete_comment, commentable, comment_id: comment.id]),
            method: :delete, remote: true

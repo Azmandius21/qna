@@ -1,5 +1,5 @@
 = form_with url: "#{polymorphic_path(commentable)}/add_comment",
-    local:false, data: { type: :json } do |f|
+    local:false, data: { type: :json }, method: :patch do |f|
   p 
     = f.label :body, 'Your Comment'
     = f.text_area :body , size: "60x2"

@@ -19,11 +19,11 @@ module Commented
   end
 
   def delete_comment
-    @comment = Comment.find_by(id: params[:id])
-    comment_id = @comment.id
+    # byebug
+    @comment = Comment.find(params[:comment_id])
     respond_to do |format|
       if @comment.destroy
-        format.json { render json: { id: comment_id } }
+        format.json { render json: { id: @comment.id } }
       else
         format.json { render json: [ @comment.errors.full_messages, { status: :unprocessable_entity }] }
       end
