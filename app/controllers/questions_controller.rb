@@ -1,3 +1,4 @@
+require 'byebug'
 class QuestionsController < ApplicationController
   include Voted
   include Commented
