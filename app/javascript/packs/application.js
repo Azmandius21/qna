@@ -21,6 +21,7 @@ require('./answers')
 require('./questions')
 require('./gist')
 require('./vote')
+require('./comment')
 
 Rails.start()
 Turbolinks.start()

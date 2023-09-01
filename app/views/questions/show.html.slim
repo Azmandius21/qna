@@ -1,5 +1,12 @@
 .question-edit-hide-form   
   = render 'questions/question', question: @question
+
+  .question-comments 
+      .comments-list 
+        = render 'comments/list', commentable: @question
+      .new-comment
+        = render 'comments/form', commentable: @question
+
   .question-reward
     = render 'shared/reward_link', resource: @question
         
