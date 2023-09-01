@@ -3,6 +3,7 @@ module Commented
   
   included do
     before_action :set_commentable, only: %i[ add_comment ]
+    after_action :publish_comment, only: %i[ add_comment ]
   end
 
   def add_comment
@@ -41,5 +42,22 @@ module Commented
 
   def set_commentable
     @commentable = model_class.find(params[:id])    
+  end
+
+  def publish_comment
+    return if @comment.errors.any?
+
+    comment_hash = Hash[
+      comment: {
+        id: @comment.id,
+        body: @comment.body,
+        users_email: @comment.user.email,
+        updated_at: @comment.updated_at,
+        commentable: @comment.commentable_type.pluralize.downcase,
+        commentable_id: @comment.commentable_id
+      }
+    ]
+
+    ActionCable.server.broadcast "comments_channel", comment_hash
   end
 end
