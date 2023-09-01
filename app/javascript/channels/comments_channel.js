@@ -2,27 +2,21 @@ import consumer from "./consumer"
 import commentTemplate from "../templates/partials/_comment.hbs"
 
 $(document).on("turbolinks:load", function(){
-  const table = $(".comments-list")
-  const channel = "QuestionsChannel"
+  const commentsElement = $(".comments-list .container")
+  const channel = "CommentsChannel"
 
   console.log(gon.user_id, gon.user_email)
-  // if (channelExist(channel)) return
 
   consumer.subscriptions.create(channel, {
     connected(){
-      console.log("Connected ...")
+      console.log("Coomments_channel connected ...")
     },
 
     received(data){
-      console.log(data)
-      
-      // $('.questions').append(data)
       const comment = commentTemplate(data)
-      table.append(question)
-      
+      commentsElement.append(comment)
+      $('.new-comment textarea').val('')      
     }
   })   
-
-
 })
 

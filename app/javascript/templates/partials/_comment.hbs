@@ -1,13 +1,18 @@
-<table class="table table-hover">
-  <tbody>
-    <tr>
-      <th>{{comment.user.email}}</th>
-      <th>{{comment.user.email}}</th>
-      <th>{{comment.user.email}}</th>
-      <th><a href="{{comment.commentable}}/{{comment.commentableId}}
-        delete_comment?comment_id={{comment.id}}" data-remote="true",
-        data-method="delete" rel="nofollow"></a>remove</th>
-    </tr>
-  </tbody>
-</table>
-          
+<div class="comment" id="{{comment.id}}">
+  <table class="table table-hover">
+    <tbody>
+      <tr>
+        <th>{{comment.users_email}}</th>
+        <th>{{comment.body}}</th>
+        <th>{{comment.updated_at}}</th>
+        {{!-- {{#if comment.user_id}} --}}
+        {{!-- <th> --}}
+          {{!-- <a class="remove-comment-link" data-id="{{comment.id}}" 
+            data-remote="true" 
+            rel="nofollow"
+            data-method="delete" 
+            href="/{{comment.commentable}}/{{comment.commentable_id}}/delete_comment?comment_id={{comment.id}}">remove</a></th> --}}
+      </tr>
+    </tbody>
+  </table>
+</div>

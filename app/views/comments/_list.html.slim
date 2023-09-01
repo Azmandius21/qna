@@ -7,5 +7,9 @@
             th  =comment.user.email
             th  =comment.body 
             th  =comment.updated_at
-            th = link_to 'remove', url_for([:delete_comment, commentable, comment_id: comment.id]),
-            method: :delete, remote: true
+            -if current_user && current_user == comment.user 
+              th = link_to 'remove',
+                url_for([:delete_comment, commentable, comment_id: comment.id]),
+                method: :delete, remote: true,
+                class: 'remove-comment-link',
+                data: { id: comment.id }
