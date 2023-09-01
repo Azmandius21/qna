@@ -1,10 +1,11 @@
-.container.card 
+.container.card
   - commentable.comments.each do |comment|
-    table.table.table-hover
-      tbody
-        tr
-          th  =comment.user.email
-          th  =comment.body 
-          th  =comment.updated_at
-          th = link_to 'remove', url_for([:delete_comment, commentable, comment_id: comment.id]),
-           method: :delete, remote: true
+    .comment id="#{comment.id}"
+      table.table.table-hover
+        tbody
+          tr
+            th  =comment.user.email
+            th  =comment.body 
+            th  =comment.updated_at
+            th = link_to 'remove', url_for([:delete_comment, commentable, comment_id: comment.id]),
+            method: :delete, remote: true
