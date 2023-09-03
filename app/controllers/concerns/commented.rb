@@ -19,7 +19,6 @@ module Commented
   end
 
   def delete_comment
-    # byebug
     @comment = Comment.find(params[:comment_id])
     respond_to do |format|
       if @comment.destroy
