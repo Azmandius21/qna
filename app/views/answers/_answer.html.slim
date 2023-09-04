@@ -28,6 +28,8 @@
 .answer id="#{answer.id}"
   .row 
     .vote-block.col-2
+      .votable-rank id="#{answer.id}" 
+        = Vote.rank_of_votable(answer)
       = render 'shared/vote_answer', votable: answer
     .answer-content.col.d-flex.flex-row
       .answer-author.text-primary.me-2

@@ -4,7 +4,7 @@
   .question-main.raw
     .question-vote.col.col-md-2
       .votable-rank id="#{question.id}" 
-        p = Vote.rank_of_votable(question)	
+        = Vote.rank_of_votable(question)	
       .voting
         = render 'shared/vote', votable: question
     .question-content.col.col-md-6
