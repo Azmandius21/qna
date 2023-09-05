@@ -51,8 +51,9 @@ module Commented
         id: @comment.id,
         body: @comment.body,
         users_email: @comment.user.email,
-        updated_at: @comment.updated_at,
+        updated_at: @comment.updated_at.strftime('%m/%d/%Y %H:%M'),
         commentable: @comment.commentable_type.pluralize.downcase,
+        commentable_type:  @comment.commentable_type.downcase,
         commentable_id: @comment.commentable_id
       }
     ]

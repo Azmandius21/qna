@@ -1,6 +1,7 @@
 .container.card
+  = link_to  "Comments", '#', class: "btn btn-outline-secondary"
   - commentable.comments.each do |comment|
-    .comment id="#{comment.id}"
+    .comment id="#{comment.id}" data-commentable-id="#{commentable.id}"
       table.table.table-hover
         tbody
           tr  

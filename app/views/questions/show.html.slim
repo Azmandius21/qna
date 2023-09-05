@@ -1,7 +1,7 @@
-.question-edit-hide-form   
+.question-edit-hide-form  
   = render 'questions/question', question: @question
 
-  .question-comments 
+  .question-comments id="#{class_by_string(@question)}-#{@question.id}"
       .comments-list 
         = render 'comments/list', commentable: @question
       .new-comment
@@ -12,14 +12,14 @@
         
   .answers.card.text-center
     h2 Answers:
-    ol 
-      - if @question.best_answer_id
-        .best-answer
-          = render 'answers/best_answer', resource: @best_answer 
-      .other-answers 
-        = render partial:'answers/answer', collection: @answers
     .answer-errors
       = render 'shared/errors', resource: @answer
+    - if @best_answer
+      .best-answer.border.border-primary
+        = render 'answers/answer', answer: @best_answer 
+    .other-answers 
+      = render partial:'answers/answer', collection: @answers
 
     - if user_signed_in?  
       = render 'answers/form'
+

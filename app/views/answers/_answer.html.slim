@@ -25,7 +25,7 @@
 /     = render 'answers/form_edit', resource: answer
 
 
-.answer id="#{answer.id}"
+.answer id="#{class_by_string(answer)}-#{answer.id}"
   .row 
     .vote-block.col-2
       .votable-rank id="#{answer.id}" 
@@ -37,3 +37,20 @@
       .answer-content
         = answer.body
     .answer-actions.col-2
+      - if user_signed_in? && current_user.author?(answer) 
+        p = link_to 'Edit', answer, class: 'edit-answer-link',
+          data: { answer_id: answer.id }, remote: true
+        p = link_to 'Delete', answer, class: 'delete-answer-link',
+          data: { answer_id: answer.id }, method: 'delete', remote: true
+      
+      - if user_signed_in? && current_user.author?(answer.question) && !answer.is_best?
+        p = link_to 'Best answer', select_answer_path(answer),
+          class: 'best-answer-link',
+          data: { answer_id: answer.id },
+          method: :patch,
+          remote: true
+  .answer-comments.row 
+    .comments-list 
+      = render 'comments/list', commentable: answer
+    .new-comment
+      = render 'comments/form', commentable: answer
