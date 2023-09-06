@@ -19,7 +19,6 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.update(author_id: current_user.id)
-    gon.question = @question
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
@@ -30,8 +29,8 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.links.build
-    gon.question = @question
-    gon.answer = @answer
+    gon.question_id = @question.id
+    
     if @question.best_answer_id
       @best_answer = @question.best_answer
       @answers = @question.answers.where.not(id: @question.best_answer_id)

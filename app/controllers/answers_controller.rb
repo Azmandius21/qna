@@ -64,4 +64,71 @@ class AnswersController < ApplicationController
   def find_answer
     @answer = Answer.find(params[:id])
   end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast( "answer_channel_#{@answer.question.id}",
+      {
+        answer: {
+          
+        }
+      }
+    )
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    
+    vote_hash = Hash[ 
+      like_url: like_question_url(@question),
+      dislike_url: dislike_question_url(@question), 
+      reset_url: reset_question_url(@question)
+    ]
+
+    attached_files = @question.files&.map do |file|
+      { 
+        file_name: file.filename.to_s,
+        file_url: url_for(file)
+      }
+    end
+
+    links = @question.links&.map do |link|
+      if link.gist?
+        {
+          link_id: link.id,
+          gist_id: link.give_gist_id
+        }
+      else
+        {
+          link_id: link.id,
+          link_url: link.url,
+          link_name: link.name
+        }
+      end
+    end
+
+    if @question.reward
+      reward = {
+        reward_name: @question.reward.name,
+        reward_url: url_for(@question.reward.image)
+      }
+    end      
+
+    ActionCable.server.broadcast "questions_channel_#{@question.id}", 
+      {
+        question: { id: @question.id,
+                    vote_rank: Vote.rank_of_votable(@question) ,
+                    body: @question.body,
+                    title: @question.title,
+                    question_url: question_url(@question),
+                    author_email: @question.author.email,
+                    user_signed_in: "#{ current_user ? true : false }",
+                    vote: vote_hash,
+                    attachments: attached_files,
+                    links: links,
+                    reward: reward
+                  }
+      }
+  end
 end

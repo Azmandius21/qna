@@ -1,5 +1,6 @@
 .question-edit-hide-form  
-  = render 'questions/question', question: @question
+  .question-show-content id="#{@question.id}"
+    = render 'questions/question', question: @question
 
   .question-comments id="#{class_by_string(@question)}-#{@question.id}"
       .comments-list 

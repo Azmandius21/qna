@@ -8,7 +8,7 @@ $(document).on('turbolinks:load', function(){
 
   $('.answers').on('click', '.delete-answer-link', function(e){
     const answerId = $(this).data('answerId');
-    $('.answer-'+ answerId).remove();
+    $('#answer-'+answerId).remove();
   });
 
   $('form.new-answer').on('ajax:success', function(e){
