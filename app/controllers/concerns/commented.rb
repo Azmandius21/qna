@@ -25,6 +25,7 @@ module Commented
     respond_to do |format|
       if @comment.destroy
         format.json { render json: { id: @comment.id } }
+        format.json { render json: { id: @comment.id } }
       else
         format.json { render json: [@comment.errors.full_messages, { status: :unprocessable_entity }] }
       end
