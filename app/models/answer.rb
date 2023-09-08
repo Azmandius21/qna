@@ -16,4 +16,8 @@ class Answer < ApplicationRecord
     question.update(best_answer_id: id)
     GivingReward.create(reward_id: question.reward.id, user_id: author.id) if question.reward.present?
   end
+
+  def is_best?
+    question.best_answer_id == id
+  end
 end

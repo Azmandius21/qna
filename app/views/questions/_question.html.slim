@@ -4,7 +4,7 @@
   .question-main.raw
     .question-vote.col.col-md-2
       .votable-rank id="#{question.id}" 
-        p = Vote.rank_of_votable(question)	
+        = Vote.rank_of_votable(question)	
       .voting
         = render 'shared/vote', votable: question
     .question-content.col.col-md-6
@@ -14,7 +14,8 @@
     .question-actions.col.col-md-2
       p = link_to 'Show', question_path(question) 
       - if current_user&.author?(question)
-        p = link_to  "Delete", question_path(question), method: :delete
+        - unless action_name == "show"
+          p = link_to  "Delete", question_path(question), method: :delete
         p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     
     .question-author.col.col-md-2 
@@ -41,8 +42,4 @@
     .question-attachments id="#{question.id}"
       = render "shared/attachment", resource: question 
 
-  .question-comments 
-    .comments-list 
-      = render 'comments/list', commentable: question
-    .new-comment
-      = render 'comments/form', commentable: question
+  

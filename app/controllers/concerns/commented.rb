@@ -3,6 +3,7 @@ module Commented
   
   included do
     before_action :set_commentable, only: %i[ add_comment ]
+    after_action :publish_comment, only: %i[ add_comment ]
   end
 
   def add_comment
@@ -19,11 +20,10 @@ module Commented
   end
 
   def delete_comment
-    @comment = Comment.find_by(id: params[:id])
-    comment_id = @comment.id
+    @comment = Comment.find(params[:comment_id])
     respond_to do |format|
       if @comment.destroy
-        format.json { render json: { id: comment_id } }
+        format.json { render json: { id: @comment.id } }
       else
         format.json { render json: [ @comment.errors.full_messages, { status: :unprocessable_entity }] }
       end
@@ -44,7 +44,21 @@ module Commented
     @commentable = model_class.find(params[:id])    
   end
 
-  def find_comment
-    @comment = Comment.find(params[:id])
+  def publish_comment
+    return if @comment.errors.any?
+
+    comment_hash = Hash[
+      comment: {
+        id: @comment.id,
+        body: @comment.body,
+        users_email: @comment.user.email,
+        updated_at: @comment.updated_at.strftime('%m/%d/%Y %H:%M'),
+        commentable: @comment.commentable_type.pluralize.downcase,
+        commentable_type:  @comment.commentable_type.downcase,
+        commentable_id: @comment.commentable_id
+      }
+    ]
+
+    ActionCable.server.broadcast "comments_channel", comment_hash
   end
 end
