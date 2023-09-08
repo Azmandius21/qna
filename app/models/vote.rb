@@ -4,7 +4,7 @@ class Vote < ApplicationRecord
 
   def self.rank_of_votable(votable)
     if votable.votes.empty?
-      "Rank : 0"
+      'Rank : 0'
     else
       rank = votable.votes.where(liked: true).count * 2 - votable.votes.count
       "Rank : #{rank}"

@@ -1,9 +1,9 @@
 module Commented
   extend ActiveSupport::Concern
-  
+
   included do
-    before_action :set_commentable, only: %i[ add_comment ]
-    after_action :publish_comment, only: %i[ add_comment ]
+    before_action :set_commentable, only: %i[add_comment]
+    after_action :publish_comment, only: %i[add_comment]
   end
 
   def add_comment
@@ -11,10 +11,11 @@ module Commented
     # link_remove = url_for([:delete, @comment, @commentable])
     respond_to do |format|
       if @comment.save
-        format.json { render json: [@comment, {author_email: @comment.user.email}
-                                    ] }
+        format.json do
+          render json: [@comment, { author_email: @comment.user.email }]
+        end
       else
-        format.json { render json: [ @comment.errors.full_messages, { status: :unprocessable_entity }] }
+        format.json { render json: [@comment.errors.full_messages, { status: :unprocessable_entity }] }
       end
     end
   end
@@ -25,7 +26,7 @@ module Commented
       if @comment.destroy
         format.json { render json: { id: @comment.id } }
       else
-        format.json { render json: [ @comment.errors.full_messages, { status: :unprocessable_entity }] }
+        format.json { render json: [@comment.errors.full_messages, { status: :unprocessable_entity }] }
       end
     end
   end
@@ -33,15 +34,15 @@ module Commented
   private
 
   def comment_params
-    params.permit(:body)  
+    params.permit(:body)
   end
 
   def model_class
-    controller_name.classify.constantize  
+    controller_name.classify.constantize
   end
 
   def set_commentable
-    @commentable = model_class.find(params[:id])    
+    @commentable = model_class.find(params[:id])
   end
 
   def publish_comment
@@ -54,11 +55,11 @@ module Commented
         users_email: @comment.user.email,
         updated_at: @comment.updated_at.strftime('%m/%d/%Y %H:%M'),
         commentable: @comment.commentable_type.pluralize.downcase,
-        commentable_type:  @comment.commentable_type.downcase,
+        commentable_type: @comment.commentable_type.downcase,
         commentable_id: @comment.commentable_id
       }
     ]
 
-    ActionCable.server.broadcast "comments_channel", comment_hash
+    ActionCable.server.broadcast 'comments_channel', comment_hash
   end
 end

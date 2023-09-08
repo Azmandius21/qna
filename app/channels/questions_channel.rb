@@ -1,6 +1,6 @@
-class QuestionsChannel < ApplicationCable::Channel  
+class QuestionsChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "questions_channel"
+    stream_from 'questions_channel'
   end
 
   def do_something(data)
