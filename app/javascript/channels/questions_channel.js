@@ -5,8 +5,6 @@ $(document).on("turbolinks:load", function(){
   const questionsList = $(".questions-list")
   const channel = "QuestionsChannel"
 
-  console.log(gon.user_id, gon.user_email)
-
   consumer.subscriptions.create(channel, {
     connected(){
       console.log("Questions_channel connected ...")

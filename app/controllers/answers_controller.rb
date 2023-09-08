@@ -97,7 +97,7 @@ class AnswersController < ApplicationController
       end
     end
 
-    ActionCable.server.broadcast( "answer_channel_#{@answer.question.id}",
+    ActionCable.server.broadcast( "question_channel#{@answer.question.id}",
       {
         answer: {id: @answer.id,
           vote_rank: Vote.rank_of_votable(@answer) ,
