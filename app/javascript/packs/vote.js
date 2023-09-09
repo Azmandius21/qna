@@ -1,11 +1,12 @@
 $(document).on('turbolinks:load', function(){
-  $('.questions-list').on('ajax:success','.vote-link', function(e){
+  $('.question-edit-hide-form').on('ajax:success','.vote-link', function(e){
     const rank = e.detail[0][1]
     const votableId = e.detail[0][0]
-    const newUrl = '/questions/'+ votableId + '/reset.json'
+    const votableClass = e.detail[0][2]
+    const newUrl = '/'+ votableClass +'/'+ votableId + '/reset.json'
 
     $('#'+votableId+'.vote-link').toggleClass('hidden');
-    $('#'+votableId+'.votable-rank').html('<p>' + rank + '</p>')
+    $('#'+votableId+'.votable-rank').html(rank)
     $('#'+votableId+'.reset').attr("href", newUrl)
   })
 })

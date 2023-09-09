@@ -1,5 +1,7 @@
 @import "bootstrap";
 
+.hidden { display : none };
+
 .question-main{
   display: flex;
   justify-content: space-between;
@@ -7,4 +9,12 @@
 
 .question-nested{
   background-color: rgb(224, 252, 222);
+}
+
+.question-comments{
+  margin-top: 5px;
+}
+
+.best-answer{
+  border-radius: 2px;
 }

@@ -1,0 +1,36 @@
+<div class="answer" id="answer-{{answer.id}}">
+  <div class="row">
+    <div class="vote-bloc col-2">
+      <div class="votable-rank" id="{{answer.id}}">
+        {{answer.vote_rank}}
+      </div>
+      <div class="voting">
+        {{#if answer.user_signed_in}}
+          <div>
+            <a class="like vote-link" id="{{answer.id}}" data-remote="true" data-id="{{answer.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{answer.vote.like_url}}">
+              <i class="bi bi-hand-thumbs-up"></i></a>
+            <a class="dislike vote-link" id="{{answer.id}}" data-remote="true" data-id="{{answer.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{answer.vote.dislike_url}}">
+              <i class="bi bi-hand-thumbs-down"></i></a>
+            <a class="reset vote-link hidden" id="{{answer.id}}" data-remote="true" data-id="{{answer.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{answer.vote.reset_url}}">
+              <i class="bi bi-x-circle"></i></a>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="answer-content col d-flex flex-row">
+      <div class="answer-author text-primary me-2">
+        {{answer.author_email}}
+      </div>
+      <div class="answer-content">
+        {{answer.body}}
+      </div>
+    </div>
+  </div>
+  <div class="answer-comment row">
+    <div class="comment-list"></div>
+    <div class="new-comment"></div>
+  </div>
+</div>

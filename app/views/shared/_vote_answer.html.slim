@@ -1,0 +1,22 @@
+- if current_user && !current_user.author?(votable)
+	.votable-vote
+	- if current_user.can_vote_for?(votable)
+			= link_to url_for([:like, votable]),
+       class: 'like vote-link', id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+			   <i class="bi bi-hand-thumbs-up"></i>
+			= link_to  url_for([:dislike, votable]), class: 'dislike vote-link',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+					 <i class="bi bi-hand-thumbs-down"></i>
+			= link_to url_for([:reset, votable]), class: 'reset vote-link hidden',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json },  remote: true do 
+					 <i class="bi bi-x-circle"></i>	
+	- else         
+			= link_to  url_for([:like, votable]), class: 'like vote-link hidden',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+					<i class="bi bi-hand-thumbs-up"></i>
+			= link_to  url_for([:dislike, votable]), class: 'dislike vote-link hidden',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json }, remote: true do 
+					<i class="bi bi-hand-thumbs-down"></i>
+			= link_to url_for([:reset, votable]), class: 'reset vote-link',
+					id: votable.id, method: :patch, data: { id: votable.id, type: :json },  remote: true do 
+					<i class="bi bi-x-circle"></i>
