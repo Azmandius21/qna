@@ -14,6 +14,7 @@ $(document).on("turbolinks:load", function(){
     },
 
     received(data){
+      if (gon.user_id == data['answer']['author_id']) return
       const answer = answerTemplate(data)
       answersElement.append(answer)
     }

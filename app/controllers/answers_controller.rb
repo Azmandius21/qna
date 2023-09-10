@@ -104,6 +104,7 @@ class AnswersController < ApplicationController
           body: @answer.body,
           answer_url: answer_url(@answer),
           author_email: @answer.author.email,
+          author_id: @answer.author.id,
           user_signed_in: "#{ current_user ? true : false }",
           vote: vote_hash,
           attachments: attached_files,

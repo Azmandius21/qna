@@ -1,0 +1,18 @@
+.comment id="#{comment.id}" data-commentable-id="#{commentable.id}"
+      table.table.table-hover
+        tbody
+          tr  
+            th class="d-flex flex-row"
+              .connent-created-at.me-2 
+                =comment.created_at.strftime('%m/%d/%Y %H:%M')
+              .comment-author.text-primary.me-2
+                =comment.user.email
+              .comment-body  
+                =comment.body 
+            th  
+            -if current_user && current_user == comment.user 
+              th = link_to 'remove',
+                url_for([:delete_comment, commentable, comment_id: comment.id]),
+                method: :delete, remote: true,
+                class: 'remove-comment-link',
+                data: { id: comment.id }

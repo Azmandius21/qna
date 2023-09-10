@@ -8,11 +8,13 @@ module Commented
 
   def add_comment
     @comment = @commentable.comments.new(comment_params.merge(user_id: current_user.id))
-    # link_remove = url_for([:delete, @comment, @commentable])
     respond_to do |format|
       if @comment.save
-        format.json { render json: [@comment, {author_email: @comment.user.email}
-                                    ] }
+        format.json { render json: [@comment, { author_email: @comment.user.email,
+          author_id: @comment.user.id,
+          commentable_type: class_by_string(@commentable),
+          commentable_id: @commentable.id
+          }] }
       else
         format.json { render json: [ @comment.errors.full_messages, { status: :unprocessable_entity }] }
       end
@@ -44,10 +46,6 @@ module Commented
     @commentable = model_class.find(params[:id])    
   end
 
-<<<<<<< HEAD
-  def find_comment
-    @comment = Comment.find(params[:id])
-=======
   def publish_comment
     return if @comment.errors.any?
 
@@ -55,6 +53,7 @@ module Commented
       comment: {
         id: @comment.id,
         body: @comment.body,
+        user_id: @comment.user.id,
         users_email: @comment.user.email,
         updated_at: @comment.updated_at.strftime('%m/%d/%Y %H:%M'),
         commentable: @comment.commentable_type.pluralize.downcase,
@@ -64,6 +63,5 @@ module Commented
     ]
 
     ActionCable.server.broadcast "comments_channel", comment_hash
->>>>>>> 860e7ddcb08c851a5962383dd5b554dafa25d4ac
   end
 end

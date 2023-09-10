@@ -1,0 +1,3 @@
+<% if !@comment.errors.present? %>
+  $('#'+ class_by_string(@commentable) +'-' + @comment.commentable_id + '.comment-list.container').append('<%= j render @comment %>');
+<% end %>

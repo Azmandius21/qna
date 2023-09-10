@@ -13,10 +13,9 @@ Rails.application.routes.draw do
   end
 
   concern :commentable do
-    resources :comments, only: %i[ destroy ]
     member do
-      post 'add_comment'
-      # delete 'delete_comment/:comment_id'
+      patch 'add_comment'
+      delete 'delete_comment'
     end
   end
 
