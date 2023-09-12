@@ -1,7 +1,7 @@
 import consumer from "./consumer"
 import commentTemplate from "../templates/partials/_comment.hbs"
 
-$(document).on("turbolinks:load", function(){
+$(document).on("DOMContentLoaded", function(){
   const channel = "CommentsChannel"
 
   console.log(gon.user_id, gon.user_email)
@@ -12,8 +12,6 @@ $(document).on("turbolinks:load", function(){
     },
 
     received(data){
-      console.log( gon.user_id, data )
-       if (gon.user_id == data["comment"]["user_id"]) return
       const comment = commentTemplate(data)
       const commented_resource_type = data["comment"]["commentable_type"]
       const commented_resource_id = data["comment"]["commentable_id"]

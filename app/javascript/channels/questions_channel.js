@@ -1,7 +1,7 @@
 import consumer from "./consumer"
 import questionTemplate from "../templates/question.hbs"
 
-$(document).on("turbolinks:load", function(){
+$(document).on("DOMContentLoaded", function(){
   const questionsList = $(".questions-list")
   const channel = "QuestionsChannel"
 
