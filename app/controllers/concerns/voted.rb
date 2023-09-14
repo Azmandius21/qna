@@ -2,7 +2,7 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_votable, only: %i[ like dislike reset ]
+    before_action :set_votable, only: %i[like dislike reset]
   end
 
   def like
@@ -10,9 +10,9 @@ module Voted
 
     @vote = @votable.votes.new(user: current_user, liked: true)
     respond_to do |format|
-      if @vote.save 
-        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable), class_by_string(@votable,2)] }
-      else 
+      if @vote.save
+        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable), class_by_string(@votable, 2)] }
+      else
         format.json { render json: [@vote.errors.full_messages, { status: :unprocessable_entity }] }
       end
     end
@@ -23,8 +23,8 @@ module Voted
 
     @vote = @votable.votes.new(user: current_user, liked: false)
     respond_to do |format|
-      if @vote.save 
-        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable), class_by_string(@votable,2)] }
+      if @vote.save
+        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable), class_by_string(@votable, 2)] }
       else
         format.json { render json: [@vote.errors.full_messages, { status: :unprocessable_entity }] }
       end
@@ -37,7 +37,7 @@ module Voted
     @vote = @votable.votes.find_by(user: current_user)
     respond_to do |format|
       if @vote.destroy
-        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable), class_by_string(@votable,2)] }
+        format.json { render json: [@votable.id, Vote.rank_of_votable(@votable), class_by_string(@votable, 2)] }
       else
         format.json { render json: [@vote.errors.full_messages, { status: :unprocessable_entity }] }
       end

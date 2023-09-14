@@ -9,18 +9,16 @@ shared_examples 'commented' do
 
   describe '#add_comment', format: :js do
     it 'user comment on the votable' do
-      patch :add_comment, params: { id: votable.id, body:"My comment", user_id: user.id,  format: :json }
+      patch :add_comment, params: { id: votable.id, body: 'My comment', user_id: user.id, format: :json }
       expect(votable.comments.count).to eq(1)
     end
   end
 
   describe '#delete_comment', format: :js do
     it 'user delete his comment' do
-      patch :add_comment, params: { id: votable.id, body:"My comment", user_id: user.id,  format: :json }
+      patch :add_comment, params: { id: votable.id, body: 'My comment', user_id: user.id, format: :json }
       delete :delete_comment, params: { id: votable.comments.last.id, format: :json }
       expect(votable.comments.count).to eq(0)
     end
   end
 end
-
-  

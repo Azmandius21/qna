@@ -21,7 +21,7 @@ shared_examples 'voted' do
     end
   end
 
-  describe '#reset_vote',format: :js do
+  describe '#reset_vote', format: :js do
     it 'user voting for votable' do
       patch :like, params: { id: votable.id, format: :json }
       patch :reset, params: { id: votable.id, format: :json }

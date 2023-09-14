@@ -5,6 +5,7 @@ feature 'Comments for question', "
   As authenticated user
   I'd like to be able to add/change/remove comment
 " do
+
     given!(:question_author){ create(:user) }
     given!(:question){ create(:question, author: question_author) }
     given!(:user){ create(:user) }
