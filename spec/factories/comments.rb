@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    body { "MyComment" }
+    body { 'MyComment' }
     user
-    association :commentable, facory: [:question, :answer]
+    association :commentable, facory: %i[question answer]
   end
 end
