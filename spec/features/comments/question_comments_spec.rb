@@ -8,10 +8,9 @@ feature 'Comments for question', "
   given!(:question_author) { create(:user) }
   given!(:question) { create(:question, author: question_author) }
   given!(:user) { create(:user) }
-  given!(:someone) { create(:user) }
-  given!(:unuthenticated_user) { create(:user) }
+  
 
-  describe 'authenticated user' do
+  describe 'authenticated user', js: true do
     background do
       sign_in(user)
       visit question_path(question)
@@ -31,8 +30,9 @@ feature 'Comments for question', "
 
   describe 'unauthenticated user' do
     scenario 'trys to add Comment' do
+      visit question_path(question)
       within '.new-comment' do
-        expect(page).to_not has_selector?('new-comment')
+        expect(page).to_not have_selector('form')
       end
     end
   end

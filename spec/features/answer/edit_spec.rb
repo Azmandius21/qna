@@ -20,17 +20,18 @@ feature 'User can edit his answer', "
     scenario 'Edit answer with valid data', js: true do
       sign_in(author)
       visit question_path(question)
-
-      click_on 'Edit answer'
-      within '.edit-answer' do
+      within '.answer-actions' do
+        click_on 'Edit'
+      end
+      
+      within '.answer-edit-form' do
         fill_in 'Body', with: 'Edited answer'
         click_on 'Save'
       end
-
+      
       within '.other-answers' do
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'Edited answer'
-        expect(page).to_not have_selector 'textarea'
       end
     end
 
@@ -38,8 +39,11 @@ feature 'User can edit his answer', "
       sign_in(author)
       visit question_path(question)
 
-      click_on 'Edit answer'
-      within '.edit-answer' do
+      within '.answer-actions' do
+        click_on 'Edit'
+      end
+
+      within '.answer-edit-form' do
         fill_in 'Body', with: 'Edited answer'
         attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
         click_on 'Save'
@@ -53,8 +57,11 @@ feature 'User can edit his answer', "
       sign_in(author)
       visit question_path(question)
 
-      click_on 'Edit answer'
-      within '.edit-answer' do
+      within '.answer-actions' do
+        click_on 'Edit'
+      end
+
+      within '.answer-edit-form' do
         fill_in 'Body', with: ''
         click_on 'Save'
 

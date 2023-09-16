@@ -8,7 +8,10 @@ $(document).on('DOMContentLoaded', function(){
 
   $('.answers').on('click', '.delete-answer-link', function(e){
     const answerId = $(this).data('answerId');
+    e.stopPropagation
+    console.log(answerId)
     $('#answer-'+answerId).remove();
+    
   });
 
   $('form.new-answer').on('ajax:success', function(e){

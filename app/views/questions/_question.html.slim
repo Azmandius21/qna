@@ -37,8 +37,5 @@
       = render 'shared/links_form', f: f
 
   .question-nested.raw.fs-6.lh-1
-    .question-links id="#{question.id}"
-      = render "shared/show_links", resource: question
-    .question-attachments id="#{question.id}"
-      = render "shared/attachment", resource: question 
-
+    = render 'shared/show_nested_attributes', resource: question
+  

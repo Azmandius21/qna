@@ -1,4 +1,4 @@
-.answer id="#{class_by_string(answer)}-#{answer.id}"
+.answer.card id="#{class_by_string(answer)}-#{answer.id}"
   .row 
     .vote-block.col-2
       .votable-rank id="#{answer.id}" 
@@ -13,15 +13,20 @@
       - if user_signed_in? && current_user.author?(answer) 
         p = link_to 'Edit', answer, class: 'edit-answer-link',
           data: { answer_id: answer.id }, remote: true
-        p = link_to 'Delete_answer', answer, class: 'delete-answer-link',
-          data: { answer_id: answer.id }, method: 'delete', remote: true
-      
+        p = link_to 'Delete answer', answer_path(answer), class: 'delete-answer-link',
+          data: { answer_id: answer.id }, method: :delete, remote: true
       - if user_signed_in? && current_user.author?(answer.question) && !answer.is_best?
         p = link_to 'Best answer', select_answer_path(answer),
           class: 'best-answer-link',
           data: { answer_id: answer.id },
           method: :patch,
           remote: true
+  .answer-nested.raw.fs-6.lh-1
+    = render 'shared/show_nested_attributes', resource: answer
+
+  .answer-edit-form.row
+    = render 'answers/form_edit', resource: answer
+
   .answer-comments.row
     .comments-list 
       = render 'comments/list', commentable: answer
