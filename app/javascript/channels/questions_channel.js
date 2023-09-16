@@ -10,9 +10,7 @@ $(document).on("DOMContentLoaded", function(){
       console.log("Questions_channel connected ...")
     },
 
-    received(data){
-      console.log(data)
-      
+    received(data){      
       const question = questionTemplate(data)
       questionsList.append(question)
     }
