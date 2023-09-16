@@ -1,6 +1,11 @@
 require 'rails_helper'
+require_relative './concerns/voted_spec'
+require_relative './concerns/commented_spec'
 
 RSpec.describe QuestionsController, type: :controller do
+  it_behaves_like 'voted'
+  it_behaves_like 'commented'
+
   let(:user) { create(:user) }
   let(:not_author) { create(:user) }
   let(:questions) { create_list(:question, 3) }
@@ -42,6 +47,12 @@ RSpec.describe QuestionsController, type: :controller do
         expect do
           post :create, params: { question: question_attr }
         end.to change(Question, :count).by(1)
+      end
+
+      xit 'broadcast new question' do
+        expect { post :create, params: { question: question_attr } }.to(
+          have_broadcasted_to('questions_channel').with(question_attr)
+        )
       end
 
       it 'redirect to show view' do

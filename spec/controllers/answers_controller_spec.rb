@@ -1,6 +1,11 @@
 require 'rails_helper'
+require_relative './concerns/voted_spec'
+require_relative './concerns/commented_spec'
 
 RSpec.describe AnswersController, type: :controller do
+  it_behaves_like 'voted'
+  it_behaves_like 'commented'
+
   let(:user) { create(:user) }
   let(:question) { create(:question, author_id: user.id) }
 
@@ -18,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render  #create answer' do
         post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
-        expect(response).to render_template "answers/_answer"
+        expect(response).to render_template 'answers/_answer'
       end
     end
 
@@ -33,7 +38,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render #create answer' do
         post :create, params: { question_id: question, author_id: user, answer: answer_attributes }
-        expect(response).to render_template "shared/_errors"
+        expect(response).to render_template 'shared/_errors'
       end
     end
   end

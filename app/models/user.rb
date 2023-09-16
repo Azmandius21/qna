@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :giving_rewards, dependent: :destroy
   has_many :rewards, through: :giving_rewards
   has_many :votes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   def author?(subject)
     id.eql?(subject.author_id)

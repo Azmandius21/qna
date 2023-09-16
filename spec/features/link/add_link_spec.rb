@@ -49,7 +49,7 @@ feature 'add links to objects', "
     click_on 'Ask'
     click_on 'Show gist content'
     expect(page).to_not have_link 'My gist link', href: gist_url
-    expect(page).to have_css '.gist-link'
+    expect(page).to have_css '.gist-content'
   end
 
   scenario 'add gist link to answer', js: true do
@@ -64,7 +64,7 @@ feature 'add links to objects', "
       click_on 'Show gist content'
 
       expect(page).to_not have_link 'My gist link', href: gist_url
-      expect(page).to have_css '.gist-link'
+      expect(page).to have_css '.gist-content'
       expect(page).to have_content 'Gist content'
     end
   end

@@ -1,21 +1,32 @@
 Rails.application.routes.draw do
+  root to: 'questions#index'
+
   devise_for :users
 
-  get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
+  concern :votable do
+    member do
+      patch 'like'
+      patch 'dislike'
+      patch 'reset'
+    end
+  end
 
-  resources :questions do
-    resources :answers, shallow: true do
+  concern :commentable do
+    member do
+      patch 'add_comment'
+      delete 'delete_comment'
+    end
+  end
+
+  resources :questions, concerns: %i[votable commentable] do
+    resources :answers, concerns: %i[votable commentable], shallow: true do
       patch 'select', on: :member
     end
   end
 
+  get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
+
   delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
-
-  post   'questions/:question_id/votes/', to: 'votes#create', as: 'create_vote_to_question'
-  post   'answers/:answer_id/votes/', to: 'votes#create', as: 'create_vote_to_answer'
-  delete 'votes/:id/destroy', to: 'votes#destroy', as: 'destroy_vote'
-
-  root to: 'questions#index'
 
   mount ActionCable.server => '/cable'
 end

@@ -1,0 +1,71 @@
+<div class="question card text-center" id="question-{{question.id}}">
+  <div class="question-main raw">
+    
+    <div class="question-vote col col-md-2">
+      <div class="votable-rank" id="{{question.id}}">
+        <p>{{question.vote_rank}}</p>
+      </div>
+      <div class="voting">
+        {{#if question.user_signed_in}}
+          <div>
+            <a class="like vote-link" id="{{question.id}}" data-remote="true" data-id="{{question.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{question.vote.like_url}}">
+              <i class="bi bi-hand-thumbs-up"></i></a>
+            <a class="dislike vote-link" id="{{question.id}}" data-remote="true" data-id="{{question.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{question.vote.dislike_url}}">
+              <i class="bi bi-hand-thumbs-down"></i></a>
+            <a class="reset vote-link hidden" id="{{question.id}}" data-remote="true" data-id="{{question.id}}"
+              data-type="json" data-method="patch" rel="nofollow" href="{{question.vote.reset_url}}">
+              <i class="bi bi-x-circle"></i></a>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="question-content col col-md-6">
+      <p>{{question.body}}</p>
+      <h6>{{question.title}}</h6>
+    </div>
+
+    <div class="question-actions col col-md-2">
+      <a href="{{question_url}}">Show</a>
+    </div>
+
+    <div class="question-author col col-md-2">
+      <p>{{question.author_email}}</p>
+    </div>
+
+  </div>
+
+  <div class="question-nested raw fs-6 lh-1">
+    {{#if question.links}}
+      <div class="question-links" id="{{question.id}}">
+        {{#each question.links}}
+          {{#if this.gist_id}}
+            <a href="#" 
+              data-gist-id="{{this.gist_id}}" 
+              data-link-id="{{this.link_id}}"
+              class="show-gist-trigger links">Show gist content
+            </a>
+            <div class="gist-content links" id="{{this.link_id}}"></div>
+          {{else}}
+            <a href="{{this.link_url}}" id="{{this.link_id}}">{{this.link_name}}</a>
+          {{/if}}
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if question.attachments}}
+      <div class="question-attachments" id="{{question.id}}">
+        <div class="col col-2">
+          <p>Attachments:</p>
+        </div>
+        <div class="col">
+          {{#each question.attachments}}
+            <p><a href="{{this.file_url}}">{{this.file_name}}</a></p>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>

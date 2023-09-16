@@ -18,8 +18,8 @@ I'd like be able to choose one best answer
     expect(page).to have_content answers[2].body
 
     best_answer_id = answers[1].id
-
-    within ".answer-#{best_answer_id}" do
+    
+    within "#answer-#{best_answer_id}" do
       click_on 'Best answer'
     end
 

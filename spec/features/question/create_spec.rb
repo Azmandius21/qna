@@ -57,7 +57,7 @@ feature 'User can create a question', "
   end
 
   describe 'Multiply sessions' do
-    given(:guest) { create(:user) }
+    given!(:guest) { create(:user) }
 
     scenario 'user has ask a question and all users are able to see this' do
       Capybara.using_session(user) do
@@ -75,10 +75,12 @@ feature 'User can create a question', "
         fill_in 'Title', with: 'Test question'
         fill_in 'Body', with: 'text text text'
         click_on 'Ask'
-        
-        expect(page).to have_content 'Test question'
-        expect(page).to have_content 'text text text'  
-        save_and_open_page
+
+        within '.question-content' do
+          expect(page).to have_content 'Test question'
+          expect(page).to have_content 'text text text'
+        end
+
       end
       
       Capybara.using_session(guest) do

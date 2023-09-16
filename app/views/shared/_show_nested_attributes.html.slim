@@ -1,0 +1,4 @@
+div class="#{class_by_string(resource)}-links" id="#{resource.id}"
+  = render "shared/show_links", resource: resource
+div class="#{class_by_string(resource)}-attachments" id="#{resource.id}"
+  = render "shared/attachment", resource: resource 

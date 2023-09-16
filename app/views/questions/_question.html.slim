@@ -1,14 +1,41 @@
-.question-errors 
-  = render 'shared/errors', resource: question
-.question  
-  .block 
-    p title: #{question.title} 
-    p body: #{question.body}
-  .block
-    p creator id : #{question.author_id.to_s}
-    p = link_to 'Show', question_path(question)    
-  .block 
-    .votable-rank id="#{question.id}" 
-      h4 = Vote.rank_of_votable(question)	
-  	
+.question-errors.raw
+    = render 'shared/errors', resource: question  	
+.question.card.text-center id="#{question.id}"
+  .question-main.raw
+    .question-vote.col.col-md-2
+      .votable-rank id="#{question.id}" 
+        = Vote.rank_of_votable(question)	
+      .voting
+        = render 'shared/vote', votable: question
+    .question-content.col.col-md-6
+      p  #{question.body}
+      h6  #{question.title} 
+
+    .question-actions.col.col-md-2
+      p = link_to 'Show', question_path(question) 
+      - if current_user&.author?(question)
+        - unless action_name == "show"
+          p = link_to  "Delete", question_path(question), method: :delete
+        p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+    
+    .question-author.col.col-md-2 
+      = User.find(question.author_id).email
+
+  .question-edit-form.card
+    = form_with model: question, local:false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
+      p 
+        = f.label :title
+        = f.text_field :title 
+      p 
+        = f.label :body 
+        = f.text_field :body 
+      p 
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p = f.submit 'Save'
+
+      = render 'shared/links_form', f: f
+
+  .question-nested.raw.fs-6.lh-1
+    = render 'shared/show_nested_attributes', resource: question
   

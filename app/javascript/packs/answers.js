@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function(){
+$(document).on('DOMContentLoaded', function(){
   $('.answers').on('click','.edit-answer-link', function(e){
    e.preventDefault();
    $(this).hide();
@@ -8,7 +8,10 @@ $(document).on('turbolinks:load', function(){
 
   $('.answers').on('click', '.delete-answer-link', function(e){
     const answerId = $(this).data('answerId');
-    $('.answer-'+ answerId).remove();
+    e.stopPropagation
+    console.log(answerId)
+    $('#answer-'+answerId).remove();
+    
   });
 
   $('form.new-answer').on('ajax:success', function(e){
