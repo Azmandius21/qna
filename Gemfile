@@ -21,6 +21,9 @@ gem 'devise'
 gem 'gon'
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
+# Authentication
+gem 'omniauth'
+gem 'omniauth-github'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
