@@ -24,6 +24,8 @@ gem 'jquery-rails'
 # Authentication
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-twitter'
+gem 'omniauth-vkontakte'
 gem 'omniauth-rails_csrf_protection'
 
 # Use Redis adapter to run Action Cable in production
