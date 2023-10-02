@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
   it { should have_many :giving_rewards }
   it { should have_many :rewards }
   it { should have_many(:votes).dependent(:destroy) }
+  it { should have_many(:authorizations).dependent(:destroy) }
 
   describe '.find_for_oauth' do
     let!(:user){ create(:user) }
