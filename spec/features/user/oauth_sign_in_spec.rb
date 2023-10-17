@@ -15,9 +15,12 @@ feature 'User can sign in through OAuth', "
 
       if page.has_content? 'You have to confirm your email address before continuing.'
         open_email 'user@test.com'
-        save_and_open_page
+        current_email.click_link 'Confirm my account'
 
-        # current_email.click_link ''
+        expect(page).to have_content 'Your email address has been successfully confirmed.'
+
+        click_link 'Sign in with GitHub'
+
       end
 
       expect(page).to have_content 'Successfully authenticated from Github account.'
