@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks'}
 
+  get '/extract_email', to: 'users#extract_email'
+  post '/confirm_email', to: 'users#confirm_email'
+
   concern :votable do
     member do
       patch 'like'

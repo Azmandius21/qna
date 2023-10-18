@@ -11,20 +11,15 @@ class User::FindForOauth
     return authorization.user if authorization
 
     email =  auth.info[:email]
-    unless email
-      #let to enter email adress 
-      #Send mail to the adress and let to confirm email adress
-      #waiting confirmations
-    end
 
     user = User.where(email: email).first
     if user
       user.create_authorization(auth)
-    else
+    elsif email
       password = Devise.friendly_token[0,20]
       user = User.create!(email: email, password: password, password_confirmation: password)
       user.create_authorization(auth)
     end
     user
   end
-end    
+end
