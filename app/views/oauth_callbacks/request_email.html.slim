@@ -1,0 +1,6 @@
+= form_with url: end_of_signin_path, method: :post do |f|
+  = f.label :email
+  = f.email_field :email
+  = f.hidden_field  'auth[provider]', value: auth.provider 
+  = f.hidden_field  'auth[uid]', value: auth.uid
+  = f.submit 'Send email'

@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks'}
+  devise_scope :user do
+    post '/end_of_signin', to: 'oauth_callbacks#end_of_signin'
+  end
 
   concern :votable do
     member do

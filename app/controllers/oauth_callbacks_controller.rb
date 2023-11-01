@@ -1,27 +1,32 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
-  def github
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
+  before_action :provider_signin, only: %i[ github vkontakte end_of_signin ]
+  def github;end
 
-    if @user&.persisted?
+  def vkontakte;end
+
+  def end_of_signin;end
+
+  private
+
+  def provider_signin
+    @user = User.find_for_oauth(auth)
+
+    if @user
       sign_in_and_redirect @user, event: :authentication
-      set_flash_message :notice, :success, kind: "Github" if is_navigational_format?
+      set_flash_message(:notice, :success, kind: auth.provider.capitalize) if is_navigational_format?
     else
-      redirect_to root_path, alert: "User does not exist"
+      flash[:notice] = 'Email is required for complit sign_up'
+      render 'oauth_callbacks/request_email', locals: { auth: auth }
     end
   end
 
-  def twitter
-    render json: request.env['omniauth.auth']
+  def auth
+    request.env['omniauth.auth'] || build_auth
   end
 
-  def vkontakte
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
-
-    if @user&.persisted?
-      sign_in_and_redirect @user, event: :authentication
-      set_flash_message(:notice, :success, kind: 'Vkontakte') if is_navigational_format?
-    else
-      redirect_to root_path, alert: "User does not exist"
-    end
+  def build_auth
+    auth = OmniAuth::AuthHash.new(params[:auth])
+    auth.info[:email] = params[:email]
+    auth
   end
 end
