@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OauthCallbacksController, type: :controller do
-  before { @request.env["devise.mapping"] = Devise.mappings[:user] }
+  before { @request.env['devise.mapping'] = Devise.mappings[:user] }
   describe '#github' do
-    let(:oauth_data){ { 'provider' => 'github', 'uid' => '123' } }
+    let(:oauth_data) { { 'provider' => 'github', 'uid' => '123' } }
     it 'find user from auth data' do
       allow(request.env).to receive(:[]).and_call_original
       allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
@@ -23,13 +23,12 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(subject.current_user).to eq user
       end
 
-      it 'redirect to root path'do
+      it 'redirect to root path' do
         expect(response).to redirect_to root_path
       end
     end
 
     context 'User does not exist' do
-
       before do
         allow(User).to receive(:find_for_oauth)
         get :github
@@ -38,14 +37,14 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(response).to redirect_to root_path
       end
 
-      it 'does not login user'do
+      it 'does not login user' do
         expect(subject.current_user).to_not be
       end
     end
   end
 
   describe '#vkontakte' do
-    let(:oauth_data){ { 'provider' => 'vkontakte', 'uid' => '123' } }
+    let(:oauth_data) { { 'provider' => 'vkontakte', 'uid' => '123' } }
     it 'find user from auth data' do
       allow(request.env).to receive(:[]).and_call_original
       allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
@@ -54,7 +53,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
       get :vkontakte
     end
     context 'User exist' do
-      let!(:user){ create(:user, :with_email_confirmed) }
+      let!(:user) { create(:user, :with_email_confirmed) }
 
       before do
         allow(User).to receive(:find_for_oauth).and_return(user)

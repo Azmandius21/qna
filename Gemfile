@@ -24,9 +24,9 @@ gem 'jquery-rails'
 # Authentication
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
-gem 'omniauth-rails_csrf_protection'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -57,8 +57,8 @@ group :development do
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'letter_opener'
   gem 'spring'
-  gem "letter_opener"
 end
 
 group :test do
@@ -66,11 +66,11 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
+  gem 'capybara-email'
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'webdrivers'
-  gem 'capybara-email'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

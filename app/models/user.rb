@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, :confirmable, omniauth_providers: %i[ github twitter vkontakte ]
+         :omniauthable, :confirmable, omniauth_providers: %i[github vkontakte]
 
   has_many :questions, class_name: 'Question', dependent: :destroy, foreign_key: 'author_id'
   has_many :answers, class_name: 'Answer', dependent: :destroy, foreign_key: 'author_id'
@@ -31,6 +31,6 @@ class User < ApplicationRecord
   end
 
   def create_authorization(auth)
-    self.authorizations.create(provider: auth.provider, uid: auth.uid.to_s)
+    authorizations.create(provider: auth.provider, uid: auth.uid.to_s)
   end
 end

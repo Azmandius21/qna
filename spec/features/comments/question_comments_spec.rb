@@ -8,7 +8,6 @@ feature 'Comments for question', "
   given!(:question_author) { create(:user) }
   given!(:question) { create(:question, author: question_author) }
   given!(:user) { create(:user) }
-  
 
   describe 'authenticated user', js: true do
     background do
