@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe User::FindForOauth do
-  let!(:user){ create(:user) }
+RSpec.describe Registration::FindForOauth do
+  let!(:user){ create(:user, :with_email_confirmed) }
   let(:auth){ OmniAuth::AuthHash.new(provider: 'github', uid: '123') }
-  subject { User::FindForOauth.new(auth) }
+  subject { Registration::FindForOauth.new(auth) }
 
   context 'User has authorization already' do
     it 'returns the User' do
@@ -33,7 +33,7 @@ RSpec.describe User::FindForOauth do
       it 'returns the user' do
         expect(subject.call).to eq user
       end
-    end 
+    end
 
     context 'User does not exist' do
       let!(:auth){ OmniAuth::AuthHash.new(provider: 'github', uid: '123', info: { email: 'new@user.com' }) }
@@ -43,7 +43,7 @@ RSpec.describe User::FindForOauth do
       end
 
       it 'returns the new User' do
-        expect(subject.call).to be_a(User)  
+        expect(subject.call).to be_a(User)
       end
 
       it 'fills user email' do

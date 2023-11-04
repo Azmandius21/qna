@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks'}
   devise_scope :user do
-    post '/end_of_signin', to: 'oauth_callbacks#end_of_signin'
+    post '/email_recipient', to: 'oauth_callbacks#email_recipient'
   end
 
   concern :votable do

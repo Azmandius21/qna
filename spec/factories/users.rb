@@ -19,5 +19,12 @@ FactoryBot.define do
         user.questions << FactoryBot.create(:answer)
       end
     end
+
+    trait :with_email_confirmed do
+      after(:create) do |user|
+        user.email_confirmed = true
+        user.confirmed_at = Time.now
+      end
+    end
   end
 end

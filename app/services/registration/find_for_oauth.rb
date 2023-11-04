@@ -1,3 +1,4 @@
+require 'byebug'
 class Registration::FindForOauth
   attr_reader :auth
 
@@ -7,9 +8,8 @@ class Registration::FindForOauth
 
   def call
     authorization= Authorization.where( provider: auth.provider,
-                                        uid: auth.uid.to_s).first
+    uid: auth.uid.to_s).first
     return authorization.user if authorization
-
     if auth.info[:email]
       email =  auth.info[:email]
     else
@@ -23,6 +23,7 @@ class Registration::FindForOauth
 
   def find_or_create_user(email)
     user = User.where(email: email).first
+
     unless user
       password = Devise.friendly_token[0,20]
       user = User.new(
@@ -30,11 +31,12 @@ class Registration::FindForOauth
         password: password,
         password_confirmation: password
         )
-      if user.save!
-        user
+        if user.save!
+          user
       else
         redirect_to new_user_session_path, message: "Something is going wrong"
       end
     end
+    user
   end
 end

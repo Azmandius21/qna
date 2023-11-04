@@ -2,17 +2,17 @@ require 'rails_helper'
 
 RSpec.describe OauthCallbacksController, type: :controller do
   before { @request.env["devise.mapping"] = Devise.mappings[:user] }
-  describe 'Github' do
+  describe '#github' do
     let(:oauth_data){ { 'provider' => 'github', 'uid' => '123' } }
     it 'find user from auth data' do
-      allow(request.env).to receive(:[]).and_call_original 
+      allow(request.env).to receive(:[]).and_call_original
       allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
       expect(User).to receive(:find_for_oauth).with(oauth_data)
-      get :github  
+      get :github
     end
-    
+
     context 'User exist' do
-      let!(:user) { create(:user) }
+      let!(:user) { create(:user, :with_email_confirmed) }
 
       before do
         allow(User).to receive(:find_for_oauth).and_return(user)
@@ -29,6 +29,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     end
 
     context 'User does not exist' do
+
       before do
         allow(User).to receive(:find_for_oauth)
         get :github
@@ -43,7 +44,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     end
   end
 
-  describe 'Vkontakte' do
+  describe '#vkontakte' do
     let(:oauth_data){ { 'provider' => 'vkontakte', 'uid' => '123' } }
     it 'find user from auth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -51,9 +52,9 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
       expect(User).to receive(:find_for_oauth).with(oauth_data)
       get :vkontakte
-    end   
+    end
     context 'User exist' do
-      let!(:user){ create(:user) }
+      let!(:user){ create(:user, :with_email_confirmed) }
 
       before do
         allow(User).to receive(:find_for_oauth).and_return(user)
@@ -65,7 +66,18 @@ RSpec.describe OauthCallbacksController, type: :controller do
       end
 
       it 'redirect to root path' do
-        expect(response).to redirect_to root_path  
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'try to take user email' do
+      before do
+        allow(User).to receive(:find_for_oauth).and_return(false)
+        get :vkontakte
+      end
+
+      it 'redirect to form extrakt_email' do
+        expect(response).to render_template('oauth_callbacks/request_email')
       end
     end
 
@@ -79,7 +91,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(subject.current_user).to_not be
       end
 
-      it 'redirect to root path' do
+      it 'redirect to form extrakt_email' do
         expect(response).to redirect_to root_path
       end
     end

@@ -1,4 +1,4 @@
-= form_with url: end_of_signin_path, method: :post do |f|
+= form_with url: email_recipient_path, method: :post do |f|
   = f.label :email
   = f.email_field :email
   = f.hidden_field  'auth[provider]', value: auth.provider 
