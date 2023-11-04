@@ -80,9 +80,8 @@ feature 'User can create a question', "
           expect(page).to have_content 'Test question'
           expect(page).to have_content 'text text text'
         end
-
       end
-      
+
       Capybara.using_session(guest) do
         expect(page).to have_content 'Test question'
       end

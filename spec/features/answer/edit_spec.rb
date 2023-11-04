@@ -23,12 +23,12 @@ feature 'User can edit his answer', "
       within '.answer-actions' do
         click_on 'Edit'
       end
-      
+
       within '.answer-edit-form' do
         fill_in 'Body', with: 'Edited answer'
         click_on 'Save'
       end
-      
+
       within '.other-answers' do
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'Edited answer'
