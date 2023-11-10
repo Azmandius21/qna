@@ -7,7 +7,11 @@ class QuestionsController < ApplicationController
   before_action :find_questions, only: %i[index update]
   after_action :publish_question, only: %i[create]
 
-  def index; end
+  authorize_resource
+
+  def index
+    authorize! :read, Question
+  end
 
   def new
     @question = Question.new
@@ -16,6 +20,8 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    authorize! :create, Question
+
     @question = Question.new(question_params)
     @question.update(author_id: current_user.id)
     if @question.save
@@ -26,6 +32,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    authorize! :read, @question
     @answer = Answer.new
     @answer.links.build
     gon.question_id = @question.id
