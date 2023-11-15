@@ -22,12 +22,12 @@ gem 'gon'
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
 # Authentication
+gem 'cancancan'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
-gem 'cancancan'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

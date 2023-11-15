@@ -26,7 +26,7 @@ class Ability
   def user_abilities
     can :read, :all
     can :create, [Question, Answer]
-    can [:update, :destroy], [Question, Answer], author_id: user.id
+    can %i[update destroy], [Question, Answer], author_id: user.id
     # for select best answer
     can :select, Answer,  question: { author_id: user.id }
     # for voting

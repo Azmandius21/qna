@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
 
   authorize_resource
 
-  def index;end
+  def index; end
 
   def new
     @question = Question.new

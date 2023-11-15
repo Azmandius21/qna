@@ -37,10 +37,10 @@ class AnswersController < ApplicationController
   end
 
   def select
-      @answer.mark_as_best
-      @best_answer = @answer
-      @other_answers = @question.answers.where.not(id: @answer.id)
-      flash[:notice] = 'Best answer selected'
+    @answer.mark_as_best
+    @best_answer = @answer
+    @other_answers = @question.answers.where.not(id: @answer.id)
+    flash[:notice] = 'Best answer selected'
   end
 
   private

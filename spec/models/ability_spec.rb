@@ -14,7 +14,7 @@ RSpec.describe Ability, type: :model do
   end
 
   describe 'for authenticated User' do
-    let(:user){ create(:user) }
+    let(:user) { create(:user) }
     let(:other_user) { create(:user) }
     let(:question) { create(:question) }
 
@@ -36,7 +36,7 @@ RSpec.describe Ability, type: :model do
   end
 
   describe ' for Admin' do
-    let(:user){ create(:user, admin: true) }
+    let(:user) { create(:user, admin: true) }
 
     it { should be_able_to :manage, :all }
   end
