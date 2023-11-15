@@ -23,7 +23,6 @@ RSpec.describe Ability, type: :model do
 
     it { should be_able_to :create, Question }
     it { should be_able_to :create, Answer }
-    it { should be_able_to :create, Comment }
 
     it { should be_able_to :update, create(:question, author: user) }
     it { should_not be_able_to :update, create(:question, author: other_user) }
@@ -31,8 +30,9 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :update, create(:answer, author: user) }
     it { should_not be_able_to :update, create(:answer, author: other_user) }
 
-    it { should be_able_to :update, create(:comment, commentable: question, user: user) }
-    it { should_not be_able_to :update, create(:comment, commentable: question, user: other_user) }
+    it { should be_able_to :add_comment, create(:comment, commentable: question, user: user) }
+    it { should be_able_to :delete_comment, create(:comment, commentable: question, user: user) }
+    it { should_not be_able_to :delete_comment, create(:comment, commentable: question, user: other_user) }
   end
 
   describe ' for Admin' do
