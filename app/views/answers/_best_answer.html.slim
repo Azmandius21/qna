@@ -11,7 +11,7 @@ li
     .best-answer-vote 
       = render 'shared/vote', votable: @best_answer
 
-    -if user_signed_in? && current_user.author?(@best_answer) 
+    -if can?(:update, @best_answer) 
       p = link_to 'Edit answer', @best_answer,
           class: 'edit-answer-link',
           data: { answer_id: @best_answer.id }

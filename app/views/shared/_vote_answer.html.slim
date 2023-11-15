@@ -1,4 +1,4 @@
-- if current_user && !current_user.author?(votable)
+- if can?(:like, votable) 
 	.votable-vote
 	- if current_user.can_vote_for?(votable)
 			= link_to url_for([:like, votable]),

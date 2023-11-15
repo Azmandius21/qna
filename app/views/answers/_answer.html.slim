@@ -10,12 +10,12 @@
       .answer-content
         = answer.body
     .answer-actions.col-2
-      - if user_signed_in? && current_user.author?(answer) 
+      - if can?(:update, answer) 
         p = link_to 'Edit', answer, class: 'edit-answer-link',
           data: { answer_id: answer.id }, remote: true
         p = link_to 'Delete answer', answer_path(answer), class: 'delete-answer-link',
           data: { answer_id: answer.id }, method: :delete, remote: true
-      - if user_signed_in? && current_user.author?(answer.question) && !answer.is_best?
+      - if can?(:select, Answer) && !answer.is_best?
         p = link_to 'Best answer', select_answer_path(answer),
           class: 'best-answer-link',
           data: { answer_id: answer.id },

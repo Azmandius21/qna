@@ -13,6 +13,7 @@ feature 'User can create a question', "
 
       visit questions_path
       click_on 'Ask question'
+      # save_and_open_page
     end
 
     scenario 'ask a question' do
@@ -90,8 +91,7 @@ feature 'User can create a question', "
 
   scenario 'Unauthenticated User ask a question' do
     visit questions_path
-    click_on 'Ask question'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Ask question'
   end
 end

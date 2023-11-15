@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Registration::FindForOauth do
-  let!(:user) { create(:user, :with_email_confirmed) }
+  let!(:user) { create(:user) }
   let(:auth) { OmniAuth::AuthHash.new(provider: 'github', uid: '123') }
   subject { Registration::FindForOauth.new(auth) }
 

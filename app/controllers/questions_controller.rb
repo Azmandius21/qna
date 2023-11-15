@@ -9,9 +9,7 @@ class QuestionsController < ApplicationController
 
   authorize_resource
 
-  def index
-    authorize! :read, Question
-  end
+  def index;end
 
   def new
     @question = Question.new
@@ -20,8 +18,6 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    authorize! :create, Question
-
     @question = Question.new(question_params)
     @question.update(author_id: current_user.id)
     if @question.save
@@ -32,7 +28,6 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    authorize! :read, @question
     @answer = Answer.new
     @answer.links.build
     gon.question_id = @question.id
@@ -46,20 +41,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'The question successfully deleted.'
-    else
-      redirect_to questions_path, alert: 'Only author of the question can remove it.'
-    end
+    @question.destroy
+    redirect_to questions_path, notice: 'The question successfully deleted.'
   end
 
   def update
-    if current_user.author?(@question)
-      @question.update(question_params)
-    else
-      redirect_to questions_path, alert: 'Only author of the question can edit it.'
-    end
+    @question.update(question_params)
   end
 
   def giving_reward(answer); end

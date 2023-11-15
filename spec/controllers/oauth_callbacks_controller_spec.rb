@@ -12,7 +12,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     end
 
     context 'User exist' do
-      let!(:user) { create(:user, :with_email_confirmed) }
+      let!(:user) { create(:user) }
 
       before do
         allow(User).to receive(:find_for_oauth).and_return(user)
@@ -53,7 +53,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
       get :vkontakte
     end
     context 'User exist' do
-      let!(:user) { create(:user, :with_email_confirmed) }
+      let!(:user) { create(:user) }
 
       before do
         allow(User).to receive(:find_for_oauth).and_return(user)

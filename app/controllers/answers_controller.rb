@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[destroy show update select]
   after_action :publish_answer, only: %i[create]
 
+  authorize_resource
+
   def create
     @answer = @question.answers.new(answer_params)
     @answer.update(author_id: current_user.id)
@@ -24,27 +26,21 @@ class AnswersController < ApplicationController
   def show; end
 
   def destroy
-    if current_user.author?(@answer)
-      @answer.destroy
-      redirect_to question_path(@question), notice: 'The answer deleted successfully.'
-    end
+    @answer.destroy
+    redirect_to question_path(@question), notice: 'The answer deleted successfully.'
   end
 
   def update
-    @answer.update(answer_params) if current_user.author?(@answer)
+    @answer.update(answer_params)
     @best_answer = @question.best_answer
     @other_answers = @best_answer ? @question.answers.where.not(id: @best_answer.id) : @question.answers
   end
 
   def select
-    if current_user.author?(@question)
       @answer.mark_as_best
       @best_answer = @answer
       @other_answers = @question.answers.where.not(id: @answer.id)
       flash[:notice] = 'Best answer selected'
-    else
-      flash[:alert] = 'Select best answer can only question author'
-    end
   end
 
   private

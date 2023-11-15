@@ -25,8 +25,16 @@ class Ability
 
   def user_abilities
     can :read, :all
-    can :create, [Question, Answer, Comment]
-    can :update, [Question, Answer], author_id: user.id
-    can :update, Comment, user_id: user.id
+    can :create, [Question, Answer]
+    can [:update, :destroy], [Question, Answer], author_id: user.id
+    # for select best answer
+    can :select, Answer,  question: { author_id: user.id }
+    # for voting
+    can :like, [Question, Answer], author_id: !user.id
+    can :dislikelike, [Question, Answer], author_id: !user.id
+    can :reset, [Question, Answer], author_id: !user.id
+    # for comment add and delete
+    can :add_comment, Comment, :all
+    can :delete_comment, Comment, user_id: user.id
   end
 end
