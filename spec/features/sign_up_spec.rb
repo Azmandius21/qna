@@ -14,7 +14,7 @@ feature 'User can register', "
     fill_in 'Password confirmation', with: user.password
     click_on 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
   end
 
   scenario 'user tries register again with valid data ' do

@@ -11,7 +11,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:authorizations).dependent(:destroy) }
 
   describe '.find_for_oauth' do
-    let!(:user) { create(:user, :with_email_confirmed) }
+    let!(:user) { create(:user) }
     let(:auth) { OmniAuth::AuthHash.new(provider: 'github', uid: '123') }
     let(:service) { Registration::FindForOauth.new(auth) }
 

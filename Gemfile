@@ -22,6 +22,7 @@ gem 'gon'
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
 # Authentication
+gem 'cancancan'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'

@@ -23,7 +23,7 @@ module Commented
   end
 
   def delete_comment
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find(params[:comment_id])
     respond_to do |format|
       if @comment.destroy
         format.json { render json: { id: @comment.id } }
