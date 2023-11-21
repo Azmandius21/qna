@@ -28,6 +28,7 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
+gem 'doorkeeper'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

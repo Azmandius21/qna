@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   root to: 'questions#index'
 
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
@@ -26,6 +27,14 @@ Rails.application.routes.draw do
       patch 'select', on: :member
     end
   end
+
+namespace :api do
+  namespace :v1 do
+    resources :profiles, only: [] do
+      get :me, on: :collection
+    end
+  end
+end
 
   get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
 
