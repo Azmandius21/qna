@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Profile API', type: :request do
-  let(:headers){ { "CONTENT_TYPE" => 'application/json',
-                 "ACCEPT" => 'application/json' } }
+  let(:headers){ { "CONTENT-TYPE" => 'application/json',
+                         "ACCEPT" => 'application/json' } }
 
   describe 'GET /api/v1/profiles/me' do
     context 'unauthorized' do
@@ -14,6 +14,14 @@ describe 'Profile API', type: :request do
       it 'returns 401 status if acces_token is invaled' do
         get '/api/v1/profiles/me', params: { acces_token: 123 }, headers: headers
         expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let(:access_token){ create(:access_token) }
+      it 'return 200 status' do
+        get '/api/v1/profiles/me', params: { access_token: access_token.token }, headers: headers
+        expect(response).to be_successful
       end
     end
   end
