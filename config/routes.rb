@@ -33,6 +33,7 @@ namespace :api do
     resources :profiles, only: [] do
       get :me, on: :collection
     end
+    resources :questions, only: %i[index]
   end
 end
 
