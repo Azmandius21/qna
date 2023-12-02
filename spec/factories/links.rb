@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :link do
     name { 'MyString' }
     url { 'MyString' }
-    association :linkable, facory: %i[question answer]
+    association :linkable, factory: %i[question answer]
   end
 end
