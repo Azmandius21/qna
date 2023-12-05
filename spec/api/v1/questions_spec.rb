@@ -3,10 +3,10 @@ require 'rails_helper'
 describe 'Questions API', type: :request do
   let(:headers){ { "CONTENT-TYPE" => 'application/json',
                          "ACCEPT" => 'application/json' } }
-  let(:access_token) { create(:access_token) }
 
   describe 'GET /api/v1/questions' do
-    let(:api_path){ '/api/v1/questions' }
+  let(:api_path){ '/api/v1/questions' }
+  let(:access_token) { create(:access_token) }
 
     it_behaves_like 'API Authorizable'do
       let(:method) { :get }
@@ -56,10 +56,13 @@ describe 'Questions API', type: :request do
   end
 
   describe 'GET /api/v1/questions/:id' do
-    let!(:question) { create(:question, :with_attached_files) }
-    let(:api_path) { "/api/v1/questions/#{question.id}" }
-    let(:comments) { create_list(:comment, 2, commentable: question) }
-    let(:links) { create_list( :link, 3, linkable: question)}
+    let!(:me) { create(:user) }
+    let!(:api_path) { "/api/v1/questions/#{question.id}" }
+    let(:access_token) { create(:access_token, resource_owner_id: me.id) }
+    let!(:question) { create(:question, :with_attached_files, author: me) }
+    let!(:comments) { create_list(:comment, 2, commentable: question) }
+    let!(:links) { create_list( :link, 3, linkable: question)}
+    let(:question_response) { json["question"]}
 
     it_behaves_like 'API Authorizable' do
       let(:method) { :get }
@@ -77,22 +80,22 @@ describe 'Questions API', type: :request do
       end
 
       it 'return questions comments' do
-        expect(json['comments'].count).to eq comments.count
+        expect(question_response['comments'].count).to eq comments.count
       end
 
       it 'return links to attached files' do
-        expect(json['attachments'].count).to eq 1
+        expect(question_response['files'].count).to eq 1
       end
 
       it 'return questions links' do
-        expect(json['links'].count).to eq links.count
+        expect(question_response['links'].count).to eq links.count
       end
 
-      # it 'return all public fields' do
-      #   %w[id title body created_at updated_at].each do |attr|
-      #     expect(question_response[attr]).to eq question.send(attr).as_json
-      #   end
-      # end
+      it 'return all public fields' do
+        %w[id title body created_at updated_at].each do |attr|
+          expect(question_response[attr]).to eq question.send(attr).as_json
+        end
+      end
 
     end
   end
