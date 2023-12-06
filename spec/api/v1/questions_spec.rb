@@ -99,4 +99,8 @@ describe 'Questions API', type: :request do
 
     end
   end
+
+  # describe 'POST'
+  # describe 'PATCH'
+  # describe 'DELETE'
 end
