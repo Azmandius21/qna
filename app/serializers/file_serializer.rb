@@ -1,5 +1,5 @@
 class FileSerializer < ActiveModel::Serializer
-  attributes :id, :url
+  attributes :url
 
   def url
     Rails.application.routes.url_helpers.rails_blob_path(object, only_path: true)
