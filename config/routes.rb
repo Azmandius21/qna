@@ -33,7 +33,7 @@ namespace :api do
     resources :profiles, only: %i[index] do
       get :me, on: :collection
     end
-    resources :questions, only: %i[index show] do
+    resources :questions, only: %i[index show create] do
       resources :answers, only: %i[index show], shallow: true
     end
   end

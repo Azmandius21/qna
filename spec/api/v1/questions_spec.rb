@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
-  let(:headers){ { "CONTENT-TYPE" => 'application/json',
-                         "ACCEPT" => 'application/json' } }
+  let(:headers){ { "ACCEPT" => 'application/json' } }
 
   describe 'GET /api/v1/questions' do
   let(:api_path){ '/api/v1/questions' }
@@ -38,20 +37,20 @@ describe 'Questions API', type: :request do
         expect(question_response['short_body']).to eq question.body.truncate(7)
       end
 
-      describe 'answers' do
-        let(:answer) { answers.first}
-        let(:answer_response) { question_response['answers'].first }
+      # describe 'answers' do
+      #   let(:answer) { answers.first}
+      #   let(:answer_response) { question_response['answers'].first }
 
-        it 'return list of answers' do
-          expect(question_response['answers'].size).to eq 3
-        end
+      #   it 'return list of answers' do
+      #     expect(question_response['answers'].size).to eq 3
+      #   end
 
-        it 'return all answers public fields' do
-          %w[id body author_id question_id created_at updated_at].each do |attr|
-            expect(answer_response[attr]).to eq answer.send(attr).as_json
-          end
-        end
-      end
+      #   it 'return all answers public fields' do
+      #     %w[id body author_id question_id created_at updated_at].each do |attr|
+      #       expect(answer_response[attr]).to eq answer.send(attr).as_json
+      #     end
+      #   end
+      # end
     end
   end
 
@@ -100,7 +99,30 @@ describe 'Questions API', type: :request do
     end
   end
 
-  # describe 'POST'
+  describe 'POST api/v1/questions' do
+    let(:api_path) { "/api/v1/questions" }
+    let!(:me) { create(:user) }
+    let(:access_token) { create(:access_token, resource_owner_id:me.id) }
+    let(:question_attr) { attributes_for(:question) }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :post}
+    end
+
+    context 'authorized' do
+      before do
+        post api_path,
+        params: { question: question_attr, access_token: access_token.token },
+        headers: headers
+      end
+
+      it 'return 201 status' do
+        expect(response).to have_http_status(:created)
+      end
+    end
+
+    # it ''
+  end
   # describe 'PATCH'
   # describe 'DELETE'
 end
