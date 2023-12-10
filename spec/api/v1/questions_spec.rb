@@ -99,7 +99,7 @@ describe 'Questions API', type: :request do
     end
   end
 
-  describe 'POST api/v1/questions' do
+  describe 'POST api/v1/questions #create' do
     let(:api_path) { "/api/v1/questions" }
     let!(:me) { create(:user) }
     let(:access_token) { create(:access_token, resource_owner_id:me.id) }
@@ -109,7 +109,7 @@ describe 'Questions API', type: :request do
       let(:method) { :post}
     end
 
-    context 'authorized' do
+    context 'authorized with valid question attr' do
       before do
         post api_path,
         params: { question: question_attr, access_token: access_token.token },
@@ -119,10 +119,115 @@ describe 'Questions API', type: :request do
       it 'return 201 status' do
         expect(response).to have_http_status(:created)
       end
+
+      it 'save  question in database' do
+        expect do
+          post api_path,
+          params: { question: question_attr, access_token: access_token.token },
+          headers: headers
+        end.to change(Question, :count).by(1)
+      end
+
+      it 'return all public fields after creating the question' do
+        %w[title body].each do |attr|
+          expect(json['question'][attr]).to eq question_attr[attr.to_sym]
+        end
+      end
     end
 
-    # it ''
+    context 'authorized with invalid question attr' do
+      let(:invalid_question_attr) { attributes_for(:question, :invalid) }
+      before do
+        post api_path,
+        params: { question: invalid_question_attr, access_token: access_token.token },
+        headers: headers
+      end
+
+      it 'return error' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'does not save the question to database' do
+        expect do
+          post api_path,
+          params: { question: invalid_question_attr, access_token: access_token.token },
+          headers: headers
+        end.to_not change(Question, :count)
+      end
+
+      it 'should contain errors key' do
+        expect(json).to have_key('errors')
+      end
+    end
   end
-  # describe 'PATCH'
-  # describe 'DELETE'
+
+  describe 'PATCH api/v1/questions/:id #update' do
+    let(:me) { create(:user) }
+    let(:question) { create(:question, author: me) }
+    let(:new_question_attr) { attributes_for(:question, title:'NewTitle', body:'NewBody') }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    let(:access_token) { create(:access_token, resource_owner_id:me.id) }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :patch }
+    end
+
+    before do
+      patch api_path,
+      params: { question: new_question_attr,
+                question_id: question.id,
+                access_token: access_token.token },
+      headers: headers
+    end
+
+    it 'return status 202' do
+      expect(response).to be_accepted
+    end
+
+  end
+
+  describe 'DELETE api/v1/questions/:id #destroy' do
+
+    let!(:question) { create(:question) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :delete }
+    end
+
+    context 'authorized' do
+      let(:me) { create(:user) }
+      let(:access_token) { create(:access_token, resource_owner_id:me.id) }
+
+      before { question.update(author: me) }
+
+      it 'return status 202' do
+        delete api_path,
+        params: { question_id: question.id, access_token: access_token.token },
+        headers: headers
+
+        expect(response).to have_http_status(:accepted)
+      end
+
+      it 'remove a question from the database' do
+        expect do
+          delete api_path,
+          params: { access_token: access_token.token },
+          headers: headers
+        end.to change(Question, :count).by(-1)
+      end
+    end
+
+    context 'unauthorized' do
+      let(:access_token) { create(:access_token) }
+
+      it 'return status 403' do
+        delete api_path,
+        params: { access_token: access_token.token },
+        headers: headers
+
+        expect(response).to be_forbidden
+      end
+    end
+  end
 end
