@@ -37,20 +37,20 @@ describe 'Questions API', type: :request do
         expect(question_response['short_body']).to eq question.body.truncate(7)
       end
 
-      # describe 'answers' do
-      #   let(:answer) { answers.first}
-      #   let(:answer_response) { question_response['answers'].first }
+      describe 'answers' do
+        let(:answer) { answers.first}
+        let(:answer_response) { question_response['answers'].first }
 
-      #   it 'return list of answers' do
-      #     expect(question_response['answers'].size).to eq 3
-      #   end
+        it 'return list of answers' do
+          expect(question_response['answers'].size).to eq 3
+        end
 
-      #   it 'return all answers public fields' do
-      #     %w[id body author_id question_id created_at updated_at].each do |attr|
-      #       expect(answer_response[attr]).to eq answer.send(attr).as_json
-      #     end
-      #   end
-      # end
+        it 'return all answers public fields' do
+          %w[id body created_at updated_at].each do |attr|
+            expect(answer_response[attr]).to eq answer.send(attr).as_json
+          end
+        end
+      end
     end
   end
 
@@ -201,20 +201,43 @@ describe 'Questions API', type: :request do
 
       before { question.update(author: me) }
 
-      it 'return status 202' do
-        delete api_path,
-        params: { question_id: question.id, access_token: access_token.token },
-        headers: headers
+      context 'the questions author' do
+        it 'return status 403' do
+          delete api_path,
+          params: { question_id: question.id, access_token: access_token.token },
+          headers: headers
 
-        expect(response).to have_http_status(:accepted)
+          expect(response).to have_http_status(:accepted)
+        end
+
+        it 'remove a question from the database' do
+          expect do
+            delete api_path,
+            params: { access_token: access_token.token },
+            headers: headers
+          end.to change(Question, :count).by(-1)
+        end
       end
 
-      it 'remove a question from the database' do
-        expect do
+      context 'not author of the question' do
+        let(:other_user) { create(:user) }
+        let(:access_token) { create(:access_token, resource_owner_id:other_user.id)}
+
+        it 'return status 403' do
           delete api_path,
-          params: { access_token: access_token.token },
+          params: { question_id: question.id, access_token: access_token.token },
           headers: headers
-        end.to change(Question, :count).by(-1)
+
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'remove a question from the database' do
+          expect do
+            delete api_path,
+            params: { access_token: access_token.token },
+            headers: headers
+          end.to_not change(Question, :count)
+        end
       end
     end
 
