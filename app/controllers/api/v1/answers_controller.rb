@@ -1,7 +1,6 @@
-require 'byebug'
-
 class Api::V1::AnswersController < Api::V1::BaseController
   before_action :set_question, only: %i[index create]
+  before_action :set_answer, only: %i[show update destroy]
 
   authorize_resource
 
@@ -11,7 +10,6 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def show
-    @answer = Answer.find(params[:id])
     render json: @answer, serializer: AnswerSerializer
   end
 
@@ -27,11 +25,20 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def update
-
+    if @answer.update(answer_params)
+      render json: @answer, status: :accepted
+    else
+      render json: { errors: @answer.errors }, status: :bad_request
+    end
   end
 
   def destroy
-
+    byebug
+    if @answer.destroy
+      head :accepted
+    else
+      render json: { errors: @answer.errors }
+    end
   end
 
   private
@@ -40,7 +47,11 @@ class Api::V1::AnswersController < Api::V1::BaseController
     @question = Question.find(params[:question_id])
   end
 
+  def set_answer
+    @answer = Answer.find(params[:id])
+  end
+
   def answer_params
-    params.require(:answer).permit(:body, :question_id, :author_id)
+    params.require(:answer).permit(:id, :body, :question_id, :author_id)
   end
 end

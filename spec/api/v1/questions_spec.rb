@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
-  let(:headers){ { "ACCEPT" => 'application/json' } }
+  let(:headers) { { 'ACCEPT' => 'application/json' } }
 
   describe 'GET /api/v1/questions' do
-  let(:api_path){ '/api/v1/questions' }
-  let(:access_token) { create(:access_token) }
+    let(:api_path) { '/api/v1/questions' }
+    let(:access_token) { create(:access_token) }
 
-    it_behaves_like 'API Authorizable'do
+    it_behaves_like 'API Authorizable' do
       let(:method) { :get }
     end
 
     context 'authorized' do
       let!(:questions) { create_list(:question, 2) }
-      let!(:question) { questions.first}
-      let(:question_response) { json['questions'].first}
+      let!(:question) { questions.first }
+      let(:question_response) { json['questions'].first }
       let!(:answers) { create_list(:answer, 3, question: question) }
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
@@ -38,7 +38,7 @@ describe 'Questions API', type: :request do
       end
 
       describe 'answers' do
-        let(:answer) { answers.first}
+        let(:answer) { answers.first }
         let(:answer_response) { question_response['answers'].first }
 
         it 'return list of answers' do
@@ -60,8 +60,8 @@ describe 'Questions API', type: :request do
     let(:access_token) { create(:access_token, resource_owner_id: me.id) }
     let!(:question) { create(:question, :with_attached_files, author: me) }
     let!(:comments) { create_list(:comment, 2, commentable: question) }
-    let!(:links) { create_list( :link, 3, linkable: question)}
-    let(:question_response) { json["question"]}
+    let!(:links) { create_list(:link, 3, linkable: question) }
+    let(:question_response) { json['question'] }
 
     it_behaves_like 'API Authorizable' do
       let(:method) { :get }
@@ -70,8 +70,8 @@ describe 'Questions API', type: :request do
     context 'authorized' do
       before do
         get api_path,
-        params: { question_id: question.id, access_token: access_token.token },
-        headers: headers
+            params: { question_id: question.id, access_token: access_token.token },
+            headers: headers
       end
 
       it 'return 200 status' do
@@ -95,25 +95,24 @@ describe 'Questions API', type: :request do
           expect(question_response[attr]).to eq question.send(attr).as_json
         end
       end
-
     end
   end
 
   describe 'POST api/v1/questions #create' do
-    let(:api_path) { "/api/v1/questions" }
+    let(:api_path) { '/api/v1/questions' }
     let!(:me) { create(:user) }
-    let(:access_token) { create(:access_token, resource_owner_id:me.id) }
+    let(:access_token) { create(:access_token, resource_owner_id: me.id) }
     let(:question_attr) { attributes_for(:question) }
 
     it_behaves_like 'API Authorizable' do
-      let(:method) { :post}
+      let(:method) { :post }
     end
 
     context 'authorized with valid question attr' do
       before do
         post api_path,
-        params: { question: question_attr, access_token: access_token.token },
-        headers: headers
+             params: { question: question_attr, access_token: access_token.token },
+             headers: headers
       end
 
       it 'return 201 status' do
@@ -123,8 +122,8 @@ describe 'Questions API', type: :request do
       it 'save  question in database' do
         expect do
           post api_path,
-          params: { question: question_attr, access_token: access_token.token },
-          headers: headers
+               params: { question: question_attr, access_token: access_token.token },
+               headers: headers
         end.to change(Question, :count).by(1)
       end
 
@@ -139,8 +138,8 @@ describe 'Questions API', type: :request do
       let(:invalid_question_attr) { attributes_for(:question, :invalid) }
       before do
         post api_path,
-        params: { question: invalid_question_attr, access_token: access_token.token },
-        headers: headers
+             params: { question: invalid_question_attr, access_token: access_token.token },
+             headers: headers
       end
 
       it 'return error' do
@@ -150,8 +149,8 @@ describe 'Questions API', type: :request do
       it 'does not save the question to database' do
         expect do
           post api_path,
-          params: { question: invalid_question_attr, access_token: access_token.token },
-          headers: headers
+               params: { question: invalid_question_attr, access_token: access_token.token },
+               headers: headers
         end.to_not change(Question, :count)
       end
 
@@ -164,9 +163,9 @@ describe 'Questions API', type: :request do
   describe 'PATCH api/v1/questions/:id #update' do
     let(:me) { create(:user) }
     let(:question) { create(:question, author: me) }
-    let(:new_question_attr) { attributes_for(:question, title:'NewTitle', body:'NewBody') }
+    let(:new_question_attr) { attributes_for(:question, title: 'NewTitle', body: 'NewBody') }
     let(:api_path) { "/api/v1/questions/#{question.id}" }
-    let(:access_token) { create(:access_token, resource_owner_id:me.id) }
+    let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
     it_behaves_like 'API Authorizable' do
       let(:method) { :patch }
@@ -174,20 +173,18 @@ describe 'Questions API', type: :request do
 
     before do
       patch api_path,
-      params: { question: new_question_attr,
-                question_id: question.id,
-                access_token: access_token.token },
-      headers: headers
+            params: { question: new_question_attr,
+                      question_id: question.id,
+                      access_token: access_token.token },
+            headers: headers
     end
 
     it 'return status 202' do
       expect(response).to be_accepted
     end
-
   end
 
   describe 'DELETE api/v1/questions/:id #destroy' do
-
     let!(:question) { create(:question) }
     let(:api_path) { "/api/v1/questions/#{question.id}" }
 
@@ -197,15 +194,15 @@ describe 'Questions API', type: :request do
 
     context 'authorized' do
       let(:me) { create(:user) }
-      let(:access_token) { create(:access_token, resource_owner_id:me.id) }
+      let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       before { question.update(author: me) }
 
       context 'the questions author' do
-        it 'return status 403' do
+        it 'return status 202' do
           delete api_path,
-          params: { question_id: question.id, access_token: access_token.token },
-          headers: headers
+                 params: { question_id: question.id, access_token: access_token.token },
+                 headers: headers
 
           expect(response).to have_http_status(:accepted)
         end
@@ -213,20 +210,20 @@ describe 'Questions API', type: :request do
         it 'remove a question from the database' do
           expect do
             delete api_path,
-            params: { access_token: access_token.token },
-            headers: headers
+                   params: { access_token: access_token.token },
+                   headers: headers
           end.to change(Question, :count).by(-1)
         end
       end
 
       context 'not author of the question' do
         let(:other_user) { create(:user) }
-        let(:access_token) { create(:access_token, resource_owner_id:other_user.id)}
+        let(:access_token) { create(:access_token, resource_owner_id: other_user.id) }
 
         it 'return status 403' do
           delete api_path,
-          params: { question_id: question.id, access_token: access_token.token },
-          headers: headers
+                 params: { question_id: question.id, access_token: access_token.token },
+                 headers: headers
 
           expect(response).to have_http_status(:forbidden)
         end
@@ -234,22 +231,10 @@ describe 'Questions API', type: :request do
         it 'remove a question from the database' do
           expect do
             delete api_path,
-            params: { access_token: access_token.token },
-            headers: headers
+                   params: { access_token: access_token.token },
+                   headers: headers
           end.to_not change(Question, :count)
         end
-      end
-    end
-
-    context 'unauthorized' do
-      let(:access_token) { create(:access_token) }
-
-      it 'return status 403' do
-        delete api_path,
-        params: { access_token: access_token.token },
-        headers: headers
-
-        expect(response).to be_forbidden
       end
     end
   end

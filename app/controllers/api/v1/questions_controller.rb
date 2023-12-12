@@ -1,5 +1,5 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
-  before_action :find_question, only: %i[ show update destroy]
+  before_action :set_question, only: %i[show update destroy]
 
   authorize_resource
 
@@ -25,7 +25,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     if @question.update(question_params)
       render json: @question, status: :accepted
     else
-      render json: { errors: @quetion.errors}, status: :bad_request
+      render json: { errors: @quetion.errors }, status: :bad_request
     end
   end
 
@@ -41,10 +41,10 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def question_params
     params.require(:question).permit(:title, :body, :author_id,
-    links_attributes: %i[id name url _destroy])
+                                     links_attributes: %i[id name url _destroy])
   end
 
-  def find_question
+  def set_question
     @question = Question.find(params[:id])
   end
 end

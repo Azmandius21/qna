@@ -28,16 +28,16 @@ Rails.application.routes.draw do
     end
   end
 
-namespace :api do
-  namespace :v1 do
-    resources :profiles, only: %i[index] do
-      get :me, on: :collection
-    end
-    resources :questions, only: %i[index show create update destroy] do
-      resources :answers, only: %i[index show create update destroy], shallow: true
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: %i[index] do
+        get :me, on: :collection
+      end
+      resources :questions, only: %i[index show create update destroy] do
+        resources :answers, only: %i[index show create update destroy], shallow: true
+      end
     end
   end
-end
 
   get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
 

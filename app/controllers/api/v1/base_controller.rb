@@ -2,7 +2,7 @@ class Api::V1::BaseController < ApplicationController
   before_action :doorkeeper_authorize!
 
   rescue_from CanCan::AccessDenied do |exception|
-    render json: { errors: exception },status: :forbidden
+    render json: { errors: exception }, status: :forbidden
   end
 
   private
