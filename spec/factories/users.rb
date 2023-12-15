@@ -8,7 +8,6 @@ FactoryBot.define do
     password { '123456' }
     password_confirmation { '123456' }
     admin { false }
-    email_confirmed { true }
     confirmed_at { Time.now }
 
     trait :with_question do
@@ -24,7 +23,7 @@ FactoryBot.define do
     end
 
     trait :not_confirmed do
-      after(:create) { |user| user.email_confirmed = false }
+      after(:create) { |user| user.confirmed_at = nil }
     end
   end
 end
