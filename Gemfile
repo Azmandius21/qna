@@ -31,7 +31,9 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
-
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'whenever', require: false
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
