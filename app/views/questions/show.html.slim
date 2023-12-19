@@ -2,6 +2,12 @@
   .question-show-content id="#{@question.id}"
     = render 'questions/question', question: @question
 
+  - if current_user 
+    .question-subscription id="question-#{@question.id}"
+      =render 'shared/subscription',
+      resource: @question,
+      subscription: current_user.subscriptions.find_by(question: @question)
+
   .question-comments id="#{class_by_string(@question)}-#{@question.id}"
       .comments-list 
         = render 'comments/list', commentable: @question

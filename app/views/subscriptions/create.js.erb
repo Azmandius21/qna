@@ -1,0 +1,7 @@
+$('.subscription-errors').html("<%= render 'shared/errors', resource: @subscription %>");
+
+<% if !@subscription.errors.present? %>
+  $('div#question-<%= @question.id %>.question-subscription').
+  .html('<%= j render 'shared/subscription', resource: @question, subscription: @subscription  %>');
+<% end %>
+
