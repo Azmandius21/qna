@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DailyDigestJob, type: :job do
-  let(:service){ double('MailServices::DailyDigest') }
+  let(:service) { double('MailServices::DailyDigest') }
 
   before do
     allow(MailServices::DailyDigest).to receive(:new).and_return(service)

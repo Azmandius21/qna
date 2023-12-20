@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MailServices::NotifySubscribers do
-  let(:users){ create_list(:user, 3) }
+  let(:users) { create_list(:user, 3) }
   let(:question) { create(:question, author: users.first) }
   let(:answer) { create(:answer, question: question) }
 

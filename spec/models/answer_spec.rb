@@ -14,7 +14,7 @@ RSpec.describe Answer, type: :model do
 
   describe 'notify subscribers after create a new answer' do
     let(:question) { create(:question) }
-    let(:answer){ build(:answer, question: question, author: create(:user)) }
+    let(:answer) { build(:answer, question: question, author: create(:user)) }
     it 'calls NotifySubscribersJob' do
       expect(NotifySubscribersJob).to receive(:perform_later).with(answer)
       answer.save!

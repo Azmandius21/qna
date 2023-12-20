@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NotifySubscribersJob, type: :job do
-  let(:service){ double('MailServices::NotifySubscribers') }
+  let(:service) { double('MailServices::NotifySubscribers') }
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question) }
 

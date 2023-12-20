@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe MailServices::DailyDigest do
-  let!(:users){ create_list(:user, 3) }
-  let!(:new_questions){ create_list(:question,4 , author: users.first) }
-  let!(:old_questions){ create_list(:question, 3, author: users.first, created_at: 2.day.ago) }
+  let!(:users) { create_list(:user, 3) }
+  let!(:new_questions) { create_list(:question, 4, author: users.first) }
+  let!(:old_questions) { create_list(:question, 3, author: users.first, created_at: 2.day.ago) }
   let(:questions) { Question.where('created_at > ?', 1.day.ago) }
 
   it 'send questions  all users' do
