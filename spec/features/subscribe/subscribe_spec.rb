@@ -15,7 +15,6 @@ feature 'User can subscribe to a question', "
       visit question_path(question)
       click_on 'Subscribe'
 
-      save_and_open_page
       expect(page).to have_link 'Unsubscribe'
     end
   end

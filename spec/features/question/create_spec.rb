@@ -13,7 +13,6 @@ feature 'User can create a question', "
 
       visit questions_path
       click_on 'Ask question'
-      # save_and_open_page
     end
 
     scenario 'ask a question' do
