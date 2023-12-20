@@ -1,6 +1,8 @@
-$('.subscription-errors').html("<%= render 'shared/errors', resource: @subscription %>");
+<% if @subscription&.errors&.present?  %>
+  $('.subscription-errors').html("<%= render 'shared/errors', resource: @subscription %>");
+<% end %>
 
-<% if !@subscription.errors.present? %>
-  $('div#question-<%= @subscription.question %>.question-subscription').
-  .html('<%= j render 'shared/subscription', resource: @subscription.question, subscription: nil  %>');
+<% if @subscription&.errors.blank? %>
+  $('div#question-<%= @question.id %>.question-subscription').
+  html('<%= j render 'shared/subscription', resource: @question, subscription: nil  %>');
 <% end %>

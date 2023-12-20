@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resources :answers, concerns: %i[votable commentable], shallow: true do
       patch 'select', on: :member
     end
-    resources :subscriptions, shallow: true, only: %i[create destroy]
+    resources :subscriptions, only: %i[create destroy]
   end
 
 

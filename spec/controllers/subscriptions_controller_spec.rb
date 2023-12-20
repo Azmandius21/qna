@@ -18,14 +18,15 @@ RSpec.describe SubscriptionsController, type: :controller do
 
   describe "DELETE #destroy" do
     let(:user){ create(:user) }
-    let!(:subscription) { create(:subscription) }
+    let(:question) { create(:question) }
+    let!(:subscription) { create(:subscription, user: user, question: question) }
 
     context 'authenticated user' do
       before { login user }
 
       it "destroy the subscription" do
         expect do
-          delete :destroy, params: { id: subscription.id }, format: :js
+          delete :destroy, params: { question_id: question.id, id: subscription.id }, format: :js
         end.to change(Subscription, :count).by(-1)
       end
     end
@@ -33,7 +34,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     context 'unauthenticated user' do
       it "trys destroy the subscription" do
         expect do
-          delete :destroy, params: { id: subscription.id }, format: :js
+          delete :destroy, params: { question_id: question.id, id: subscription.id }, format: :js
         end.to_not change(Subscription, :count)
       end
     end

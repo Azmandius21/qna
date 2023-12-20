@@ -5,6 +5,12 @@ FactoryBot.define do
     association :author, factory: :user
     best_answer_id { nil }
 
+    trait :with_author_subscription do
+      after(:create) do |question|
+        question.subscriptions << FactoryBot.create(:subscription, user: question.author, question: question)
+      end
+    end
+
     trait :invalid do
       title { nil }
     end
