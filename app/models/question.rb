@@ -16,11 +16,5 @@ class Question < ApplicationRecord
 
   validates :title, :body, :author_id, presence: true
 
-  after_create :calculate_reputation
-
-  private
-
-  def calculate_reputation
-   ReputationJob.perform_later(self)
-  end
+  scope :last_day_questions, -> { where('created_at > ?', 1.day.ago) }
 end

@@ -1,0 +1,7 @@
+- if questions
+  p 'There are have been created next question in the last day'
+  ol 
+    - questions.each do |q|
+      li = linkt_to "#{q.title}", question_path(q)
+- else
+  p 'No questions have been created in the last day'
