@@ -1,0 +1,6 @@
+-if subscription && subscription.user == subscription.question.author
+  p = link_to 'Unsubscribe', question_subscription_path(resource, subscription), remote: true,
+      method: :delete, class: 'btn btn-danger', data: { type: :js }  
+-else
+  p = link_to 'Subscribe', question_subscriptions_path(resource), remote: true,
+      method: :post, class: 'btn btn-success' , data: { type: :js }  

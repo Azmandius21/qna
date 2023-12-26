@@ -36,5 +36,7 @@ class Ability
     # for comment add and delete
     can :add_comment, Comment, :all
     can :delete_comment, Comment, user_id: user.id
+    # for subscriptions
+    can %i[create destroy], Subscription, user_id: user.id
   end
 end

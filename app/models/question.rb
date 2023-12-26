@@ -4,6 +4,7 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy, inverse_of: :question
   has_many :links, dependent: :destroy, as: :linkable
+  has_many :subscriptions
   has_one :reward, dependent: :destroy, as: :rewardable
 
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
@@ -15,4 +16,6 @@ class Question < ApplicationRecord
   belongs_to :best_answer, class_name: 'Answer', optional: true
 
   validates :title, :body, :author_id, presence: true
+
+  scope :last_day_questions, -> { where('created_at > ?', 1.day.ago) }
 end

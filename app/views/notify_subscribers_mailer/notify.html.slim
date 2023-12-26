@@ -1,0 +1,8 @@
+h1 NotifySubscribers#notify
+p = "#{@greeting}"
+p "Question title: #{@question.title}"
+p "Question body: #{@question.body}"
+p 'got new answer from #{@answer.author.email}'
+p 
+  = @answer.body
+  = @answer.created_at

@@ -1,0 +1,8 @@
+<% if @subscription&.errors&.present?  %>
+  $('.subscription-errors').html("<%= render 'shared/errors', resource: @subscription %>");
+<% end %>
+
+<% if @subscription&.errors.blank? %>
+  $('div#question-<%= @question.id %>.question-subscription').
+  html('<%= j render 'shared/subscription', resource: @question, subscription: nil  %>');
+<% end %>
