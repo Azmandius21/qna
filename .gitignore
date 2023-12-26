@@ -41,3 +41,8 @@ yarn-debug.log*
 # Ignore .env with classick token
 .env
 
+# Sphinx 
+/config/*.sphinx.conf
+/db/sphinx
+
+

@@ -34,6 +34,9 @@ gem 'omniauth-vkontakte'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+# global search: sphinx
+gem 'mysql2'
+gem 'thinking-sphinx'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
