@@ -1,0 +1,21 @@
+h1 Search result
+.result-search 
+	- unless @result.empty?
+		table
+			- @result.each do |r|
+				tr
+					td = r.class
+					td = r.id 
+					- if r.class == 'Question'
+						td = r.title
+					-if !r.class == 'User'
+						td = r.body
+					-if r.class == 'User'
+						td = r.email
+					td = r.created_at
+					td = r.updated_at
+	- else
+		p
+			| No items found
+			
+		

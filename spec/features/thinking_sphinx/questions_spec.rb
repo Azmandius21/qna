@@ -1,5 +1,4 @@
 require 'sphinx_helper'
-
 feature 'User can search for question', "
   In order to find needed question
   As a User
@@ -22,14 +21,13 @@ feature 'User can search for question', "
   scenario 'data present', sphinx: true do
     ThinkingSphinx::Test.run do
       visit questions_path
-
-      within '.global-search' do
-        fill_in 'search', with: "question"
-        check 'by_questions'
+      within '.search' do
+        fill_in 'query', with: "question"
+        select_by_value 'search_area', 'question'
         click_on 'Find'
       end
 
-      within 'result-search' do
+      within '.result-search' do
         expect(page).to have_content 'find in body'
         expect(page).to have_content 'find in title'
         expect(page).to have_content 'find in author email'
@@ -41,14 +39,14 @@ feature 'User can search for question', "
     ThinkingSphinx::Test.run do
       visit questions_path
 
-      within '.global-search' do
-        fill_in 'search', with: "empty"
-        check 'by_questions'
+      within '.search' do
+        fill_in 'query', with: "empty"
+        select('question', from: :search_area)
         click_on 'Find'
       end
 
-      within 'result-search' do
-        expect(page).to have_content 'Nothing found'
+      within '.result-search' do
+        expect(page).to have_content 'No items found'
       end
    end
   end

@@ -46,6 +46,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/search', to: 'search#search'
+
   get 'user/:id', to: 'users#show_rewards', as: 'user_show_rewards'
 
   delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
