@@ -6,14 +6,20 @@ h1 Search result
 				tr
 					td = r.class
 					td = r.id 
-					- if r.class == 'Question'
+					- if r.class.to_s == 'Question'
 						td = r.title
-					-if !r.class == 'User'
+					-unless r.class.to_s == 'User'
 						td = r.body
-					-if r.class == 'User'
-						td = r.email
+					-if r.class.to_s == 'User'
+						
 					td = r.created_at
 					td = r.updated_at
+					-if r.class.to_s == 'Comment'
+						td = r.user.email 
+					-elsif r.class.to_s == 'User'
+						td = r.email
+					-else
+						td = r.author.email  
 	- else
 		p
 			| No items found
