@@ -4,9 +4,8 @@ feature 'User can search for question', "
   As a User
   I'd like to be able to search for the question
 " do
-
   describe 'User search for the question', js: true do
-    given(:author){ create(:user, email: 'question@test.ru')}
+    given(:author) { create(:user, email: 'question@test.ru') }
     given(:question1) do
       create(:question, title: 'find in body', body: 'question body')
     end
@@ -22,7 +21,7 @@ feature 'User can search for question', "
     ThinkingSphinx::Test.run do
       visit questions_path
       within '.search' do
-        fill_in 'query', with: "question"
+        fill_in 'query', with: 'question'
         select_by_value 'search_area', 'question'
         click_on 'Find'
       end
@@ -32,7 +31,7 @@ feature 'User can search for question', "
         expect(page).to have_content 'find in title'
         expect(page).to have_content 'find in author email'
       end
-   end
+    end
   end
 
   scenario 'empty result', sphinx: true do
@@ -40,14 +39,14 @@ feature 'User can search for question', "
       visit questions_path
 
       within '.search' do
-        fill_in 'query', with: "empty"
-        select('question', from: :search_area)
+        fill_in 'query', with: 'empty'
+        select_by_value 'search_area', 'question'
         click_on 'Find'
       end
 
       within '.result-search' do
         expect(page).to have_content 'No items found'
       end
-   end
+    end
   end
 end
