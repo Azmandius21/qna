@@ -34,6 +34,9 @@ gem 'omniauth-vkontakte'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+# global search: sphinx
+gem 'mysql2'
+gem 'thinking-sphinx'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -73,6 +76,7 @@ group :test do
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'capybara-email'
+  gem 'database_cleaner-active_record'
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'

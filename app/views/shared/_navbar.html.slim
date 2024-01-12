@@ -8,7 +8,13 @@ nav class="navbar navbar-expand-lg bg-body-tertiary"
           = link_to 'Sigup', new_user_registration_path, class: "nav-link", "aria-current" => "page"
         li class="nav-item"
           = link_to 'Login', new_user_session_path, class: "nav-link", "aria-current" => "page"
-    
+    div class="search col.col-md-2"
+      .container       
+        = form_with url:'/search', method: :get do |f| 
+          span Find in
+          = f.select :search_area, [:question, :answer, :comment, :user, :all]
+          = f.text_field :query
+          = f.submit 'Find'
 - if user_signed_in?
   = "Hello, #{ current_user.email } || "
   = link_to  "Log out", destroy_user_session_path, method: :delete

@@ -1,0 +1,7 @@
+div class="search col.col-md-2"
+  .container       
+    = form_with url:'/search', method: :get do |f| 
+      span Find in
+      = f.select :search_area, [:question, :answer, :comment, :user, :all]
+      = f.text_field :query
+      = f.submit 'Find'
