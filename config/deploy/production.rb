@@ -6,6 +6,9 @@
 server "79.174.95.43", user: "deployer", roles: %w{app db web}, primary: true
 set :rails_env, :production
 
+#for sidekiq
+set :stage, :production
+
 # Custom SSH Options
 # ==================
 # You may pass any option but keep in mind that net/ssh understands a
