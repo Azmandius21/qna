@@ -31,14 +31,19 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
+# ActiveJob
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
-# global search: sphinx
+
+# Global search: sphinx
 gem 'mysql2'
 gem 'thinking-sphinx'
+
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
+gem 'redis-rails'
+
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
