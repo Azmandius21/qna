@@ -65,14 +65,14 @@ Rails.application.configure do
   # Mailer settings
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: '79.174.95.43', port: 80 }
-  config.action_mailer.default_options = { from: "azizqna3@gmail.com", reply_to: "azizqna3@gmail.com"}
+  config.action_mailer.default_options = { from: "kaxopob.azizuz@gmail.com", reply_to: "kaxopob.azizuz@gmail.com" }
   config.action_mailer.delivery_method = :smtp
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :user_name            => "aziz qna",
+    :user_name            => "kaxopob.azizuz@gmail.com",
     :password             => Rails.application.credentials[:gmail_password],
     :authentication       => "plain",
     :enable_starttls_auto => true
