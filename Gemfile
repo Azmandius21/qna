@@ -40,6 +40,9 @@ gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx'
 
+# Web service
+gem 'unicorn'
+
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
 gem 'redis-rails'
@@ -80,6 +83,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
