@@ -8,7 +8,7 @@ feature 'User can search for comment', "
     given!(:author) { create(:user, email: 'sphinx@test.ru') }
     given!(:question) { create(:question) }
     given!(:comment1) { create(:comment, commentable: question, body: 'find in body sphinx') }
-    given!(:comment2){ create(:comment, commentable: question, user: author, body: 'find in author email')}
+    given!(:comment2) { create(:comment, commentable: question, user: author, body: 'find in author email') }
 
     background { visit questions_path }
 

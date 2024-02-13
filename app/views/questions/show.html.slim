@@ -8,25 +8,27 @@
       resource: @question,
       subscription: current_user.subscriptions.find_by(question: @question)
 
-  .question-comments id="#{class_by_string(@question)}-#{@question.id}"
-      .comments-list 
-        = render 'comments/list', commentable: @question
-      .new-comment
-        = render 'comments/form', commentable: @question
+  - cache [@question, 'comment']
+    .question-comments id="#{class_by_string(@question)}-#{@question.id}"
+        .comments-list 
+          = render 'comments/list', commentable: @question
+        .new-comment
+          = render 'comments/form', commentable: @question
 
-  .question-reward
-    = render 'shared/reward_link', resource: @question
+    .question-reward
+      = render 'shared/reward_link', resource: @question
         
-  .answers.card.text-center
-    h2 Answers:
-    .answer-errors
-      = render 'shared/errors', resource: @answer
-    - if @best_answer
-      .best-answer.border.border-primary
-        = render 'answers/answer', answer: @best_answer 
-    .other-answers 
-      = render partial:'answers/answer', collection: @answers
+  - cache ['answers', @question]
+    .answers.card.text-center
+      h2 Answers:
+      .answer-errors
+        = render 'shared/errors', resource: @answer
+      - if @best_answer
+        .best-answer.border.border-primary
+          = render 'answers/answer', answer: @best_answer 
+      .other-answers 
+        = render partial:'answers/answer', collection: @answers
 
-    - if user_signed_in?  
-      = render 'answers/form'
+      - if user_signed_in?  
+        = render 'answers/form'
 

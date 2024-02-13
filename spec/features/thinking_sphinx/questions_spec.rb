@@ -8,7 +8,7 @@ feature 'User can search for question', "
     given!(:author) { create(:user, email: 'question@test.ru') }
     given!(:question1) { create(:question, title: 'find in body', body: 'question body') }
     given!(:question2) { create(:question, title: 'question title', body: 'find in title') }
-    given!(:question3){ create(:question, author: author, title: 'title3', body: 'find in author email')}
+    given!(:question3) { create(:question, author: author, title: 'title3', body: 'find in author email') }
 
     background { visit questions_path }
 

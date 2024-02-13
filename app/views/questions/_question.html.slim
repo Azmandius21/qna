@@ -7,9 +7,10 @@
         = Vote.rank_of_votable(question)	
       .voting
         = render 'shared/vote', votable: question
-    .question-content.col.col-md-6
-      p  #{question.body}
-      h6  #{question.title} 
+    - cache question do 
+      .question-content.col.col-md-6
+        p  #{question.body}
+        h6  #{question.title} 
 
     .question-actions.col.col-md-2
       p = link_to 'Show', question_path(question) 
