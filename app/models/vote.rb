@@ -1,6 +1,6 @@
 class Vote < ApplicationRecord
   belongs_to :user
-  belongs_to :votable, polymorphic: true
+  belongs_to :votable, polymorphic: true, touch: true
 
   def self.rank_of_votable(votable)
     if votable.votes.empty?

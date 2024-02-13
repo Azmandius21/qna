@@ -7,7 +7,7 @@ feature 'User can search for answer', "
   describe 'User search for the answer', js: true do
     given!(:author) { create(:user, email: 'sphinx@test.ru') }
     given!(:answer1) { create(:answer, body: 'find in body sphinx') }
-    given!(:answer2){ create(:answer, author: author, body: 'find in author email')}
+    given!(:answer2) { create(:answer, author: author, body: 'find in author email') }
 
     background { visit questions_path }
 

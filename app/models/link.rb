@@ -1,6 +1,6 @@
 class Link < ApplicationRecord
   GIST_URL = Regexp.new 'https://gist.github.com/\w+/\w+'.freeze
-  belongs_to :linkable, polymorphic: true
+  belongs_to :linkable, polymorphic: true, touch: true
 
   validates :name, :url, presence: true
 

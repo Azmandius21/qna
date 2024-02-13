@@ -8,7 +8,7 @@ feature 'User can search for all', "
     given!(:user) { create(:user, email: 'find_in_user@sphinx.ru') }
     given!(:question) { create(:question, title: 'find in question', body: 'sphinx') }
     given!(:answer) { create(:answer, body: 'find in answer sphinx') }
-    given!(:comment){ create(:comment, commentable: question,  body: 'find in comment sphinx')}
+    given!(:comment) { create(:comment, commentable: question, body: 'find in comment sphinx') }
 
     background { visit questions_path }
 
